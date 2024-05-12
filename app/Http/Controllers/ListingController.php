@@ -11,21 +11,26 @@ use Illuminate\Support\Facades\DB;
 class ListingController extends Controller
 {
     public function index(){
-        if(request("category")){
-            return view('listings.index', [
-                'listings' => DB::table('listings_categories') 
-                            -> join('listings', 'listing_id','=','listings.id') 
-                            -> where('category_id', request('category'))
-                            -> select('listings.*')
-                            -> get(),
-                'categories' => Category::all()
-            ]);
-        }else{
-            return view('listings.index', [
-                'listings' => Listing::all(),
-                'categories' => Category::all(),
-            ]);
-        }
+        // if(request("category")){
+        //     return view('listings.index', [
+        //         'listings' => DB::table('listings_categories') 
+        //                     -> join('listings', 'listing_id','=','listings.id') 
+        //                     -> where('category_id', request('category'))
+        //                     -> select('listings.*')
+        //                     -> get(),
+        //         'categories' => Category::with('sections.subsections')->get(),
+        //     ]);
+        // }else{
+        //     return view('listings.index', [
+        //         'listings' => Listing::all(),
+        //         'categories' => Category::with('sections')->get(),
+        //     ]);
+        // }
+        return view('listings.index', [
+                'listings' => Listing::with('details.images') -> get(),
+                'categories' => Category::with('sections.subsections') -> get()
+        ]);
+
     }
     public function show(Listing $listing){
         return view('listings.show', [
