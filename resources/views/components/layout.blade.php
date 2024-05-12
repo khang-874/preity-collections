@@ -23,8 +23,9 @@
                     },
                 },
             },
-        };
+        }
     </script>
+    <script src='tailwind.config.js'></script>
     <title>Clothing shop</title>
     @vite('resources/js/app.js')
 </head>

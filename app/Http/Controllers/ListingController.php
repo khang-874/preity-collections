@@ -18,15 +18,19 @@ class ListingController extends Controller
                             -> where('category_id', request('category'))
                             -> select('listings.*')
                             -> get(),
-                'sections' => Section::all(),
                 'categories' => Category::all()
             ]);
         }else{
             return view('listings.index', [
                 'listings' => Listing::all(),
-                'sections' => Section::all(),
                 'categories' => Category::all(),
             ]);
         }
+    }
+    public function show(Listing $listing){
+        return view('listings.show', [
+            'listing' => $listing,
+            'categories' => Category::all(),
+        ]);
     }
 }
