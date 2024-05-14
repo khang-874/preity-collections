@@ -36,7 +36,7 @@
                 ><img class="w-24" src={{asset('images/logo.png')}} alt="" class="logo"
             /></a>
             <ul class="flex space-x-6 mr-6 text-lg">
-                @auth
+                {{-- @auth
                     <li>
                         <span class="font-bold uppercase">Welcome {{auth() -> user() ->name}}</span>
                     </li>
@@ -67,7 +67,8 @@
                             Login</a
                         >
                     </li>
-                @endauth
+                @endauth --}}
+                <li><a href="/listings/create" class='bg-red-400 p-4'>Create new listing</a></li>
             </ul>
         </div>
     </nav>

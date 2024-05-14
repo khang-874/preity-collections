@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Image extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['imageURL'];
+
     public function listing(): BelongsTo{
         return $this->belongsTo(Detail::class);
     }

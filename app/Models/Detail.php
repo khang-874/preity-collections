@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Detail extends Model
 {
     use HasFactory;
+    
+    protected $fillable = ['color', 'size', 'inventory', 'sold', 'weight'];
+
     public function images() : HasMany{
         return $this->hasMany(Image::class);
     }
