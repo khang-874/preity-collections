@@ -13,23 +13,9 @@ use Illuminate\Validation\Rule;
 class ListingController extends Controller
 {
     public function index(){
-        // if(request("category")){
-        //     return view('listings.index', [
-        //         'listings' => DB::table('listings_categories') 
-        //                     -> join('listings', 'listing_id','=','listings.id') 
-        //                     -> where('category_id', request('category'))
-        //                     -> select('listings.*')
-        //                     -> get(),
-        //         'categories' => Category::with('sections.subsections')->get(),
-        //     ]);
-        // }else{
-        //     return view('listings.index', [
-        //         'listings' => Listing::all(),
-        //         'categories' => Category::with('sections')->get(),
-        //     ]);
-        // }
+        
         return view('listings.index', [
-                'listings' => Listing::with('details.images') -> paginate(20),
+                'listings' => Listing::with('details.images') -> filter(request(['category', 'section', 'subsection','search'])) -> paginate(20),
                 'categories' => Category::with('sections.subsections') -> get()
         ]);
 
