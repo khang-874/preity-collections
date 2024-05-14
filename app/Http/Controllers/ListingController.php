@@ -29,7 +29,7 @@ class ListingController extends Controller
         //     ]);
         // }
         return view('listings.index', [
-                'listings' => Listing::with('details.images') -> get(),
+                'listings' => Listing::with('details.images') -> paginate(20),
                 'categories' => Category::with('sections.subsections') -> get()
         ]);
 

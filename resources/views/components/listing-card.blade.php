@@ -14,7 +14,8 @@
 
             @foreach ($listing->details as $detail)
                 @foreach ($detail->images as $image)
-                    <img src="{{$image->imageURL}}"/>
+                    {{-- <img src="{{$image->imageURL}}"/> --}}
+                    <div>image</div>
                 @endforeach
             @endforeach
 
