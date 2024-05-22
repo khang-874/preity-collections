@@ -1,33 +1,48 @@
 @props(['listing'])
 
 <x-card>
-    <div class="flex">
-        <img
-            class="hidden w-48 mr-6 md:block"
-            src="{{asset('images/no-image.png');}}"
-            alt=""
-        />
+    <div class="flex"> 
         <div>
-            <h3 class="text-2xl">
+            @php
+                $count = 0;
+            @endphp
+
+            <div>
+                <div x-data = "{activeSlide: 0}" class="relative">
+                   @foreach ($listing->details as $detail)
+                        @foreach ($detail->images as $image)
+                        <div x-show="activeSlide === {{$count++}}"
+                            class="h-48 flex items-center bg-teal-500 text-white rounded-lg">
+                                <img src='{{$image -> imageURL}}' class='w-full h-full'/>
+                        </div>   
+                        @endforeach 
+                    @endforeach
+
+                    <div class="flex absolute w-full top-1/2">
+                        <div class="flex items-center justify-start w-1/2 ">
+                            <button 
+                            class="bg-transparent font-bold hover:shadow-lg rounded-full w-8 h-8 mb-4"
+                            x-on:click="activeSlide = activeSlide === 0 ? {{$count - 1}}: activeSlide - 1">
+                            <
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-end w-1/2">
+                            <button 
+                            class="bg-transparent font-bold hover:shadow rounded-full w-8 h-8 mb-4"
+                            x-on:click="activeSlide = activeSlide ===  {{$count - 1}} ? 0 : activeSlide + 1">
+                            >
+                            </button>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+
+             <h3 class="text-2xl">
                 <a href="/listings/{{$listing->id}}">{{$listing->name}}</a>
             </h3>
+           
 
-            @foreach ($listing->details as $detail)
-                @foreach ($detail->images as $image)
-                    {{-- <img src="{{$image->imageURL}}"/> --}}
-                    <div>image</div>
-                @endforeach
-            @endforeach
-
-            <div class="text-xl font-bold mb-4">{{$listing->description}}</div>
-
-            {{-- <x-listing-tags :tagsCsv="$listing->tags" /> --}}
-                
-            {{-- <div class="text-lg mt-4">
-                <i class="fa-solid fa-location-dot"></i> 
-                {{$listing->location}}
-            </div> --}}
-            <div>{{$listing->price}}</div>
+            <div>CA$ {{$listing->selling_price}}</div>
         </div>
     </div>
 </x-card>

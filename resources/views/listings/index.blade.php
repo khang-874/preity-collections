@@ -1,13 +1,16 @@
 <x-layout>
 {{-- @include('partials._hero') --}}
-@include('partials._search')
+{{-- @include('partials._search') --}}
 @include('partials._navbar')
-<div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
-@unless(count($listings) == 0)
-@foreach ($listings as $listing)
-    <x-listing-card :listing="$listing"/>
+<div class="grid space-y-4 md:space-y-0 mx-[10%] gap-8 mt-4" style="grid-template-columns: 1fr 5fr">
+<div class="col-start-1 bg-red-500 "></div>
+<div class="col-start-2 flex flex-wrap w-full gap-4">
+    @unless(count($listings) == 0)
+    @foreach ($listings as $listing)
+        <x-listing-card :listing="$listing"/>
 
-@endforeach
+    @endforeach
+</div>
 </div>
 @else
     <p>No listings found </p>

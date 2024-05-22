@@ -22,8 +22,11 @@ class Listing extends Model
     public function subsections(): BelongsToMany{
         return $this -> belongsToMany(Subsection::class,'listings_subsections', 'listing_id', 'subsection_id');
     }
+    function roundToNearest($x):float{
+        return round($x / 5) * 5;
+    }
     public function getSellingPriceAttribute(){
-        return ($this -> initPrice / 5) * 2.5;
+        return $this -> roundToNearest(($this -> initPrice / 5) * 2.5) - 0.01;
     }
     public function scopeFilter($query, array $filters){
         if($filters['category'] ?? false){

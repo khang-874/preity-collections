@@ -25,17 +25,18 @@
             },
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v1.9.5/dist/alpine.js"></script>
     <script src='tailwind.config.js'></script>
     <title>Clothing shop</title>
     @vite('resources/js/app.js')
 </head>
-<body class="mb-48">
-    <nav class="mb-4 w-full">
-        <div class="flex justify-between items-center w-full">
-            <a href="/"
-                ><img class="w-24" src={{asset('images/logo.png')}} alt="" class="logo"
+<body class="mb-48 bg-gray-100">
+    <nav class="w-full bg-white">
+        <div class="flex justify-between items-center w-full h-24 px-[10%]">
+            <a href="/" class="h-full flex items-center"
+                ><img class="h-4/5" src={{asset('images/logo.png')}} alt="" class="logo"
             /></a>
-            <ul class="flex space-x-6 mr-6 text-lg">
+            <ul class="flex space-x-6 mr-6 text-lg h-full items-center">
                 {{-- @auth
                     <li>
                         <span class="font-bold uppercase">Welcome {{auth() -> user() ->name}}</span>
@@ -68,7 +69,14 @@
                         >
                     </li>
                 @endauth --}}
-                <li><a href="/listings/create" class='bg-red-400 p-4'>Create new listing</a></li>
+                {{-- <li><a href="/listings/create" class='bg-red-400 p-4'>Create new listing</a></li> --}}
+                <li class="h-full"><x-search></x-search></li>
+                <li>
+                    <div class='flex flex-col justify-center w-full h-full'>
+                        <i class="fa-solid fa-cart-shopping mx-auto"></i>
+                        <p class="mx-auto">Cart</p>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
