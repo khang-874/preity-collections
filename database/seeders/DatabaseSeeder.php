@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        
         for($category= 0; $category < 3; $category++){
             $sections = Section::factory(rand(2,5)) -> for(Category::factory()) -> create();
             foreach($sections as $section){

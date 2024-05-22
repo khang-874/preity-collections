@@ -15,9 +15,12 @@ return new class extends Migration
             $table->unsignedBigInteger('detail_id');
             $table->foreign('detail_id') -> references('id') -> on('details') -> onDelete('cascade') -> onUpdate('cascade');
             
+            $table -> unsignedBigInteger('characteristic_id');
+            $table -> foreign('characteristic_id') -> references('id') -> on('characteristics') -> onDelete('cascade') -> onUpdate('cascade');
+
             $table->string('value');
 
-            $table->primary('detail_id', 'value');
+            $table->primary('detail_id', 'characteristic_id','value');
             $table->timestamps();
         });
     }

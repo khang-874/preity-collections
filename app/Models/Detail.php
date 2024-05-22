@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Detail extends Model
@@ -20,7 +21,7 @@ class Detail extends Model
         return $this -> belongsTo(Listing::class);
     }
     
-    public function characteristics(): HasMany{
-        return $this -> hasMany(Characteristic::class);
+    public function characteristics(): BelongsToMany{
+        return $this -> belongsToMany(Characteristic::class, 'characteristics_value', 'detail_id', 'characteristic_id');
     }
 }
