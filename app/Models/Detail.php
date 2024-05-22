@@ -11,12 +11,16 @@ class Detail extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['color', 'size', 'inventory', 'sold', 'weight'];
+    protected $fillable = ['inventory', 'sold'];
 
     public function images() : HasMany{
         return $this->hasMany(Image::class);
     }
     public function listing(): BelongsTo{
         return $this -> belongsTo(Listing::class);
+    }
+    
+    public function characteristics(): HasMany{
+        return $this -> hasMany(Characteristic::class);
     }
 }

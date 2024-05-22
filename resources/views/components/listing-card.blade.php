@@ -12,7 +12,7 @@
                    @foreach ($listing->details as $detail)
                         @foreach ($detail->images as $image)
                         <div x-show="activeSlide === {{$count++}}"
-                            class="h-48 flex items-center bg-teal-500 text-white rounded-lg">
+                            class="h-72 w-60 flex items-center bg-teal-500 text-white rounded-lg">
                                 <img src='{{$image -> imageURL}}' class='w-full h-full'/>
                         </div>   
                         @endforeach 
@@ -37,12 +37,10 @@
                 </div>
             </div>
 
-             <h3 class="text-2xl">
+             <p class="text-xl font-medium">
                 <a href="/listings/{{$listing->id}}">{{$listing->name}}</a>
-            </h3>
-           
-
-            <div>CA$ {{$listing->selling_price}}</div>
+            </p>
+            <p>CA$ {{$listing->selling_price}}</p>
         </div>
     </div>
 </x-card>
