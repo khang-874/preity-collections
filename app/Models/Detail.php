@@ -19,9 +19,6 @@ class Detail extends Model
     }
     public function listing(): BelongsTo{
         return $this -> belongsTo(Listing::class);
-    }
+    } 
     
-    public function characteristics(): BelongsToMany{
-        return $this -> belongsToMany(Characteristic::class, 'characteristics_value', 'detail_id', 'characteristic_id');
-    }
 }
