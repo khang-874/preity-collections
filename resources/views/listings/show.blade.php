@@ -1,7 +1,7 @@
 <x-layout>
 @include('partials._navbar')
     <div class="mx-[20%] mt-4">
-        <x-card class='grid grid-cols-2 gap-4' x-data="{color: '', size: ''}">
+        <x-card class='grid grid-cols-2 gap-4' x-data="{color: '', size: '', currentVal: 1, minVal: 0, decimalPoints: 0, incrementAmount: 1}">
 
             @php
                 $count = 0;
@@ -29,11 +29,14 @@
                     </li>
                     @endforeach
                 </ul>
+                <x-counter></x-counter>
                 <p>{{$listing -> description}}</p>
-                <button x-data @click="$store.storing.addToCart({
+                <button x-data @click="$store.cart.addToCart({
                    'listingId' : {{$listing->id}},
                    'color' : color,
                    'size' : size, 
+                   'quantity' : currentVal,
+                   'imageURL' : '{{$listing -> details -> first() -> images -> first() -> imageURL}}',
                 })">Add to cart</button>
             </div>
         </x-card>
