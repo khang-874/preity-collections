@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ListingController;
+use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
 
 //Get all listing
@@ -14,4 +15,3 @@ Route::post('listings', [ListingController::class, 'store']);
 
 //Get a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
-

@@ -1,18 +1,21 @@
-<form action="/" class="h-full flex flex-col justify-center">
-    <div class="relative border-2 rounded-lg focus:shadow-md">
-        <div class="inline-block ml-4">
-            <button
-                type="submit"
-            ><i
-                class="fa fa-search z-20 "
-            ></i>
-            </button>
-        </div>
+<form x-data="{
+    disableSubmit: true, 
+    inputText: null,
+    handleClick(event){
+        if(this.disableSubmit)
+            event.preventDefault();
+        $refs.input.focus();
+    }
+}" action="/" class="h-full flex flex-col justify-center">
+    <div class="flex gap-2 rounded-lg focus:shadow-md">
+        <button @click="handleClick"><i class="fa fa-search z-20 "></i></button>
         <input
+            x-ref="input"
+            x-model="inputText"
+            x-on:input="(inputText !== null || inputText.length != 0) ? disableSubmit = false : disableSubmit = true" 
             type="text"
             name="search"
-            class="h-full ml-2 rounded-lg z-0 focus:outline-none text-black"
-            placeholder="What are you looking for?"
+            class="  w-0 text-black focus:w-24 focus:mr-2 focus:outline-none focus:pl-2 focus:border-2 focus:rounded-md"
         />
         {{-- <div class="absolute top-2 right-2">
             <button

@@ -5,12 +5,12 @@
 @endphp
 
 
-<div x-data = "{activeSlide: 0}" class="relative">
+<div x-data = "{activeSlide: 0}" class="relative w-full h-40">
    @foreach ($listing->details as $detail)
       @foreach ($detail->images as $image)
       <div x-show="activeSlide === {{$count++}}"
-            {{$attributes->merge(['class' => 'h-48 flex items-center bg-teal-500 text-white rounded-lg'])}}>
-               <img src='{{$image -> imageURL}}' class='w-full h-full'/>
+            {{$attributes->merge(['class' => 'h-40 flex items-center'])}}>
+               <img x-cloak src='{{$image -> imageURL}}' class='w-full overflow-hidden'/>
       </div>   
       @endforeach 
    @endforeach

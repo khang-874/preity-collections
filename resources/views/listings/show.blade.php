@@ -1,5 +1,7 @@
 <x-layout>
+<x-slot:navbar>
 @include('partials._navbar')
+</x-slot>
     <div class="mx-[20%] mt-4">
         <x-card class='grid grid-cols-2 gap-4' x-data="{color: '', size: '', currentVal: 1, minVal: 0, decimalPoints: 0, incrementAmount: 1}">
 

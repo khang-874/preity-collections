@@ -1,13 +1,9 @@
 @props(['listing'])
 
 <x-card>
-    <div class="flex"> 
-        <div>
-            <div><x-image-gallery :listing="$listing"></x-image-gallery></div>
-             <h3 class="text-2xl">
-                <a href="/listings/{{$listing->id}}">{{$listing->name}}</a>
-            </h3> 
-            <div>CA$ {{$listing->selling_price}}</div>
-        </div>
-    </div>
+    <x-image-gallery :listing="$listing"></x-image-gallery>
+    <p class="text-sm pl-2 font-bold">
+        <a href="/listings/{{$listing->id}}">{{$listing->name}}</a>
+    </p> 
+    <p class="text-md pl-2">CA$ {{$listing->selling_price}}</p>
 </x-card>

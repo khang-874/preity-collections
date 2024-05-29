@@ -49,4 +49,10 @@ class ListingController extends Controller
 
         return redirect('/');
     }
+    public function manage(){
+        return view('manage.index',[
+            'listings' => Listing::with('details.images') -> filter(request(['category', 'section', 'subsection','search'])) -> paginate(20),
+            'categories' => Category::with('sections.subsections') -> get()
+        ]);
+    }
 }
