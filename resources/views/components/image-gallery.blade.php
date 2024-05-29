@@ -1,17 +1,16 @@
-@props(['listing', 'cover'])
-
+@props(['listing'])
 
 @php
    $count = 0;
 @endphp
 
 
-<div x-data = "{activeSlide: 0}" class="relative w-full h-40 {{$cover}}">
+<div x-data = "{activeSlide: 0}" class="relative w-full h-40">
    @foreach ($listing->details as $detail)
       @foreach ($detail->images as $image)
       <div x-show="activeSlide === {{$count++}}"
-            {{$attributes->merge(['class' => 'h-40 flex items-center justify-center'])}}>
-               <img x-cloak src='{{$image -> imageURL}}' class='object-cover h-full overflow-hidden'/>
+            {{$attributes->merge(['class' => 'h-40 flex items-center'])}}>
+               <img x-cloak src='{{$image -> imageURL}}' class='w-full overflow-hidden'/>
       </div>   
       @endforeach 
    @endforeach

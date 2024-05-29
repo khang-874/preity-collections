@@ -2,58 +2,46 @@
 <x-slot:navbar>
 @include('partials._navbar')
 </x-slot>
-    <div class="mx-[10%] mt-4">
-        <div x-data="{color: '{{$listing->details->first() -> color}}', size: '{{$listing->details->first()->size}}', quantity:1}">
+    <div class="mx-[20%] mt-4">
+        <x-card class='grid grid-cols-2 gap-4' x-data="{color: '', size: '', currentVal: 1, minVal: 0, decimalPoints: 0, incrementAmount: 1}">
+
             @php
                 $count = 0;
             @endphp
             <div class='col-start-1 h-full'>            
-                <x-card.image-gallery class='!w-full !h-full' :listing="$listing" cover="bg-white drop-shadow-md p-2 h-60 mb-2"></x-card.image-gallery>
+                <x-image-gallery class='!w-full !h-full' :listing="$listing"></x-image-gallery>
             </div>
             <div>
-                <div class="bg-white drop-shadow-md p-2">
-                    <h4 class="w-full font-semibold">{{$listing -> name}}</h4>
-                    <div class="flex gap-x-4">  
-                        <div class="flex-grow">
-                            <p>Size</p> 
-                            <select name="size" id="size-id" x-model="size" class="w-full">
-                                @foreach ($listing -> details as $detail) 
-                                    <option value="{{$detail->size}}">{{$detail->size}}</option> 
-                                @endforeach 
-                            </select>
-                        </div>
-                        <div class="flex-grow">
-                            <p>Color</p>
-                            <select name="size" id="size-id" x-model="color" class="w-full">
-                                @foreach ($listing -> details as $detail)    
-                                    <option value="{{$detail->color}}">{{$detail->color}}</option> 
-                                @endforeach 
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-2 bg-white drop-shadow-md mt-2">
-                    <p class="font-semibold">Description:</p>
-                    <p>{{$listing -> description}}</p>
-                </div>
-                <p class="p-2 bg-white drop-shadow-md font-medium mt-2">CA$ {{$listing -> selling_price}}</p>
-                <div class="p-2 bg-white drop-shadow-md mt-2">
-                    <label for="quantity" class="font-semibold">Quantity:</label>
-                    <input type="number" x-model.number="quantity" id="quantity"/>
-                </div>
+                <h4 class="w-full">{{$listing -> name}}</h4>
+                <p>Size</p>
+                <ul class= 'flex flex-wrap gap-2'>
+                    @foreach ($listing -> details as $detail)
+                    <li>
+                        <input type="radio" name="size" id="{{$detail -> size}}" value="{{$detail->size}}" x-data x-model="size" required>
+                        <p>{{$detail -> size}}</p> 
+                    </li>
+                    @endforeach
+                </ul>
+                <p>Color</p>
+                <ul class= 'flex flex-wrap gap-2'>
+                    @foreach ($listing -> details as $detail)
+                    <li>
+                        <input type="radio" value="{{$detail -> color}}" id="{{$detail -> color}}" name="color" x-data x-model="color" required>
+                        <p>{{$detail -> color}}</p>
+                    </li>
+                    @endforeach
+                </ul>
+                <x-counter></x-counter>
+                <p>{{$listing -> description}}</p>
                 <button x-data @click="$store.cart.addToCart({
                    'listingId' : {{$listing->id}},
-                   'name' : '{{$listing->name}}',
                    'color' : color,
                    'size' : size, 
-                   'quantity' : quantity,
-                   'price' : {{$listing->selling_price}},
+                   'quantity' : currentVal,
                    'imageURL' : '{{$listing -> details -> first() -> images -> first() -> imageURL}}',
-                })"
-                    class="p-2 bg-black rounded-md font-medium text-white mt-2"
-                >Add to cart</button>
+                })">Add to cart</button>
             </div>
-        </div>
+        </x-card>
     </div>
     {{-- <a href="/">Return</a> --}}
 </x-layout>

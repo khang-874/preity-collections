@@ -1,7 +1,7 @@
 @props(['listing'])
 
 <x-card>
-    <x-card.image-gallery :listing="$listing" cover=" "></x-image-gallery>
+    <x-image-gallery :listing="$listing"></x-image-gallery>
     <p class="text-sm pl-2 font-bold">
         <a href="/listings/{{$listing->id}}">{{$listing->name}}</a>
     </p> 

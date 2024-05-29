@@ -33,12 +33,6 @@
             removeFromCart(index){
                     console.log(this.items.splice(index, 1));
             }
-        });
-        Alpine.store('showCart', {
-            on: false,
-            toggle(){
-                this.on = !this.on;
-            }
         })
     })
     </script>
@@ -46,7 +40,6 @@
 </head>
 <body class="mb-48 bg-gray-50">
     <x-logo></x-logo>
-    <x-cart></x-cart> 
     {{ $navbar }}
     <main>
     {{-- View Output --}}
