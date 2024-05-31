@@ -55,4 +55,9 @@ class ListingController extends Controller
             'categories' => Category::with('sections.subsections') -> get()
         ]);
     }
+    public function edit(Listing $listing){
+        return view('listings.edit', [
+            'listing' => $listing
+        ]);
+    }
 }

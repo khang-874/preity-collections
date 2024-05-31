@@ -12,10 +12,14 @@ Route::get('/', [ListingController::class, 'index']);
 Route::get('/listings/create', [ListingController::class, 'create']);
 
 //Store listing data
-Route::post('listings', [ListingController::class, 'store']);
+Route::post('/listings', [ListingController::class, 'store']);
+
+//Edit a listing
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
 
 //Get a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
 
 //Display login form
 Route::get('/login', [UserController::class, 'login']);
