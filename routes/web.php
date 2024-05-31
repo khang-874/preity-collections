@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Models\Listing;
@@ -15,10 +16,17 @@ Route::get('/listings/create', [ListingController::class, 'create']);
 Route::post('/listings', [ListingController::class, 'store']);
 
 //Edit a listing
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']) -> middleware('auth');
 
 //Get a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
+
+
+//Create new deatil
+Route::post('/details', [DetailController::class, 'create']);
+
+//Delete detail
+Route::get('/details/{detail}/delete', [DetailController::class, 'destroy']);
 
 
 //Display login form
