@@ -54,6 +54,10 @@
                 >Add to cart</button>
             </div>
         </div>
+    @auth
+        <a href="/listings/{{$listing->id}}/edit" class="mb-4"><x-button>Edit</x-button></a>
+    @endauth
+
     </div>
-    {{-- <a href="/">Return</a> --}}
+       {{-- <a href="/">Return</a> --}}
 </x-layout>

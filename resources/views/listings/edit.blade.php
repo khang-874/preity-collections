@@ -1,6 +1,7 @@
 <x-layout>
     <x-slot:navbar>
     </x-slot>
+    <a href="/listings/{{$listing->id}}"><x-button>Check listing</x-button></a>
     <x-form.container>
         <form action="/listings/{{$listing->id}}" method="post" enctype="multipart/form-data">
             @csrf
