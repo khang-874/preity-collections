@@ -14,8 +14,8 @@
         <div class="p-2">Hello {{auth() -> user() -> name}}</div>
         <form action="/logout" method="post">
             @csrf 
-            <button>Logout</button>
-        
+            <button>Logout</button> 
         </form>
+        
     @endauth
 </div>

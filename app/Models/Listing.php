@@ -28,6 +28,27 @@ class Listing extends Model
     public function getSellingPriceAttribute(){
         return $this -> roundToNearest(($this -> initPrice / 5) * 2.5) - 0.01;
     }
+    public function getProductCodeAttribute(){
+        $price = round($this -> initPrice / 5);
+        $code = [
+            0 => 'C',
+            1 => 'M',
+            2 => 'N',
+            3 => 'O',
+            4 => 'R',
+            5 => 'S',
+            6 => 'T',
+            7 => 'W',
+            8 => 'X',
+            9 => 'Y',
+        ];
+        $productCode = '';
+        while($price > 0){
+            $productCode = $code[$price % 10] . $productCode;
+            $price = intdiv($price, 10);
+        }
+        return $productCode;
+    }
     public function scopeFilter($query, array $filters){
         if($filters['category'] ?? false){
             $query -> join('listings_subsections', 'listings.id', '=', 'listings_subsections.listing_id')
