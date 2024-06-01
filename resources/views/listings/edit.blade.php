@@ -18,7 +18,7 @@
 
     @foreach ($listing->details as $detail)
         <x-form.container>
-            <form action="/details/{{$detail->id}}" method="post">
+            <form action="/details/{{$detail->id}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <x-form.field field="inventory" fieldName="Inventory" inputType="number" :value="$detail->inventory"> </x-form.field>
@@ -26,9 +26,15 @@
                 <x-form.field field="weight" fieldName="Weight" inputType="number" :value="$detail->weight"> </x-form.field>
                 <x-form.field field="size" fieldName="Size" inputType="text" :value="$detail->size"> </x-form.field>
                 <x-form.field field="color" fieldName="Color" inputType="color" :value="$detail->color"> </x-form.field>
+                <input name="images[]" type="file" multiple>
                 <div class="flex ml-2 gap-2">
                     @foreach ($detail->images as $image)
-                        <img src="{{$image->imageURL}}" alt="" class="w-40">
+                        @php
+                            $imageURL = $image -> imageURL;
+                            if(is_file($imageURL))
+                                $imageURL = asset($imageURL); 
+                        @endphp
+                        <img src="{{$imageURL}}" alt="" class="w-40">
                     @endforeach
                 </div>
             <x-button>Update detail</x-button>
