@@ -29,4 +29,15 @@ class DetailController extends Controller
 
         return redirect('/listings/' . $listingId . '/edit') -> with('message', 'Delete detail successfully'); 
     }
+
+
+    //Update detail
+    public function update(Detail $detail, Request $request){
+        $formFields = $request -> validate([
+            "inventory" => ["required", "gte:0"],
+            "sold" => ["required", "gte:0"],
+        ]);
+        $detail -> update($formFields);
+        return redirect('/listings/'. $detail->listing->id. '/edit') -> with('message', 'Update detail successfully');
+    }
 }

@@ -13,9 +13,12 @@
             <x-button>Update listing</x-button>
         </form>
     </x-form.container>
+
     @foreach ($listing->details as $detail)
         <x-form.container>
-            <form action="/details/{{$detail->id}}">
+            <form action="/details/{{$detail->id}}" method="post">
+                @csrf
+                @method('PUT')
                 <x-form.field field="inventory" fieldName="Inventory" inputType="number" :value="$detail->inventory"> </x-form.field>
                 <x-form.field field="sold" fieldName="Sold" inputType="number" :value="$detail->sold"> </x-form.field>
                 <x-form.field field="weight" fieldName="Weight" inputType="number" :value="$detail->weight"> </x-form.field>
@@ -33,6 +36,7 @@
             </form>
         </x-form.container>
     @endforeach
+
     <form action="/details?listingId={{$listing->id}}" method="post">
         @csrf
         <x-button>Add new detail</x-button>
