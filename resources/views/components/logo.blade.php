@@ -10,4 +10,12 @@
             </button>
         </li>
     </ul> 
+    @auth 
+        <div class="p-2">Hello {{auth() -> user() -> name}}</div>
+        <form action="/logout" method="post">
+            @csrf 
+            <button>Logout</button>
+        
+        </form>
+    @endauth
 </div>

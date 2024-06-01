@@ -22,10 +22,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('123456789'),
+        ]);
         
         for($category= 0; $category < 3; $category++){
             $sections = Section::factory(rand(2,5)) -> for(Category::factory()) -> create();

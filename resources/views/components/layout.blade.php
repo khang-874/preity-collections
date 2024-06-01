@@ -51,8 +51,9 @@
     <main>
     {{-- View Output --}}
     {{$slot}}
-    
+
     </main>
  
+    <x-flash-message></x-flash-message>
 </body>
 </html>

@@ -39,20 +39,36 @@ class ListingController extends Controller
             'color' => 'required',
             'inventory' => 'required',
         ]);
-        if($request->hasFile('images')){
-            
-        }
+
         $listing = $request -> only(['name', 'description', 'brand', 'vendor', 'initPrice']);
         $createdListing = Listing::create($listing);
         $detail = new Detail($request -> only(['color', 'size', 'inventory', 'sold','weight']));
         $createdListing -> details() -> save($detail);
 
         return redirect('/');
-    }
-    public function manage(){
-        return view('manage.index',[
-            'listings' => Listing::with('details.images') -> filter(request(['category', 'section', 'subsection','search'])) -> paginate(20),
-            'categories' => Category::with('sections.subsections') -> get()
+    } 
+    public function edit(Listing $listing){
+        return view('listings.edit', [
+            'listing' => $listing
         ]);
+    } 
+
+    public function update(Listing $listing, Request $request){
+        $formFields = $request -> validate([
+            'name' => 'required',
+            'description' => 'required',
+            'brand' => 'required',
+            'vendor' => 'required',
+            'initPrice' => ['required', 'numeric'],
+        ]); 
+
+        $listing -> update($formFields);
+
+        return redirect('/listings/' . $listing -> id ) -> with('message', 'Listing update successfully');
+    }
+    
+    public function destroy(Listing $listing){
+        $listing -> delete();
+        return redirect('/');
     }
 }
