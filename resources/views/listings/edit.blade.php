@@ -2,6 +2,7 @@
     <x-slot:navbar>
     </x-slot>
     <a href="/listings/{{$listing->id}}"><x-button>Check listing</x-button></a>
+    <x-form.delete-button url="/listings/{{$listing->id}}" name="Delete listing"/>
     <x-form.container>
         <form action="/listings/{{$listing->id}}" method="post" enctype="multipart/form-data">
             @csrf
@@ -32,10 +33,8 @@
                 </div>
             <x-button>Update detail</x-button>
             </form>
-            <form action="/details/{{$detail->id}}/delete" method="get">
-                <x-button>Delete detail</x-button>
-            </form>
-        </x-form.container>
+            <x-form.delete-button url="/details/{{$detail->id}}" name="Delete detail"/>
+            </x-form.container>
     @endforeach
 
     <form action="/details?listingId={{$listing->id}}" method="post">

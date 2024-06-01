@@ -55,8 +55,9 @@
             </div>
         </div>
     @auth
-        <a href="/listings/{{$listing->id}}/edit" class="mb-4"><x-button>Edit</x-button></a>
-    @endauth
+        <a href="/listings/{{$listing->id}}/edit" class="mb-4"><x-button>Edit</x-button></a> 
+        <x-form.delete-button url="/listings/{{$listing->id}}" name="Delete listing"/>
+       @endauth
 
     </div>
        {{-- <a href="/">Return</a> --}}
