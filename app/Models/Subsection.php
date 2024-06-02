@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Subsection extends Model
 {
@@ -13,7 +14,7 @@ class Subsection extends Model
     public function section() : BelongsTo{
         return $this->belongsTo(Section::class);
     } 
-    public function listings() : BelongsToMany{
-        return $this->belongsToMany(Listing::class, 'listings_subsections', 'section_id', 'listing_id');
+    public function listings() : HasMany{
+        return $this -> hasMany(Listing::class);
     }
 }

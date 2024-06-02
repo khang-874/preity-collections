@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('brand');
             $table->string('vendor');
             $table->float('initPrice');
+            $table -> unsignedBigInteger('subsection_id');
+            $table -> foreign('subsection_id') -> references('id') -> on('subsections');
             $table->timestamps();
         });
     }

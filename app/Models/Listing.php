@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\HigherOrderWhenProxy;
@@ -19,8 +20,8 @@ class Listing extends Model
     {
         return $this->hasMany(Detail::class);
     }
-    public function subsections(): BelongsToMany{
-        return $this -> belongsToMany(Subsection::class,'listings_subsections', 'listing_id', 'subsection_id');
+    public function subsections(): BelongsTo{
+        return $this -> belongsTo(Subsection::class);
     }
     public function orders() : BelongsToMany{
         return $this -> belongsToMany(Order::class, 'orders_listings', 'listing_id', 'order_id');
