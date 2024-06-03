@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
@@ -39,9 +41,18 @@ Route::delete('/details/{detail}', [DetailController::class, 'destroy']) -> midd
 Route::post('/details', [DetailController::class, 'create']) -> middleware('auth');
 
 
+//Display orders
+Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
+
+//Display a single order
+Route::get('/orders/{order}', [OrderController::class, 'show']) -> middleware('auth');
+
+
+//Display all customers
+Route::get('/customers', [CustomerController::class, 'index']) -> middleware('auth');
 
 //Display login form
-Route::get('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login']) -> name('login');
 
 //Authenticate user
 Route::post('/authenticate', [UserController::class, 'authenticate']);

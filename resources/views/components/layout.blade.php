@@ -45,14 +45,7 @@
 
 </head>
 <body class="mb-48 bg-gray-50">
-    <x-logo></x-logo>
-    <x-cart></x-cart> 
-    {{ $navbar }}
-    <main>
-    {{-- View Output --}}
-    {{$slot}}
-
-    </main>
+    {{$slot}} 
  
     <x-flash-message></x-flash-message>
 </body>

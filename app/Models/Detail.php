@@ -13,6 +13,7 @@ class Detail extends Model
     use HasFactory;
     
     protected $fillable = ['inventory', 'sold', 'color', 'size', 'weight', 'listing_id'];
+    protected $with = ['images'];
 
     public function images() : HasMany{
         return $this->hasMany(Image::class);

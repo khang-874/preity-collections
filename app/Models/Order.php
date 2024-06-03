@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Order extends Model
 {
     use HasFactory;
+    public $withTimestamps = true;
+    public $with = ['listings'];
+
     public function customer() : BelongsTo{
         return $this -> belongsTo(Customer::class);
     }
@@ -17,7 +20,7 @@ class Order extends Model
         return $this -> belongsToMany(Listing::class, 'orders_listings', 'order_id', 'listing_id');
     }
 
-    public function getTotalAttribute() : float{
+    public function getSubtotalAttribute() : float{
         $total = 0;
         foreach($this -> listings as $listing){
             $total += $listing -> getSellingPriceAttribute();
@@ -25,7 +28,7 @@ class Order extends Model
         return $total;
     }
 
-    public function getTaxAttribute() : float{
-        return $this -> getTotalAttribute() * 1.13;
+    public function getTotalAttribute() : float{
+        return $this -> getSubTotalAttribute() * 1.13;
     }
 }

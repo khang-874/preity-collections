@@ -15,8 +15,8 @@ class ListingController extends Controller
     public function index(){
         
         return view('listings.index', [
-                'listings' => Listing::with('details.images') -> filter(request(['category', 'section', 'subsection','search'])) -> paginate(20),
-                'categories' => Category::with('sections.subsections') -> get()
+                'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) -> paginate(20),
+                'categories' => Category::all()
         ]);
 
     }

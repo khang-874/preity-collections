@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;   
+    protected $with = ['sections.subsections'];
     public function sections():HasMany{
         return $this->hasMany(Section::class);
     }

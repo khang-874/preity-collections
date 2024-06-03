@@ -15,7 +15,8 @@ class Listing extends Model
     use HasFactory;
 
     protected $fillable = ['name','description','brand','vendor', 'initPrice'];
-
+    
+    protected $with = ['details.images'];
     public function details(): HasMany
     {
         return $this->hasMany(Detail::class);
