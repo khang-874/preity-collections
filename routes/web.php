@@ -5,6 +5,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Models\Customer;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::get('/orders/{order}', [OrderController::class, 'show']) -> middleware('a
 //Display all customers
 Route::get('/customers', [CustomerController::class, 'index']) -> middleware('auth');
 
+//Display a single customer
+Route::get('/customers/{customer}', [CustomerController::class, 'show']) -> middleware('auth');
 //Display login form
 Route::get('/login', [UserController::class, 'login']) -> name('login');
 

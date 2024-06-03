@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -11,7 +12,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customers.index');
+        return view('customers.index', [
+            'customers' => Customer::all(),
+        ]);
     }
 
     /**
@@ -33,9 +36,11 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Customer $customer)
     {
-        //
+        return view('customers.show', [
+            'customer' => $customer -> load('orders.listings')
+        ]);
     }
 
     /**

@@ -11,7 +11,6 @@ class Order extends Model
 {
     use HasFactory;
     public $withTimestamps = true;
-    public $with = ['listings'];
 
     public function customer() : BelongsTo{
         return $this -> belongsTo(Customer::class);
