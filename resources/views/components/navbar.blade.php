@@ -1,3 +1,5 @@
+@props(['categories'])
+
 <div class="w-full bg-white px-[10%] hidden">
     @php
         $categoriesLen = sizeof($categories)

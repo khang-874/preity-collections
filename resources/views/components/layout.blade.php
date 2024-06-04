@@ -32,6 +32,11 @@
             },
             removeFromCart(index){
                     console.log(this.items.splice(index, 1));
+            },
+            placeOrder(event){
+                data = [];
+                for(let item of this.items)
+                    console.log(item);
             }
         });
         Alpine.store('showCart', {
@@ -39,7 +44,7 @@
             toggle(){
                 this.on = !this.on;
             }
-        })
+        });
     })
     </script>
 

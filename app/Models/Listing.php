@@ -21,7 +21,7 @@ class Listing extends Model
     {
         return $this->hasMany(Detail::class);
     }
-    public function subsections(): BelongsTo{
+    public function subsection(): BelongsTo{
         return $this -> belongsTo(Subsection::class);
     }
     public function orders() : BelongsToMany{
@@ -33,7 +33,16 @@ class Listing extends Model
     public function getSellingPriceAttribute(){
         return $this -> roundToNearest(($this -> initPrice / 5) * 2.5) - 0.01;
     }
-    public function getProductCodeAttribute(){
+    public function getProductIdAttribute(){
+       $words = explode(' ', $this -> subsection -> name); 
+       $acronym = "";
+       foreach($words as $word){
+            $acronym .= mb_substr($word, 0, 1);
+       }
+       $acronym .= $this -> id;
+       return $acronym;
+    }
+    public function getProductPriceCodeAttribute(){
         $price = round($this -> initPrice / 5);
         $code = [
             0 => 'C',

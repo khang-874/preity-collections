@@ -1,7 +1,48 @@
+@props(['listing'])
+
 <x-layout>
-    <x-slot:navbar>
-    </x-slot>
     <a href="/listings/{{$listing->id}}"><x-button>Check listing</x-button></a>
+    @php
+        $printAllTag = "";
+        foreach ($listing->details as $detail){
+                $printAllTag .= "<div style='border-width: 1px; border-style:solid; width: 125px; margin: 2px'>";
+                $printAllTag .= "<h4 style='word-wrap: break-word; width: 100%;'>PREITY COLLECTION</h4>";
+                $printAllTag .= "<h6>SN: " . $listing -> product_id . "</h6>";
+
+                $printAllTag .= "<h6>Price Code: " . $listing -> product_price_code . "</h6>";
+                $printAllTag .= '<h6>Size: ' . $detail -> size . '</h6>';
+                $printAllTag .= "<h6>Color: " . $detail -> color . "</h6>";
+                $printAllTag .= "<h5>MPR: " . $listing -> selling_price . "</h5>";
+                $printAllTag .= "<h6>Made in India</h6>";
+                $printAllTag .= "<h6>Dry Clean Only</h6>";
+                $printAllTag .= "</div>";
+        }
+    @endphp
+    <x-button x-data @click="() => {
+        let a = window.open('', '',);
+        a.document.write(`
+        <html>
+            <head>
+                <style>
+                    *{
+                        margin: 0px;
+                        padding: 0px;
+                    }
+                    h4,h5,h6{
+                        margin: 5px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div style='display:flex;'>
+                    {{$printAllTag}}    
+                </div>
+            </body>
+        </html>
+        `);
+        a.document.close();
+        a.print();
+    }">Print All Tag</x-button>
     <x-form.delete-button url="/listings/{{$listing->id}}" name="Delete listing"/>
     <x-form.container>
         <form action="/listings/{{$listing->id}}" method="post" enctype="multipart/form-data">
@@ -15,7 +56,6 @@
             <x-button>Update listing</x-button>
         </form>
     </x-form.container>
-
     @foreach ($listing->details as $detail)
         <x-form.container>
             <form action="/details/{{$detail->id}}" method="post" enctype="multipart/form-data">
@@ -40,7 +80,41 @@
             <x-button>Update detail</x-button>
             </form>
             <x-form.delete-button url="/details/{{$detail->id}}" name="Delete detail"/>
-            </x-form.container>
+            <x-button x-data @click="() => {
+                let a = window.open('', '',);
+                    a.document.write(`
+                    <html>
+                        <head>
+                            <style>
+                                *{
+                                    margin: 0px;
+                                    padding: 0px;
+                                }
+                                h4,h5,h6{
+                                    margin: 5px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                        <div style='width:125px; display:flex; border-width:1px; border-style:solid;'>
+                            <div style='width:100%'>
+                                <h4 style='word-wrap: break-word;'>PREITY COLLECTION</h4>
+                                <h6>SN: {{$listing -> product_id}}</h6>
+                                <h6>Price Code: {{$listing -> product_price_code}}</h6>
+                                <h6>Size: {{$detail -> size}}</h6>
+                                <h6>Color: {{$detail -> color}}</h6>
+                                <h5>MPR: ${{$listing -> selling_price}}</h5>
+                                <h6>Made in India</h6>
+                                <h6>Dry Clean Only</h6>
+                            </div>
+                        </div>
+                        </body>
+                    </html>
+                `);
+                a.document.close();
+                a.print();
+            }">Print tag</x-button>
+        </x-form.container>
     @endforeach
 
     <form action="/details?listingId={{$listing->id}}" method="post">

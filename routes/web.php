@@ -5,6 +5,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,8 @@ Route::delete('/listings/{listing}', [ListingController::class, 'destroy']) -> m
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
 
+//Place order
+Route::view('/placeOrder', 'orders.placeorder', ["categories" => Category::all()]);
 
 //Update detail
 Route::put('/details/{detail}', [DetailController::class, 'update']) -> middleware('auth');

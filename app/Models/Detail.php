@@ -22,4 +22,8 @@ class Detail extends Model
         return $this -> belongsTo(Listing::class);
     } 
     
+    public function getAvailableAttribute(){
+        return $this -> inventory != 0;
+    }
+
 }

@@ -1,5 +1,5 @@
-<div x-data x-cloak x-show="$store.showCart.on" class="fixed inset-0 z-10 bg-black bg-opacity-50 w-screen h-screen">
-    <div    x-show="$store.showCart.on" 
+<div x-data x-cloak x-show="!$store.showCart.on" class="fixed inset-0 z-10 bg-black bg-opacity-50 w-screen h-screen">
+    <div    x-show="!$store.showCart.on" 
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-100 translate-x-1/2"
             x-transition:enter-end="opacity-100 scale-100"
@@ -27,5 +27,6 @@
             </div>
         </template> 
         </div>
+        <a href="/placeOrder"><x-button>Order</x-button></a>
     </div> 
 </div>
