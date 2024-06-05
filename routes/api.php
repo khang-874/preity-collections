@@ -12,4 +12,4 @@ Route::get('/hello', function (Request $request){
     return 'Hello world';
 });
 
-Route::post('/orders', [OrderController::class, 'create']) -> middleware('auth');
+Route::post('/orders', [OrderController::class, 'create']);

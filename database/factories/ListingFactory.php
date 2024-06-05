@@ -18,7 +18,7 @@ class ListingFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->text(),
+            'description' => fake() -> realText(1500),
             'brand' => fake() -> name(),
             'vendor' => fake() -> name(),
             'initPrice' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),

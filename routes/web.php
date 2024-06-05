@@ -51,6 +51,8 @@ Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
 //Display a single order
 Route::get('/orders/{order}', [OrderController::class, 'show']) -> middleware('auth');
 
+//Create new order;
+Route::post('/orders' ,[OrderController::class, 'create']);
 
 //Display all customers
 Route::get('/customers', [CustomerController::class, 'index']) -> middleware('auth');

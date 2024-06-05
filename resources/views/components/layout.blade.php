@@ -24,19 +24,30 @@
         Alpine.store('cart', {
             items: Alpine.$persist([]), 
             
-            addToCart(product) {
-                alert('Add this product to cart: ' + product['listingId'] + ' ' + product['size'] + ' ' 
-                + product['color'] + ' ' + product['quantity']
-                + product['imageURL'])
+            addToCart(product) { 
                 this.items.push(product);
             },
             removeFromCart(index){
-                    console.log(this.items.splice(index, 1));
+                this.items.splice(index, 1);
             },
             placeOrder(event){
                 data = [];
+                console.log(event);
+                let formData = new FormData();
                 for(let item of this.items)
-                    console.log(item);
+                    formData.append('items', {
+                        'listingId' : item['listingId'],
+                        'detailId' : item['detailId'],
+                        'quantity' : item['quantity'],
+                    });
+                console.log(formData.values().get());
+                fetch('/orders', {
+                    method: 'post',
+                    //headers:{
+                    //    'Content-Type' : 'application/json',
+                    //}
+                    body: formData,
+                });
             }
         });
         Alpine.store('showCart', {

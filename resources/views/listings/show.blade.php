@@ -1,6 +1,6 @@
 <x-layout>
     <x-logo></x-logo>
-    {{-- <x-cart></x-cart> --}}
+    <x-cart></x-cart>
     <x-navbar :categories="$categories"></x-navbar>
     @php
         $count = 0;
@@ -19,28 +19,28 @@
             <div x-data="{
                 color: '{{$listing->details->first() -> color}}', 
                 size: '{{$listing->details->first()->size}}', 
-                currentDetailId:'', 
                 quantity:1,
+                availability : {{json_encode($availableOption)}},
                 handleClick(){
                     let availability = this.availability;
+                    let currentDetailId = ''
                     for(let i = 0; i < availability.length; ++i){
-                        if(this.color == availability[i]['color'] && this.size == availability[i]['size']){
-                            this.currentDetailId = availability[i]['id'];
+                        if(this.color === availability[i]['color'] && this.size === availability[i]['size']){
+                            currentDetailId = availability[i]['detailId'];
                             break;
                         }
                     }
                     $store.cart.addToCart({
                         'listingId' : {{$listing->id}},
-                        'detailId' : this.currentDetailId,
+                        'detailId' : currentDetailId,
                         'name' : '{{$listing->name}}',
-                        'color' : color,
-                        'size' : size, 
-                        'quantity' : quantity,
+                        'color' : this.color,
+                        'size' : this.size, 
+                        'quantity' : this.quantity,
                         'price' : {{$listing->selling_price}},
                         'imageURL' : '{{$listing -> details -> first() -> images -> first() -> imageURL}}',
                     })
                 },
-                'availability' : {{json_encode($availableOption)}},
                 showAvailableOption(selectedValue, mainOption, otherOption, mainOptionKey, otherOptionKey){
                     let availability = this.availability;
 
@@ -51,16 +51,26 @@
                         }
                     }
                     let children = otherOption.children;
+                    console.log(availableOption);
                     for(let i = 0; i < children.length; ++i){
                         let input = children[i].children[0];
                         input.disabled = false;
                         let inputValue = children[i].children[0].value;
-                        if(!availableOption.includes(inputValue))
-                            input.disabled = true; 
+                        if(!availableOption.includes(inputValue)){
+                            input.checked = false;
+                            input.classList.toggle('bg-red-500');
+                        }
                         else{
                             input.checked = true;
+                            //Set the model to correct data
+                            if(mainOptionKey === 'color'){
+                                this.size = inputValue;
+                            }else{
+                                this.color = inputValue;
+                            }
                         }
                     }
+                    console.log(this.color, this.size);
 
                     setTimeout(() => {
                         for(let i = 0; i < children.length; ++i){
@@ -122,7 +132,7 @@
                         <label for="quantity" class="font-semibold">Quantity:</label>
                         <input type="number" x-model.number="quantity" id="quantity"/>
                     </div>
-                    <button @click=""
+                    <button @click="handleClick"
                         class="p-2 bg-black rounded-md font-medium text-white mt-2"
                     >Add to cart</button>
                 </div>

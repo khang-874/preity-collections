@@ -16,8 +16,14 @@ return new class extends Migration
             $table->foreign('listing_id') -> references('id') -> on('listings') -> onDelete('cascade') -> onUpdate('cascade');
             
             $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id') -> references('id') -> on('orders') -> onDelete('cascade') -> onUpdate('cascade');
-            $table->primary(['listing_id', 'order_id']);
+            $table->foreign('order_id') -> references('id') -> on('orders');
+
+            $table -> unsignedBigInteger('detail_id');
+            $table->foreign('detail_id') -> references('id') -> on('details');
+            
+            $table -> integer('quantity');
+
+            $table->primary(['listing_id', 'order_id', 'detail_id']);
             $table->timestamps();
 
         });

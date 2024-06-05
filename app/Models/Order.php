@@ -11,6 +11,7 @@ class Order extends Model
 {
     use HasFactory;
     public $withTimestamps = true;
+    protected $fillable = ['paymentType', 'customer_id'];
 
     public function customer() : BelongsTo{
         return $this -> belongsTo(Customer::class);
@@ -18,7 +19,9 @@ class Order extends Model
     public function listings() : BelongsToMany{
         return $this -> belongsToMany(Listing::class, 'orders_listings', 'order_id', 'listing_id');
     }
-
+    public function details() : BelongsToMany{
+        return $this -> belongsToMany(Detail::class, 'orders_listings', 'order_id', 'detail_id');
+    }
     public function getSubtotalAttribute() : float{
         $total = 0;
         foreach($this -> listings as $listing){

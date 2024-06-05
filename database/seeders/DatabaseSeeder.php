@@ -35,32 +35,21 @@ class DatabaseSeeder extends Seeder
                             -> has(Listing::factory(10) 
                             -> has(Detail::factory(3) 
                             -> has(Image::factory(2)))) )) -> create();
-        // for($category= 0; $category < 3; $category++){
-        //     $sections = Section::factory(rand(2,5)) -> for(Category::factory()) -> create();
-        //     foreach($sections as $section){
-        //         $subsections = Subsection::factory(3)-> has(
-        //             Listing::factory() -> count(10)
-        //         ) -> create([
-        //             'section_id' => $section->getKey(),
-        //         ]);
-        //         foreach($subsections as $subsection){
-        //             $listings = Listing::factory(10) -> hasAttached($subsection) -> create();
-        //             $listingList = array_merge($listings, $listingList);
-        //             foreach($listings as $listing){
-        //                 Detail::factory(3) -> hasImages(2) -> create([
-        //                     'listing_id' => $listing->getKey(),
-        //                 ]);
-        //             }
-        //         }
-        //     }
-        // }
         $listings = Listing::all(); 
         Customer::factory(10) -> has(Order::factory(5)) -> create();
         $orders = Order::all();
-        $orders -> each(function($order) use ($listings){
-            $order -> listings() -> attach(
-                $listings -> random(rand(7,11)) -> pluck('id') -> toArray()
-            );
-        });
+        $details = Detail::all();
+        foreach($orders as $order){
+            $randomListings = $listings -> random(rand(2,5)) -> unique();
+            foreach($randomListings as $listing){
+                $details = $listing -> details;
+                foreach($details as $detail){
+                    $order -> listings() -> attach($listing -> id, [
+                        'detail_id' => $detail -> id,
+                        'quantity' => rand(4,10),
+                    ]);
+                }
+            } 
+        };
     }
 }

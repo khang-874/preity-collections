@@ -22,6 +22,9 @@ class Detail extends Model
         return $this -> belongsTo(Listing::class);
     } 
     
+    public function orders() : BelongsToMany{
+        return $this -> belongsToMany(Order::class, 'orders_listings', 'detail_id', 'order_id');
+    }
     public function getAvailableAttribute(){
         return $this -> inventory != 0;
     }
