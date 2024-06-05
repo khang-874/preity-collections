@@ -65,28 +65,25 @@ class Listing extends Model
     }
     public function scopeFilter($query, array $filters){
         if($filters['category'] ?? false){
-            $query -> join('listings_subsections', 'listings.id', '=', 'listings_subsections.listing_id')
-                    -> join('subsections', 'listings_subsections.subsection_id', '=', 'subsections.id')
+            $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
                     -> join('sections', 'subsections.section_id', '=', 'sections.id')
                     -> join('categories', 'sections.category_id', '=', 'categories.id')
                     -> select('listings.*')
                     -> where('categories.id', '=', request('category'));
         }
         if($filters['section'] ?? false){
-            $query -> join('listings_subsections', 'listings.id', '=','listings_subsections.listing_id')
-                    -> join('subsections', 'listings_subsections.subsection_id', '=', 'subsections.id')
+            $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
                     -> join('sections', 'subsections.section_id', '=', 'sections.id')
                     -> select('listings.*')
                     -> where('sections.id', '=', request('section'));
         }
         if($filters['subsection'] ?? false){
-            $query -> join('listings_subsections', 'listings.id', '=', 'listings_subsections.listing_id')            
+            $query -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')            
             -> select('listings.*')
-            -> where('listings_subsections.subsection_id', '=', request('subsection'));
+            -> where('subsections.id', '=', request('subsection'));
         }
         if($filters['search'] ?? false){
-            $query -> join('listings_subsections', 'listings.id', '=', 'listings_subsections.listing_id')
-                    -> join('subsections', 'listings_subsections.subsection_id', '=', 'subsections.id')
+            $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
                     -> join('sections', 'subsections.section_id', '=', 'sections.id')
                     -> join('categories', 'sections.category_id', '=', 'categories.id')
                     -> select('listings.*')

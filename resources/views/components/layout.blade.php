@@ -56,6 +56,12 @@
                 this.on = !this.on;
             }
         });
+        Alpine.store('showMenu', {
+            on:false,
+            toggle(){
+                this.on = !this.on;
+            }
+        })
     })
     </script>
 
