@@ -8,25 +8,29 @@
     @vite('resources/js/app.js')
 
 </head>
-<body>
-    <form action="/authenticate" method="post">
+<body class="bg-gray-100">
+    <form action="/authenticate" method="post" class="flex flex-col items-center py-8 justify-center">
         @csrf
-        <div class="">Login Form</div>
-        <div class="">
-            <label for="email">email</label>
-            <input type="text" name="email" class="border-2 rounded-sm">
-            @error('email')
-                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
+        <div class="bg-white p-8 rounded-md drop-shadow-sm flex flex-col gap-4">
+            <div class="font-semibold text-2xl">Sign in to your account</div>
+            <div class="flex flex-col">
+                <label for="email" class="font-medium">Email</label>
+                <input type="text" name="email" class="border-2 rounded-md p-1 focus:border-gray-200" value="{{old('email')}}">
+                @error('email')
+                    <p class="text-red-500 mt-1">{{$message}}</p>
+                @enderror
+            </div>
+            <div class="flex flex-col">
+                <label for="password" class="font-medium">Password</label>
+                <input type="password" name="password" class="border-2 rounded-md p-1" value="{{old('password')}}">
+                @error('password')
+                    <p class="text-red-500 mt-1">{{$message}}</p>
+                @enderror
+            </div>
+            <button class="bg-blue-500 w-full rounded-md text-white py-2">Sign in</button>
+            <a href="/" class="bg-blue-500 w-full rounded-md text-white py-2 flex justify-center hover:cursor-pointer" @click="$event.target.eventDefault()">Return to mainpage</button></a>
+
         </div>
-        <div class="mt-2">
-            <label for="password">password</label>
-            <input type="password" name="password" class="border-2 rounded-sm">
-            @error('password')
-                <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-            @enderror
-        </div>
-        <button class="bg-blue-600 p-4 text-white font-medium mt-2 rounded-md">Sign in</button>
     </form>
 </body>
 </html>

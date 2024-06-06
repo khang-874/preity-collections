@@ -22,32 +22,18 @@
     <script type="text/javascript">
         document.addEventListener('alpine:init', () => {
         Alpine.store('cart', {
-            items: Alpine.$persist([]), 
-            
+            items: Alpine.$persist([]),  
             addToCart(product) { 
                 this.items.push(product);
             },
             removeFromCart(index){
                 this.items.splice(index, 1);
-            },
-            placeOrder(event){
-                data = [];
-                console.log(event);
-                let formData = new FormData();
-                for(let item of this.items)
-                    formData.append('items', {
-                        'listingId' : item['listingId'],
-                        'detailId' : item['detailId'],
-                        'quantity' : item['quantity'],
-                    });
-                console.log(formData.values().get());
-                fetch('/orders', {
-                    method: 'post',
-                    //headers:{
-                    //    'Content-Type' : 'application/json',
-                    //}
-                    body: formData,
-                });
+            },      
+            getSubtotal(){
+                subtotal = 0;
+                for(let i = 0; i < this.items.length; ++i)
+                    subtotal += this.items[i]['price'];
+                return subtotal;
             }
         });
         Alpine.store('showCart', {

@@ -12,21 +12,26 @@
             <button @click="$store.showCart.toggle()"><i class="fa-solid fa-xmark"></i></button>
             <p>Shopping cart</p>
         </div>
-        <div class="flex flex-col gap-y-2 px-1">
-        <template x-for="(item,index) in $store.cart.items" :key="index">
-            <div x-data="{quantity: item.quantiyt}"class="flex gap-x-2 border-2 p-1">
-                <img :src="item.imageURL" class="w-24 object-cover"alt="">
-                <div>
-                    <p x-text="item.name" class="font-medium"></p>    
-                    <p x-text="'Size: ' + item.size"></p>
-                    <p x-text="'Color: ' + item.color"></p>
-                    <p x-text="'Quantity: ' + item.quantity"></p>
-                    <p x-text="'CA$ ' + item.price" class="font-semibold"></p>
-                    <button @click="$store.cart.removeFromCart(index)" class="bg-red-600 rounded-sm p-2 text-white">Remove</button>
+        <div class="flex flex-col gap-y-2 px-1 justify-center">
+            <template x-for="(item,index) in $store.cart.items" :key="index">
+                <div x-data="{quantity: item.quantiyt}"class="flex gap-x-2 border-2 p-1 relative">
+                    <img :src="item.imageURL" class="w-24 object-cover"alt="">
+                    <div >
+                        <p x-text="item.name" class="font-medium"></p>    
+                        <p x-text="'Size: ' + item.size"></p>
+                        <p x-text="'Color: ' + item.color"></p>
+                        <p x-text="'Quantity: ' + item.quantity"></p>
+                        <p x-text="'CA$ ' + item.price" class="font-semibold"></p>
+                        <button @click="$store.cart.removeFromCart(index)" class="absolute -top-1 -right-1 text-gray-500"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                 </div>
-            </div>
-        </template> 
+            </template> 
         </div>
-        <a href="/placeOrder"><x-button>Order</x-button></a>
+        <template x-if="$store.cart.items.length != 0">
+        <div class="mx-auto w-fit">
+            <div x-text="'Subtotal: $' + $store.cart.getSubtotal()"></div>
+            <a href="/placeOrder"><x-button>Order now</x-button></a>
+        </div>
+        </template>
     </div> 
 </div>
