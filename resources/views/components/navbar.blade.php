@@ -40,6 +40,9 @@
             <p>Categories</p>
             <button @click="$store.showMenu.toggle()"><i class="fa-solid fa-xmark"></i></button>
         </div>
+        @auth
+            <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
+        @endauth
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">
                     @foreach ($category -> sections as $section)

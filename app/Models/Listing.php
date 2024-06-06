@@ -14,7 +14,7 @@ class Listing extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','description','brand','vendor', 'initPrice'];
+    protected $fillable = ['name','description','brand','vendor', 'initPrice', 'subsection_id'];
     
     protected $with = ['details.images'];
     public function details(): HasMany

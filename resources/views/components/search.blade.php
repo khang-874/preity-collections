@@ -2,13 +2,17 @@
     disableSubmit: true, 
     inputText: null,
     handleClick(event){
-        if(this.disableSubmit)
+        console.log(event);
+        if(this.disableSubmit){
             event.preventDefault();
-        $refs.input.focus();
+            $refs.input.focus();
+        }else{
+            $el.submit();
+        }
     }
 }" action="/" class="h-full flex flex-col justify-center">
     <div class="flex gap-2 rounded-lg focus:shadow-md">
-        <button @click="handleClick"><i class="fa fa-search z-20 "></i></button>
+        <button @click="handleClick" class=""><i class="fa fa-search z-20 fa-lg"></i></button>
         <input
             x-ref="input"
             x-model="inputText"

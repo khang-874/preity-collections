@@ -27,7 +27,9 @@ class ListingController extends Controller
         ]);
     }
     public function create(){
-        return view('listings.create');
+        return view('listings.create', [
+            'categories' => Category::with('sections.subsections') -> get(),
+        ]);
     }
     public function store(Request $request){
         $formFields = $request -> validate([
@@ -36,16 +38,20 @@ class ListingController extends Controller
             'brand' => 'required',
             'vendor' => 'required',
             'initPrice' => ['required', 'numeric'],
-            'color' => 'required',
-            'inventory' => 'required',
+            'subsection' => ['required']
         ]);
 
-        $listing = $request -> only(['name', 'description', 'brand', 'vendor', 'initPrice']);
-        $createdListing = Listing::create($listing);
-        $detail = new Detail($request -> only(['color', 'size', 'inventory', 'sold','weight']));
-        $createdListing -> details() -> save($detail);
-
-        return redirect('/');
+        $listing = $request -> only(['name', 'description', 'brand', 'vendor', 'initPrice', 'subsection']);
+        $createdListing = Listing::create([
+            'name' => $listing['name'],
+            'description' => $listing['description'],
+            'brand' => $listing['brand'],
+            'vendor' => $listing['vendor'],
+            'initPrice' => $listing['initPrice'],
+            'subsection_id' => $listing['subsection']
+        ]);
+        
+        return redirect('/listings/' . $createdListing -> id . '/edit');
     } 
     public function edit(Listing $listing){
         return view('listings.edit', [
