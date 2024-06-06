@@ -43,7 +43,7 @@
             }
         });
         Alpine.store('showMenu', {
-            on:true,
+            on: false,
             toggle(){
                 this.on = !this.on;
             }
