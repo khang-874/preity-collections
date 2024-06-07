@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Section extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'category_id'];
+
     public function subsections(): HasMany{
         return $this->hasMany(Subsection::class);
     }

@@ -12,6 +12,8 @@ class Category extends Model
 {
     use HasFactory;   
     protected $with = ['sections.subsections'];
+    protected $fillable = ['name'];
+
     public function sections():HasMany{
         return $this->hasMany(Section::class);
     }

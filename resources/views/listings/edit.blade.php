@@ -16,7 +16,6 @@
                     }    
     @endphp
     <x-form.container actionURL="/listings/{{$listing->id}}" categoryId="{{$category_id}}" sectionId="{{$section_id}}" subsectionId="{{$listing->subsection_id}}">
-        @csrf
         @method('PUT')
         <div class="text-2xl font-semibold">Update listing</div>
         <x-form.field field="name" fieldName="Name" inputType="text" :value="$listing->name"> </x-form.field>

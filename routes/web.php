@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Customer;
@@ -62,9 +65,28 @@ Route::get('/customers/{customer}', [CustomerController::class, 'show']) -> midd
 //Display login form
 Route::get('/login', [UserController::class, 'login']) -> name('login');
 
+// Mange categories, sections, subsections
 Route::view('/manage', 'manage.index', [
     'categories' => Category::with('sections.subsections') -> get()
-]);
+]) -> middleware('auth');
+
+//Create a new category
+Route::post('/categories', [CategoryController::class, 'store']) -> middleware('auth');
+
+//Delete a category
+Route::delete('/categories/{category}', [CategoryController::class, 'delete']) -> middleware('auth');
+
+//Create a new section
+Route::post('/sections', [SectionController::class, 'store']) -> middleware('auth');
+
+//Delete a section
+Route::delete('/sections/{section}', [SectionController::class, 'delete']) -> middleware('auth');
+
+//Create new subsection
+Route::post('/subsections', [SubsectionController::class, 'store']) -> middleware('auth');
+
+//Delete a subsection
+Route::delete('/subsections/{subsection}', [SubsectionController::class, 'delete']) -> middleware('auth');
 
 //Authenticate user
 Route::post('/authenticate', [UserController::class, 'authenticate']);

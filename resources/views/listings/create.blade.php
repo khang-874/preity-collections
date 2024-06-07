@@ -12,7 +12,6 @@
             subsectionId: '{{$categories -> first() -> sections -> first() -> subsections -> first() -> id}}'
         }"
         actionURL="/listings" formID="createForm">
-            @csrf
             <div class="text-2xl font-semibold">Create new listing</div>
             <x-form.field field="name" value="{{old('name')}}" fieldName="Name" inputType="text"></x-form.field> 
             <div class="flex flex-col gap-1">

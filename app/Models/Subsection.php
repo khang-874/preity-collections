@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Subsection extends Model
 {
     use HasFactory;
+    protected $fillable=['name', 'section_id'];
+
     public function section() : BelongsTo{
         return $this->belongsTo(Section::class);
     } 

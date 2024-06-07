@@ -13,7 +13,7 @@
                     <x-form.delete-button url="/categories/{{$category->id}}" name="Delete"></x-form.delete-button> 
                 </div>
             @endforeach
-            <x-form.container actionURL="/categories">
+            <x-form.container actionURL="/categories" formId="createCategory">
                 <x-form.field  inputType="text" field="name" fieldName="Enter new category name:" value=""></x-form>
                 <x-button>Create new category</x-button>
             </x-form.container>
@@ -32,7 +32,7 @@
                     </template>
                 @endforeach 
             @endforeach
-            <x-form.container actionURL="/sections">
+            <x-form.container actionURL="/sections" formId="createSection">
                 <input type="hidden" name="categoryId" :value="categoryId">
                 <x-form.field  inputType="text" field="name" fieldName="Enter new section name:" value=""></x-form>
                 <x-button>Create new section</x-button>
@@ -50,18 +50,15 @@
                 @foreach ($categories as $category)
                     @foreach ($category->sections as $section)
                         @foreach ($section -> subsections as $subsection)
-                            <template x-if="sectionId == {{$subsection->section_id}}">
-                                <div class="flex items-center w-full">
+                                <div class="flex items-center w-full" x-show="sectionId == {{$subsection -> section_id}}">
                                     <div class="flex-grow">{{$subsection -> name}}</div>
                                     <x-form.delete-button url="/subsections/{{$subsection->id}}" name="Delete"></x-form.delete-button> 
                                 </div>
-                            </template>
                         @endforeach
                     @endforeach 
                 @endforeach
             </div>
-            <x-form.container actionURL="/subsections">
-                <input type="hidden" name="categoryId" :value="categoryId">
+            <x-form.container actionURL="/subsections" formId="createSubsection">
                 <input type="hidden" name="sectionId" :value="sectionId">
                 <x-form.field  inputType="text" field="name" fieldName="Enter new subsection name:" value=""></x-form>
                 <x-button>Create new subsection</x-button>
