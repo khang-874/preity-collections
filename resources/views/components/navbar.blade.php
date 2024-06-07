@@ -42,6 +42,7 @@
         </div>
         @auth
             <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
+            <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage categories</button></a>
         @endauth
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">

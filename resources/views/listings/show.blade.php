@@ -90,7 +90,7 @@
                             <div class="flex-grow">
                                 <p>Size</p> 
                                 {{-- <select x-ref="size" name="size" id="size-id" x-model="size" class="w-full" :change="showAvailableColor"> --}}
-                                <div x-ref="size" class="flex gap-2">
+                                <div x-ref="size" class="flex gap-2 flex-wrap">
                                     @foreach ($listing -> details as $detail) 
                                         <div x-id="['size']" class="flex items-center ps-2 border-gray-200 rounded border">
                                             <input type="radio" x-model="size" :id="$id('size')" value="{{$detail->size}}" @change="showAvailableOption(size, $refs.size, $refs.color, 'size', 'color')"
@@ -105,9 +105,9 @@
                                 {{-- </select> --}}
                             </div>
                             <div class="flex-grow">
-                                <p>color</p> 
+                                <p>Color</p> 
                                 {{-- <select x-ref="size" name="size" id="size-id" x-model="size" class="w-full" :change="showAvailableColor"> --}}
-                                <div x-ref="color" class="flex gap-2">
+                                <div x-ref="color" class="flex gap-2 flex-wrap">
                                     @foreach ($listing -> details as $detail) 
                                         <div x-id="['color']" class="flex items-center ps-2 border-gray-200 rounded border">
                                             <input type="radio" x-model="color" :id="$id('color')" value="{{$detail->color}}" @change="showAvailableOption(color, $refs.color, $refs.size, 'color', 'size')"

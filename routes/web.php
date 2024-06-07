@@ -62,6 +62,10 @@ Route::get('/customers/{customer}', [CustomerController::class, 'show']) -> midd
 //Display login form
 Route::get('/login', [UserController::class, 'login']) -> name('login');
 
+Route::view('/manage', 'manage.index', [
+    'categories' => Category::with('sections.subsections') -> get()
+]);
+
 //Authenticate user
 Route::post('/authenticate', [UserController::class, 'authenticate']);
 
