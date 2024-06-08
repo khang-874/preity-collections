@@ -21,6 +21,7 @@
             inputField.name = 'items';
             inputField.value = JSON.stringify(data);
             form.appendChild(inputField);
+            localStorage.clear();
             form.submit();
         }
     }" x-ref="orderForm" action="/orders" method="post" @submit.prevent="submitData">

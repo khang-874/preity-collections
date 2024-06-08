@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('brand');
             $table->string('vendor');
+            $table->string('imageURL');
             $table->float('initPrice');
             $table -> unsignedBigInteger('subsection_id');
             $table -> foreign('subsection_id') -> references('id') -> on('subsections');

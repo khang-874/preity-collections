@@ -1,6 +1,10 @@
-@props(['customers'])
+@props(['customers' , 'categories'])
 
 <x-layout>
+    <header>
+        <x-logo></x-logo>
+        <x-navbar :categories="$categories"></x-navbar>
+    </header>
     <main>
         @foreach($customers as $customer)
         <div class = 'm-2 bg-white drop-shadow-md p-2'>

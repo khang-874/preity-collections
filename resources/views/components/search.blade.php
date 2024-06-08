@@ -7,6 +7,7 @@
             event.preventDefault();
             $refs.input.focus();
         }else{
+            $el.action = window.location.href;
             $el.submit();
         }
     }

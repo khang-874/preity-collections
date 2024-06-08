@@ -8,9 +8,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
+use App\Mail\NewOrder;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Listing;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 //Get all listing

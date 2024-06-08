@@ -1,6 +1,10 @@
-@props(['customer'])
+@props(['customer', 'categories'])
 
 <x-layout>
+    <header>
+        <x-logo></x-logo>
+        <x-navbar :categories="$categories"></x-navbar>
+    </header>
     <main>
         <div>Showing customer</div>
         <div>First name: {{$customer -> firstName}}</div>

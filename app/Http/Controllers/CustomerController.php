@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class CustomerController extends Controller
     {
         return view('customers.index', [
             'customers' => Customer::all(),
+            'categories' => Category::all(),
         ]);
     }
 
@@ -39,7 +41,8 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         return view('customers.show', [
-            'customer' => $customer -> load('orders.listings')
+            'customer' => $customer -> load('orders.listings'),
+            'categories' => Category::all(),
         ]);
     }
 

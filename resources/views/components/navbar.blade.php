@@ -1,31 +1,5 @@
 @props(['categories'])
 
-{{-- <div class="w-full bg-white px-[10%]">
-    @php
-        $categoriesLen = sizeof($categories)
-    @endphp
-    <div class="grid grid-cols-{{$categoriesLen}} w-full" style="grid-template-rows: auto auto;">
-    @foreach($categories as $category)
-        <div class='peer/category{{$category->id}} row-start-1 p-2'>
-            <a href="/?category={{$category->id}}" class="block uppercase font-small"> {{$category -> name}}</a> 
-        </div> 
-        <div class="hidden hover:inline-flex peer-hover/category{{$category->id}}:inline-flex gap-4 row-start-2 col-span-full w-full p-2">
-            @foreach ($category->sections as $section)
-            <div class="" >
-                <a href="/?section={{$section->id}}" class="font-small">{{$section -> name}}</a>
-                <ul>
-                @foreach ($section->subsections as $subsection)
-                    <li>
-                        <a href="/?subsection={{$subsection->id}}">{{$subsection->name}}</a> 
-                    </li>
-                @endforeach
-                </ul>
-            </div>
-            @endforeach        
-        </div>
-    @endforeach
-    </div>  
-</div> --}}
 <div x-data x-cloak x-show="$store.showMenu.on" class="fixed inset-0 z-10 bg-black bg-opacity-50 w-screen h-screen">
     <div    x-show="$store.showMenu.on" 
             x-transition:enter="transition ease-out duration-200"
@@ -43,6 +17,7 @@
         @auth
             <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
             <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage categories</button></a>
+            <a href="/customers" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage Customers</button></a>
         @endauth
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">
