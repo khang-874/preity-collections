@@ -15,7 +15,11 @@
                         break 3;
                     }    
     @endphp
-    <x-form.container actionURL="/listings/{{$listing->id}}" categoryId="{{$category_id}}" sectionId="{{$section_id}}" subsectionId="{{$listing->subsection_id}}">
+    <x-form.container   actionURL="/listings/{{$listing->id}}"
+                        data="{ categoryId : '{{$category_id}}',
+                                sectionId : '{{$section_id}}',
+                                subsectionId : '{{$listing -> subsection_id}}'
+                        }">
         @method('PUT')
         <div class="text-2xl font-semibold">Update listing</div>
         <x-form.field field="name" fieldName="Name" inputType="text" :value="$listing->name"> </x-form.field>
@@ -29,42 +33,11 @@
         <x-form.field field="brand" fieldName="Brand" inputType="text" :value="$listing->brand"> </x-form.field>
         <x-form.field field="vendor" fieldName="Vendor" inputType="text" :value="$listing->vendor"> </x-form.field>
         <x-form.field field="initPrice" fieldName="Initial Price" inputType="number" :value="$listing->initPrice"> </x-form.field> 
-        <div class="flex flex-col">  
-                <label for="category">Categories</label> 
-                <select name="category" id="category" x-model="categoryId">
-                    @foreach ($categories as $category)
-                        <option value="{{$category->id}}">{{$category -> name}}</option> 
-                    @endforeach
-                </select>
-            </div>
-            
-             <div class="flex flex-col">  
-                <label for="section">Sections</label> 
-                <select name="section" id="section" x-model="sectionId">
-                    @foreach ($categories as $category)
-                        @foreach ($category -> sections as $section)
-                            <template x-if="categoryId == {{$section -> category_id}}">
-                                <option value="{{$section->id}}">{{$section->name}}</option>
-                            </template>
-                        @endforeach
-                    @endforeach
-                </select>
-            </div>
 
-            <div class="flex flex-col">  
-                <label for="subsection">Subsections</label> 
-                <select name="subsection" id="subsection">
-                    @foreach ($categories as $category)
-                        @foreach ($category -> sections as $section)
-                            @foreach ($section -> subsections as $subsection)
-                                <template x-if="sectionId == {{$subsection -> section_id}}">
-                                    <option value="{{$subsection->id}}">{{$subsection->name}}</option>
-                                </template>   
-                            @endforeach 
-                        @endforeach
-                    @endforeach
-                </select>
-            </div>
+        <x-form.select-category :categories="$categories"></x-form.select-category> 
+        <x-form.select-section  :categories="$categories"></x-form.select-section>
+        <x-form.select-subsection :categories="$categories"></x-form.select-subsection>
+
         <x-button>Update listing</x-button>
     </x-form.contaier>
     
@@ -94,18 +67,19 @@
                             <x-form.field field="size" fieldName="Size" inputType="text" :value="$detail->size"> </x-form.field>
                             <x-form.field field="color" fieldName="Color" inputType="color" :value="$detail->color"> </x-form.field>
                             <input name="images[]" type="file" multiple>
-                            <div class="flex ml-2 gap-2 flex-wrap">
-                                @foreach ($detail->images as $image)
-                                    @php
-                                        $imageURL = $image -> imageURL;
-                                        if(is_file($imageURL))
-                                            $imageURL = asset($imageURL); 
-                                    @endphp
-                                    <img src="{{$imageURL}}" alt="" class="w-40">
-                                @endforeach
-                            </div>
-                        <x-button>Update detail</x-button>
+                            <x-button>Update detail</x-button>
                     </x-form.container>
+                    <div class="flex ml-2 gap-2 flex-wrap">
+                        @foreach ($detail->images as $image) 
+                            <img src="{{$image -> imageURL}}" alt="" class="w-40">
+                            <form action="/images/{{$image ->id}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <x-button>Delete</x-button>
+                            </form>
+                        @endforeach
+                    </div>
+
                 </div>
                 <div class="flex flex-grow px-[10%] gap-4">
                 <div class="">

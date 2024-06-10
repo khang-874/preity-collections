@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
@@ -38,7 +39,7 @@ Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
 
 //Place order
-Route::view('/placeOrder', 'orders.placeorder', ["categories" => Category::all()]);
+Route::get('/placeOrder', [OrderController::class, 'placeOrder']);
 
 //Update detail
 Route::put('/details/{detail}', [DetailController::class, 'update']) -> middleware('auth');
@@ -49,6 +50,8 @@ Route::delete('/details/{detail}', [DetailController::class, 'destroy']) -> midd
 //Create new deatil
 Route::post('/details', [DetailController::class, 'create']) -> middleware('auth');
 
+//Delete image
+Route::delete('/images/{image}' , [ImageController::class, 'destroy']) -> middleware('auth');
 
 //Display orders
 Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
@@ -68,9 +71,7 @@ Route::get('/customers/{customer}', [CustomerController::class, 'show']) -> midd
 Route::get('/login', [UserController::class, 'login']) -> name('login');
 
 // Mange categories, sections, subsections
-Route::view('/manage', 'manage.index', [
-    'categories' => Category::with('sections.subsections') -> get()
-]) -> middleware('auth');
+Route::get('/manage', [UserController::class, 'manage']) -> middleware('auth');
 
 //Create a new category
 Route::post('/categories', [CategoryController::class, 'store']) -> middleware('auth');

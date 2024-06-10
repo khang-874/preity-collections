@@ -37,18 +37,18 @@ class DetailController extends Controller
         $formFields = $request -> validate([
             "inventory" => ["required", "gte:0"],
             "sold" => ["required", "gte:0"],
+            "size" => ['required']
         ]);
         if($request->hasFile('images')){
             $files= $request -> file('images');
             $allowedFileExtension=['jpg','png','jpeg'];
 
             foreach($files as $file){
-                $imageName = $file -> getClientOriginalName();
                 $extension = $file -> getClientOriginalExtension();
                 $check = in_array($extension, $allowedFileExtension);
                 if($check){
-                   $imageURL = $file -> store('photos'); 
-                   $imageModel = Image::create([
+                   $imageURL = asset('storage/'.$file -> store('photos')); 
+                   Image::create([
                         'imageURL' => $imageURL,
                         'detail_id' => $detail -> id,
                    ]);

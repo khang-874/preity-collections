@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,5 +33,11 @@ class UserController extends Controller
     public function logout(){
         auth() -> logout();
         return redirect('/') -> with('message', 'Log out successfully');
+    }
+
+    public function manage(){
+        return view('manage.index',[
+            'categories' => Category::all()
+        ]);
     }
 }

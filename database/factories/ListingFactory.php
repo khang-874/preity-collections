@@ -23,7 +23,6 @@ class ListingFactory extends Factory
             'description' => fake() -> realText(1500),
             'brand' => fake() -> name(),
             'vendor' => fake() -> name(),
-            'imageURL' => fake() -> picsumUrl(),
             'initPrice' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
         ];
     }

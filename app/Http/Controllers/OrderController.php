@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewOrder;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -109,27 +110,10 @@ class OrderController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function placeOrder(){
+        return view('orders.placeOrder',[
+            'categories' => Category::all(),
+        ]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+ 
 }

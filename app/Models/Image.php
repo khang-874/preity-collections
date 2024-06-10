@@ -12,7 +12,7 @@ class Image extends Model
 
     protected $fillable = ['imageURL', 'detail_id'];
 
-    public function listing(): BelongsTo{
+    public function detail(): BelongsTo{
         return $this->belongsTo(Detail::class);
     }
 }

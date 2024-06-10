@@ -15,8 +15,7 @@
     @endphp
 
     <main>
-        <div class="mx-[10%] mt-4">
-            <div x-data="{
+        <div x-data="{
                 color: '{{$listing->details->first() -> color}}', 
                 size: '{{$listing->details->first()->size}}', 
                 quantity:1,
@@ -79,18 +78,21 @@
                         }
                     }, 5000);
                 }
-            }">
+            }" class=" mt-4">
+            <div >
                 <div class='col-start-1 h-full'>            
-                    <x-card.image-gallery class='!w-full !h-full' :listing="$listing" cover="bg-white drop-shadow-md p-2 h-60 mb-2"></x-card.image-gallery>
+                    <x-card.image-gallery class='!w-full !h-full' :listing="$listing" cover="bg-white drop-shadow-md mb-2"></x-card.image-gallery>
                 </div>
-                <div>
+                <div class="mx-2">
                     <div class="bg-white drop-shadow-md p-2">
-                        <h4 class="w-full font-semibold">{{$listing -> name}}</h4>
+                        <div>
+                            <h4 class="w-full font-medium text-2xl">{{$listing -> name}}</h4>
+                            <p class="font-medium text-xl">CA$ {{$listing -> selling_price}}</p>
+                        </div>
                         <div  class="flex gap-x-4 flex-wrap">  
                             <div class="flex-grow">
-                                <p>Size</p> 
-                                {{-- <select x-ref="size" name="size" id="size-id" x-model="size" class="w-full" :change="showAvailableColor"> --}}
-                                <div x-ref="size" class="flex gap-2 flex-wrap">
+                                <p class="">Select Size:</p> 
+                                <div x-ref="size" class="flex gap-2 flex-wrap ml-2">
                                     @foreach ($listing -> details as $detail) 
                                         <div x-id="['size']" class="flex items-center ps-2 border-gray-200 rounded border">
                                             <input type="radio" x-model="size" :id="$id('size')" value="{{$detail->size}}" @change="showAvailableOption(size, $refs.size, $refs.color, 'size', 'color')"
@@ -102,12 +104,10 @@
                                         </div>
                                     @endforeach 
                                 </div>
-                                {{-- </select> --}}
                             </div>
                             <div class="flex-grow">
-                                <p>Color</p> 
-                                {{-- <select x-ref="size" name="size" id="size-id" x-model="size" class="w-full" :change="showAvailableColor"> --}}
-                                <div x-ref="color" class="flex gap-2 flex-wrap">
+                                <p>Select Color:</p> 
+                                <div x-ref="color" class="flex gap-2 flex-wrap ml-2">
                                     @foreach ($listing -> details as $detail) 
                                         <div x-id="['color']" class="flex items-center ps-2 border-gray-200 rounded border">
                                             <input type="radio" x-model="color" :id="$id('color')" value="{{$detail->color}}" @change="showAvailableOption(color, $refs.color, $refs.size, 'color', 'size')"
@@ -119,7 +119,11 @@
                                         </div>
                                     @endforeach 
                                 </div>
-                                {{-- </select> --}}
+
+                            <div class="">
+                                <label for="quantity" class="">Quantity:</label>
+                                <input type="number" x-model.number="quantity" id="quantity"/>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -127,16 +131,16 @@
                         <p class="font-semibold">Description:</p>
                         <p>{{$listing -> description}}</p>
                     </div>
-                    <p class="p-2 bg-white drop-shadow-md font-medium mt-2">CA$ {{$listing -> selling_price}}</p>
-                    <div class="p-2 bg-white drop-shadow-md mt-2">
-                        <label for="quantity" class="font-semibold">Quantity:</label>
-                        <input type="number" x-model.number="quantity" id="quantity"/>
-                    </div>
-                    <button @click="handleClick"
-                        class="p-2 bg-black rounded-md font-medium text-white mt-2"
-                    >Add to cart</button>
+                    
                 </div>
             </div>
+            <div @click="handleClick" class="fixed bottom-0 bg-white z-10 w-screen h-12 flex justify-center items-center"> 
+                <button class="p-2 bg-blue-600 rounded-md font-medium text-white w-[90%] flex gap-2 items-center justify-center">   
+                    <i class="fa-solid fa-cart-shopping" ></i>
+                    Add to cart
+                </button>
+            </div>
+
         @auth
             <a href="/listings/{{$listing->id}}/edit" class="mb-4"><x-button>Edit</x-button></a> 
             <x-form.delete-button url="/listings/{{$listing->id}}" name="Delete listing"/>
