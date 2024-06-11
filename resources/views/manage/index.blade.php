@@ -18,8 +18,16 @@
                 <x-button>Create new category</x-button>
             </x-form.container>
         </div>
-        
-        <div x-data="{categoryId:'{{$categories->first()->id}}'}"class="mx-[10%] bg-white border drop-shadow-md p-3 mb-4">
+        @php
+            $categoryId = '';
+            $sectionId = '';
+            if(sizeof($categories) != 0){
+                $categoryId = $categories -> first() -> id;
+                    if(sizeof($categories -> first() -> sections) != 0)
+                        $sectionId = $categories -> first() -> sections -> first() -> id;
+            }
+        @endphp
+        <div x-data="{categoryId:'{{$categoryId}}'}"class="mx-[10%] bg-white border drop-shadow-md p-3 mb-4">
             <x-form.select-category :categories="$categories" selectId="categorySection"></x-form.select-category> 
             <div>Sections: </div>
             @foreach ($categories as $category)
@@ -38,10 +46,9 @@
                 <x-button>Create new section</x-button>
             </x-form.container>
         </div>
-
         <div x-data="{
-            categoryId : '{{$categories -> first() -> id}}',
-            sectionId: '{{$categories -> first() -> sections -> first() -> id}}',
+            categoryId : '{{$categoryId}}',
+            sectionId: '{{$sectionId}}',
         }"class="mx-[10%] bg-white border drop-shadow-md p-3 mb-4">
             <div>
                 <x-form.select-category :categories="$categories" selectId="categorySubsection"></x-form.select-category> 

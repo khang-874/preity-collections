@@ -6,14 +6,19 @@
         <x-navbar :categories="$categories"></x-navbar>
     </header>
     <main>
-        @foreach($customers as $customer)
-        <div class = 'm-2 bg-white drop-shadow-md p-2'>
-           <div>First name: {{$customer -> firstName}}</div> 
-           <div>Last name: {{$customer -> lastName}}</div>
-           <div>Phone: {{$customer -> phoneNumber}}</div>
-           <div>Amount owed: {{$customer -> amountOwed}}</div>
-           <a href="/customers/{{$customer->id}}">Check all orders</a>
+        <form action="/customers/?unpaid=true" method="get"></form>
+        <div class="md:mx-[10%]">
+            @foreach($customers as $customer)
+            <div class = 'm-2 bg-white drop-shadow-md p-2 flex items-center gap-4 hover:scale-[101%]'>
+                <i class="fa-solid fa-user"></i>
+                <div class='flex-grow'>
+                    <div>Name: {{$customer -> firstName}} {{$customer -> lastName}}</div>
+                    <div>Phone: {{$customer -> phoneNumber}}</div>
+                    <div>Amount owed: {{$customer -> amountOwed}}</div>
+                </div>
+                <x-button><a href="/customers/{{$customer->id}}">History</a></x-button>
+            </div>
+            @endforeach
         </div>
-        @endforeach
     </main>
 </x-layout>

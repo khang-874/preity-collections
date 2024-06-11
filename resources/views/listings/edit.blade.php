@@ -81,10 +81,10 @@
                     </div>
 
                 </div>
-                <div class="flex flex-grow px-[10%] gap-4">
-                <div class="">
-                    <x-form.delete-button url="/details/{{$detail->id}}" name="Delete detail"/>
-                </div>
+                <div class="flex flex-grow flex-wrap gap-4">
+                    <div class="flex-grow">
+                        <x-form.delete-button url="/details/{{$detail->id}}" name="Delete detail"/>
+                    </div>
                 <div class="">
                     <x-print-button
                         :details="[$detail]"

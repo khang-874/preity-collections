@@ -6,7 +6,7 @@
         <x-logo></x-logo>
     </header>
     <main>
-        <div class='bg-white mt-2 mx-4 p-2 drop-shadow-md border-md'>
+        <div class='bg-white mt-2 mx-4 p-2 drop-shadow-md border-md md:mx-[20%]'>
             <div class="font-medium text-lg">Order: </div>
             <form x-data="{
                 submitData(event){

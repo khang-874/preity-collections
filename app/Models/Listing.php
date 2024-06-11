@@ -16,7 +16,7 @@ class Listing extends Model
 
     protected $fillable = ['name','description','brand','vendor', 'initPrice', 'subsection_id', 'imageURL'];
     
-    protected $with = ['details.images'];
+    protected $with = ['details'];
     public function details(): HasMany
     {
         return $this->hasMany(Detail::class);
@@ -31,7 +31,7 @@ class Listing extends Model
         return round($x / 5) * 5;
     }
     public function getSellingPriceAttribute(){
-        return $this -> roundToNearest(($this -> initPrice / 5) * 2.5) - 0.01;
+        return $this -> roundToNearest(($this -> initPrice / 50) * 2.5) - 0.01;
     }
     public function getAvailableAttribute(){
         $total = 0;

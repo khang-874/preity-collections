@@ -11,14 +11,14 @@ class Order extends Model
 {
     use HasFactory;
     public $withTimestamps = true;
-    protected $with = ['listings'];
+    protected $with = ['listings', 'details'];
     protected $fillable = ['paymentType', 'customer_id'];
 
     public function customer() : BelongsTo{
         return $this -> belongsTo(Customer::class);
     }
     public function listings() : BelongsToMany{
-        return $this -> belongsToMany(Listing::class, 'orders_listings', 'order_id', 'listing_id');
+        return $this -> belongsToMany(Listing::class, 'orders_listings', 'order_id', 'listing_id') -> withPivot('detail_id');
     }
     public function details() : BelongsToMany{
         return $this -> belongsToMany(Detail::class, 'orders_listings', 'order_id', 'detail_id');

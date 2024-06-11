@@ -17,7 +17,7 @@ class SectionController extends Controller
             'name' => $input['name'],
             'category_id' => $input['categoryId'],
         ]);
-        return redirect('/manage') -> with('message', 'Create new seciton successfully');
+        return redirect('/manage') -> with('message', 'Create new section successfully');
     }
 
     public function delete(Section $section){
