@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         return view('orders.index', [
-            'orders' => Order::all(),
+            'orders' => Order::where('paymenType', '=', 'pending'),
         ]);
     }
 
@@ -111,7 +111,7 @@ class OrderController extends Controller
     }
 
     public function placeOrder(){
-        return view('orders.placeOrder',[
+        return view('orders.placeorder',[
             'categories' => Category::all(),
         ]);
     }

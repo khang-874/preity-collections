@@ -33,6 +33,15 @@ class Listing extends Model
     public function getSellingPriceAttribute(){
         return $this -> roundToNearest(($this -> initPrice / 5) * 2.5) - 0.01;
     }
+    public function getAvailableAttribute(){
+        $total = 0;
+        foreach($this -> details as $detail){
+            $total += $detail -> inventory;
+        }
+        if($total == 0)
+            return false;
+        return true;
+    }
     public function getProductIdAttribute(){
        $words = explode(' ', $this -> subsection -> name); 
        $acronym = "";
@@ -41,7 +50,7 @@ class Listing extends Model
        }
        $acronym .= $this -> id;
        return $acronym;
-    }
+    } 
     public function getProductPriceCodeAttribute(){
         $price = round($this -> initPrice / 5);
         $code = [
@@ -63,6 +72,31 @@ class Listing extends Model
         }
         return $productCode;
     }
+    public function scopeSize($query, $size){
+       //Filter based on size 
+        if($size != null){
+            $query -> join('details', 'listings.id', '=', 'details.listing_id')
+                    -> where('details.size', '=', $size);
+        }
+    }
+    public function scopeAllSize($query){
+        $query -> join('details', 'listings.id', '=', 'details.listing_id')
+                -> select('details.size')
+                -> distinct();
+    }
+    public function scopeColor($query, $color){
+       //Filter based on color
+        if($color != null){
+            $query -> join('details', 'listings.id', '=', 'details.listing_id')
+                    -> where('details.color', '=', $color);
+        }
+    }
+    public function scopeAllColor($query){
+        $query -> join('details', 'listings.id', '=', 'details.listing_id')
+                -> select('details.color')
+                -> distinct();
+    }
+    
     public function scopeFilter($query, array $filters){
         if($filters['category'] ?? false){
             $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
@@ -83,15 +117,7 @@ class Listing extends Model
             -> where('subsections.id', '=', request('subsection'));
         }
         if($filters['search'] ?? false){
-            $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
-                    -> join('sections', 'subsections.section_id', '=', 'sections.id')
-                    -> join('categories', 'sections.category_id', '=', 'categories.id')
-                    -> select('listings.*')
-                    -> where('listings.name', 'like', '%' . request('search') . '%')
-                    -> orWhere('listings.description', 'like', '%' . request('search') . '%')
-                    -> orWhere('subsections.name', 'like', '%' . request('search'). '%')
-                    -> orWhere('sections.name' , 'like', '%' . request('search') . '%')
-                    -> orWhere('categories.name', 'like', '%' . request('search') . '%');
+            $query -> where('listings.name', 'like', '%' . request('search') . '%');
         }
     }
 }

@@ -53,7 +53,7 @@ Route::post('/details', [DetailController::class, 'create']) -> middleware('auth
 //Delete image
 Route::delete('/images/{image}' , [ImageController::class, 'destroy']) -> middleware('auth');
 
-//Display orders
+//Display pending order
 Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
 
 //Display a single order

@@ -14,7 +14,7 @@ class CustomerController extends Controller
     public function index()
     {
         return view('customers.index', [
-            'customers' => Customer::all(),
+            'customers' => Customer::filter(request(['search'])) -> get(),
             'categories' => Category::all(),
         ]);
     }
@@ -41,7 +41,7 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         return view('customers.show', [
-            'customer' => $customer -> load('orders.listings'),
+            'customer' => $customer,
             'categories' => Category::all(),
         ]);
     }

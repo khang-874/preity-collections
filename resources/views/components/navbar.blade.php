@@ -8,7 +8,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 -translate-x-1/2"        
-            class="bg-white shadow-lg w-64 h-full rounded-sm mr-auto overflow-y-scroll pb-8"
+            class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm mr-auto overflow-y-scroll pb-8"
             @click.outside="$store.showMenu.toggle()"> 
         <div class="p-2 text-lg font-medium flex gap-x-2 border-b-2 mb-2 justify-between">
             <p>Categories</p>
@@ -17,7 +17,8 @@
         @auth
             <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
             <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage categories</button></a>
-            <a href="/customers" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage Customers</button></a>
+            <a href="/customers" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage customers</button></a>
+            <a href="/orders" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage orders</button></a>
         @endauth
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">

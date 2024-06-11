@@ -22,6 +22,9 @@
             name="search"
             class="  w-0 text-black focus:w-24 focus:mr-2 focus:outline-none focus:pl-2 focus:border-2 focus:rounded-md"
         />
+        <x-form.retained-search-value name="category"></x-form.retained-search-value>
+        <x-form.retained-search-value name="section"></x-form.retained-search-value>
+        <x-form.retained-search-value name="subsection"></x-form.retained-search-value>
         {{-- <div class="absolute top-2 right-2">
             <button
                 type="submit"

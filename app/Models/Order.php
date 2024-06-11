@@ -11,6 +11,7 @@ class Order extends Model
 {
     use HasFactory;
     public $withTimestamps = true;
+    protected $with = ['listings'];
     protected $fillable = ['paymentType', 'customer_id'];
 
     public function customer() : BelongsTo{

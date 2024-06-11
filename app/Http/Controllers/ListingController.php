@@ -13,9 +13,10 @@ use Illuminate\Validation\Rule;
 class ListingController extends Controller
 {
     public function index(){
-        
         return view('listings.index', [
-                'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) -> paginate(20),
+                'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) -> size(request('size')) -> paginate(30),
+                'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) -> allSize() -> get(),
+                'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) -> allColor() -> get(),
                 'categories' => Category::all()
         ]);
 
