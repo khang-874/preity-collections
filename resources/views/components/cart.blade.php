@@ -20,7 +20,12 @@
                         <p x-text="item.name" class="font-medium"></p>    
                         <p x-text="'Size: ' + item.size"></p>
                         <p x-text="'Color: ' + item.color"></p>
-                        <p x-text="'Quantity: ' + item.quantity"></p>
+                        <p>Quantity: </p>
+                        <div class="flex items-center gap-2">
+                            <i @click="item.quantity++" class="fa-solid fa-plus"></i>
+                            <p x-text="item.quantity"></p>
+                            <i @click="() => {if(item.quantity > 1) item.quantity--;}" class="fa-solid fa-minus"></i>
+                        </div>
                         <p x-text="'CA$ ' + item.price" class="font-semibold"></p>
                         <button @click="$store.cart.removeFromCart(index)" class="absolute -top-1 -right-1 text-gray-500"><i class="fa-solid fa-trash"></i></button>
                     </div>
@@ -28,10 +33,10 @@
             </template> 
         </div>
         <template x-if="$store.cart.items.length != 0">
-        <div class="mx-auto w-fit">
-            <div x-text="'Subtotal: $' + $store.cart.getSubtotal()"></div>
-            <a href="/placeOrder"><x-button>Order now</x-button></a>
-        </div>
+            <div class="mx-auto w-fit text-lg font-medium">
+                <div x-text="'Subtotal: $' + $store.cart.getSubtotal().toFixed(2)"></div>
+                <a href="/placeOrder"><x-button>Order now</x-button></a>
+            </div>
         </template>
     </div> 
 </div>

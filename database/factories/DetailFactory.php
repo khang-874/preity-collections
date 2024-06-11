@@ -20,8 +20,8 @@ class DetailFactory extends Factory
             'inventory' => fake() -> numberBetween(int1:1, int2:1000),
             'sold' => fake() -> numberBetween(int1:1, int2:1000),
             'weight' => fake() -> randomFloat(2,10,20),
-            'size' => fake() -> randomElement(['XL', 'L', 'X', 'S', 'M']),
-            'color' => fake() -> randomElement(['black', 'blue', 'white', 'red']),
+            'size' => fake() -> randomElement(['XL', 'L', 'S', 'M']) -> unique(),
+            'color' => fake() -> randomElement(['black', 'blue', 'white', 'red']) -> unique(),
         ];
     }
 }
