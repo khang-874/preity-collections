@@ -59,14 +59,23 @@ Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
 //Display a single order
 Route::get('/orders/{order}', [OrderController::class, 'show']) -> middleware('auth');
 
+//Edit an order
+Route::put('/orders/{order}', [OrderController::class, 'edit']) -> middleware('auth');
+
 //Create new order;
 Route::post('/orders' ,[OrderController::class, 'create']);
 
 //Display all customers
 Route::get('/customers', [CustomerController::class, 'index']) -> middleware('auth');
 
+Route::get('/customers/newOrder', [CustomerController::class, 'newOrder']) -> middleware('auth');
+
 //Display a single customer
 Route::get('/customers/{customer}', [CustomerController::class, 'show']) -> middleware('auth');
+
+//Update customer
+Route::post('/customers/{customer}', [CustomerController::class, 'edit']) -> middleware('auth');
+
 //Display login form
 Route::get('/login', [UserController::class, 'login']) -> name('login');
 

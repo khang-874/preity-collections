@@ -87,7 +87,7 @@ class OrderController extends Controller
                 'quantity' => $item['quantity']
             ]);     
         }
-        $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
+        // $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
         return redirect('/') -> with('message', 'Place order successfully');
     }
 
@@ -99,6 +99,18 @@ class OrderController extends Controller
         //
     }
 
+    public function edit(Order $order, Request $request){
+        $request -> validate([
+            'amount' => 'required'
+        ]);
+        
+        $customer = $order -> customer;
+        $customer -> amountOwed += $order -> getTotalAttribute() - $request -> input('amount');
+        $order -> paymentType = $request -> input('paymentType');
+        $customer -> save();
+        $order -> save();
+        return redirect('/customers/' . $order -> customer_id) -> with('message', 'Pay for order successfully');
+    }
     /**
      * Display the specified resource.
      */

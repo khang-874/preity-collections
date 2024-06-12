@@ -22,4 +22,10 @@ class Customer extends Model
                     -> orWhere('customers.phoneNumber', 'like', '%' . request('search') . '%');
         }
     }
+    
+    public function scopeNewOrder($query){
+        $query -> join('orders', 'customers.id', '=', 'orders.customer_id')
+                -> select('customers.*')
+                -> where('orders.paymentType', '=', 'pending');
+    }
 }

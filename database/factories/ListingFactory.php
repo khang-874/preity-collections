@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Vendor;
+use Mmo\Faker\PicsumProvider;
 use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Mmo\Faker\PicsumProvider;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -19,10 +20,10 @@ class ListingFactory extends Factory
     public function definition(): array
     {
         return [
+            'vendor_id' => Vendor::factory(),
             'name' => fake()->name(),
             'description' => fake() -> realText(1500),
-            'brand' => fake() -> name(),
-            'vendor' => fake() -> name(),
+            'weight' => fake() -> randomFloat(),
             'initPrice' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
         ];
     }

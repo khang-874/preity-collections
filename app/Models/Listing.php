@@ -21,6 +21,15 @@ class Listing extends Model
     {
         return $this->hasMany(Detail::class);
     }
+    public function images() : HasMany
+    {
+        return $this -> hasMany(Image::class);
+    }
+
+    public function vendor() : BelongsTo
+    {
+        return $this -> belongsTo(Vendor::class);
+    }
     public function subsection(): BelongsTo{
         return $this -> belongsTo(Subsection::class);
     }
@@ -31,7 +40,7 @@ class Listing extends Model
         return round($x / 5) * 5;
     }
     public function getSellingPriceAttribute(){
-        return $this -> roundToNearest(($this -> initPrice / 50) * 2.5) - 0.01;
+        return $this -> roundToNearest(($this -> initPrice / 55) * 2.5) - 0.01;
     }
     public function getAvailableAttribute(){
         $total = 0;

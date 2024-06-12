@@ -9,7 +9,7 @@
             $htmlString  .= "<h6>Price Code: " . $productPriceCode . "</h6>";
             $htmlString  .= '<h6>Size: ' . $detail -> size . '</h6>';
             $htmlString  .= "<h6>Color: " . $detail -> color . "</h6>";
-            $htmlString  .= "<h5>MPR: " . $sellingPrice . "</h5>";
+            $htmlString  .= "<h5>MRP: $" . $sellingPrice . "</h5>";
             $htmlString  .= "<h6>Made in India</h6>";
             $htmlString  .= "<h6>Dry Clean Only</h6>";
             $htmlString  .= "</div>";

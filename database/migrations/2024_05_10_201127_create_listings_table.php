@@ -15,11 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('brand');
-            $table->string('vendor');
             $table->float('initPrice');
+            $table->float('weight');
+
             $table -> unsignedBigInteger('subsection_id');
             $table -> foreign('subsection_id') -> references('id') -> on('subsections');
+
+            $table -> unsignedBigInteger('vendor_id');
+            $table -> foreign('vendor_id') -> references('id') -> on('vendors'); 
+
             $table->timestamps();
         });
     }

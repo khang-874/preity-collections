@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('sold');
             $table->string('color');
             $table->string('size');
-            $table->float('weight');
             $table->foreignId('listing_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

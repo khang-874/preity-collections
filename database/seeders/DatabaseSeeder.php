@@ -12,6 +12,7 @@ use App\Models\Section;
 use App\Models\Size;
 use App\Models\Subsection;
 use App\Models\User;
+use App\Models\Vendor;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -30,12 +31,18 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456789'),
         ]);
 
+
+        Vendor::factory(25) -> create();
+
+        $vendors = Vendor::all();
+        
         Category::factory(3) -> has(Section::factory(5) 
                             -> has(Subsection::factory(rand(3,5)) 
-                            -> has(Listing::factory(10) 
-                            -> has(Detail::factory(3) 
-                            -> has(Image::factory(2)))) )) -> create();
+                            -> has(Listing::factory(10) -> has(Detail::factory(3)) -> has(Image::factory(4)) -> recycle($vendors)
+                            ))) -> create();
+
         $listings = Listing::all(); 
+
         Customer::factory(10) -> has(Order::factory(5)) -> create();
         $orders = Order::all();
         $details = Detail::all();
@@ -46,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 foreach($details as $detail){
                     $order -> listings() -> attach($listing -> id, [
                         'detail_id' => $detail -> id,
-                        'quantity' => rand(4,10),
+                        'quantity' => rand(1,3),
                     ]);
                 }
             } 
