@@ -7,13 +7,11 @@
 
 
 <div x-data = "{activeSlide: 0}" class="relative w-full h-auto {{$cover}}">
-   @foreach ($listing->details as $detail)
-      @foreach ($detail->images as $image)
+   @foreach ($listing->images as $image)
       <div x-show="activeSlide === {{$count++}}"
                {{$attributes->merge(['class' => 'h-40 flex items-center justify-center'])}}>
                <img x-cloak src='{{$image -> imageURL}}' class='object-cover h-full overflow-hidden'/>
       </div>   
-      @endforeach 
    @endforeach
 
    <div class="flex absolute w-full top-1/2">

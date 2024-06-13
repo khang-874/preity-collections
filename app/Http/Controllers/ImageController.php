@@ -9,7 +9,7 @@ class ImageController extends Controller
 {
     //Delete an image
     public function destroy(Image $image){
-        $listingId = $image -> detail -> listing_id;
+        $listingId = $image -> listing -> id;
         $image -> delete();
         return redirect('/listings/' . $listingId . '/edit');
     }

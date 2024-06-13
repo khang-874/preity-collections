@@ -63,7 +63,7 @@
             'size' : this.size, 
             'quantity' : this.quantity,
             'price' : {{$listing->selling_price}},
-            'imageURL' : '{{$listing -> details -> first() -> images -> first() -> imageURL}}',
+            'imageURL' : '{{$listing -> images -> first() -> imageURL}}',
         })
     },
     showAvailableOption(selectedValue, mainOption, otherOption, mainOptionKey, otherOptionKey){

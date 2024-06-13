@@ -1,4 +1,4 @@
-@if (session() -> has('message')) --}}
+@if (session() -> has('message'))
     <div    x-data="{show:true}" 
             x-show="show" 
             x-cloak

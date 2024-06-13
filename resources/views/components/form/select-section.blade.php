@@ -1,7 +1,7 @@
 @props(['categories', 'selectId' => 'section'])
 <div class="flex flex-col">  
-    <label for="section">Sections:</label> 
-    <select name="section" id="{{$selectId}}" x-ref="selectSection" x-model="sectionId"
+    <label for="section_id">Sections:</label> 
+    <select name="section_id" id="{{$selectId}}" x-ref="selectSection" x-model="sectionId"
         {{-- Automatically choose the first option in subsection --}}
         x-on:change="() => {
             if($refs.selectSubsection && $refs.selectSubsection.options.length != 0)

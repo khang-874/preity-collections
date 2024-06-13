@@ -81,6 +81,13 @@ class Listing extends Model
         }
         return $productCode;
     }
+    public function getStockAttribute(){
+        $stock = 0;
+        foreach($this -> details as $detail){
+            $stock += $detail -> inventory;
+        }
+        return $stock;
+    }
     public function scopeSize($query, $size){
        //Filter based on size 
         if($size != null){

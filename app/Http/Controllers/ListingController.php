@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Image;
 use App\Models\Detail;
+use App\Models\Vendor;
 use App\Models\Listing;
 use App\Models\Section;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class ListingController extends Controller
 {
@@ -57,6 +59,7 @@ class ListingController extends Controller
     public function edit(Listing $listing){
         return view('listings.edit', [
             'listing' => $listing,
+            'vendors' => Vendor::all(), 
             'categories' => Category::with('sections.subsections') -> get(),
         ]);
     } 
@@ -65,14 +68,30 @@ class ListingController extends Controller
         $formFields = $request -> validate([
             'name' => 'required',
             'description' => 'required',
-            'brand' => 'required',
-            'vendor' => 'required',
-            'initPrice' => ['required', 'numeric'],
+            'vendor_id' => 'required',
+            'initPrice' => ['required'],
         ]); 
+        if($request->hasFile('images')){
+            $files= $request -> file('images');
+            $allowedFileExtension=['jpg','png','jpeg'];
 
+            foreach($files as $file){
+                $extension = $file -> getClientOriginalExtension();
+                $check = in_array($extension, $allowedFileExtension);
+                if($check){
+                   $imageURL = asset('storage/'.$file -> store('photos')); 
+                   Image::create([
+                        'imageURL' => $imageURL,
+                        'listing_id' => $listing -> id,
+                   ]);
+                }
+            }
+        }
+        $formFields = $request -> all();
+        // dd($formFields);
         $listing -> update($formFields);
 
-        return redirect('/listings/' . $listing -> id ) -> with('message', 'Listing update successfully');
+        return redirect('/listings/' . $listing -> id  . '/edit') -> with('message', 'Listing update successfully');
     }
     
     public function destroy(Listing $listing){

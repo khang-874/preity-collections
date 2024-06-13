@@ -39,23 +39,7 @@ class DetailController extends Controller
             "sold" => ["required", "gte:0"],
             "size" => ['required']
         ]);
-        if($request->hasFile('images')){
-            $files= $request -> file('images');
-            $allowedFileExtension=['jpg','png','jpeg'];
-
-            foreach($files as $file){
-                $extension = $file -> getClientOriginalExtension();
-                $check = in_array($extension, $allowedFileExtension);
-                if($check){
-                   $imageURL = asset('storage/'.$file -> store('photos')); 
-                   Image::create([
-                        'imageURL' => $imageURL,
-                        'detail_id' => $detail -> id,
-                   ]);
-                }
-            }
-            // dd($files);
-        }
+        
         $detail -> update($formFields);
         return redirect('/listings/'. $detail->listing->id. '/edit') -> with('message', 'Update detail successfully');
     }

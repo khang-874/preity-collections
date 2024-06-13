@@ -26,6 +26,6 @@
             <x-form.delete-button url="/listings/{{$listing->id}}" name="Delete listing"/>
         @endauth
 
-    {{-- <a href="/">Return</a> --}}
+ 
     </main>
 </x-layout>
