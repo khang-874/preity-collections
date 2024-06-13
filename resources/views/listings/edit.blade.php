@@ -87,6 +87,16 @@
         @endforeach
     </div>
     
+    <div>
+        @foreach ($listing->details as $detail)
+            <div>
+                <div>Size : {{$detail -> size}}</div> 
+                <div>Color : {{$detail -> color}}</div> 
+                <div>Inventory : {{$detail -> inventory}}</div> 
+                <div>Sold : {{$detail -> sold}}</div> 
+            </div>
+        @endforeach
+    </div>
     <div class="mx-[10%] flex gap-x-4 flex-wrap">
         <a href="/listings/{{$listing->id}}"><x-button>Go to listing</x-button></a>
         <x-print-button :details="$listing -> details" 

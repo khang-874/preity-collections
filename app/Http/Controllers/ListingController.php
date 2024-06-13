@@ -32,28 +32,57 @@ class ListingController extends Controller
     public function create(){
         return view('listings.create', [
             'categories' => Category::with('sections.subsections') -> get(),
+            'vendors' => Vendor::all()
         ]);
     }
     public function store(Request $request){
-        $formFields = $request -> validate([
+
+        // dd($request -> all());
+        $request -> validate([
             'name' => 'required',
             'description' => 'required',
-            'brand' => 'required',
-            'vendor' => 'required',
+            'vendor_id' => 'required',
             'initPrice' => ['required', 'numeric'],
-            'subsection' => ['required']
+            'subsection_id' => ['required']
         ]);
 
-        $listing = $request -> only(['name', 'description', 'brand', 'vendor', 'initPrice', 'subsection']);
+        $details = json_decode($request -> input('details'), true);
+    
+        $listing = $request -> only(['name', 'description', 'brand', 'weight', 'vendor_id', 'initPrice', 'subsection_id']);
         $createdListing = Listing::create([
             'name' => $listing['name'],
             'description' => $listing['description'],
-            'brand' => $listing['brand'],
-            'vendor' => $listing['vendor'],
+            'vendor_id' => $listing['vendor_id'],
             'initPrice' => $listing['initPrice'],
-            'subsection_id' => $listing['subsection']
+            'subsection_id' => $listing['subsection_id'],
+            'weight' => $listing['weight']
         ]);
         
+        foreach($details as $detail){
+            Detail::create([
+                'size' => $detail['size'],
+                'color' => $detail['color'],
+                'inventory' => intval($detail['inventory']),
+                'sold' => intval($detail['sold']),
+                'listing_id' => $createdListing -> id
+            ]);
+        }
+        if($request->hasFile('images')){
+            $files= $request -> file('images');
+            $allowedFileExtension=['jpg','png','jpeg'];
+
+            foreach($files as $file){
+                $extension = $file -> getClientOriginalExtension();
+                $check = in_array($extension, $allowedFileExtension);
+                if($check){
+                   $imageURL = asset('storage/'.$file -> store('photos')); 
+                   Image::create([
+                        'imageURL' => $imageURL,
+                        'listing_id' => $createdListing -> id,
+                   ]);
+                }
+            }
+        }
         return redirect('/listings/' . $createdListing -> id . '/edit');
     } 
     public function edit(Listing $listing){
