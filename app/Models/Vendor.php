@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Vendor extends Model
 {
     use HasFactory;
+    protected $fillable = ['name'];
     public function listings() : HasMany{
         return $this -> hasMany(Listing::class);
     }

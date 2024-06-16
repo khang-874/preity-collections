@@ -16,7 +16,7 @@ class Listing extends Model
 
     protected $fillable = ['name','description','vendor_id', 'weight', 'initPrice', 'subsection_id'];
     
-    protected $with = ['details'];
+    protected $with = ['details','images'];
     public function details(): HasMany
     {
         return $this->hasMany(Detail::class);

@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use App\Mail\NewOrder;
 use App\Models\Category;
 use App\Models\Customer;
@@ -99,6 +100,15 @@ Route::post('/subsections', [SubsectionController::class, 'store']) -> middlewar
 
 //Delete a subsection
 Route::delete('/subsections/{subsection}', [SubsectionController::class, 'delete']) -> middleware('auth');
+
+//View all listings belonged to a vendor
+Route::get("/vendors/{vendor}", [VendorController::class, 'show']) -> middleware('auth');
+
+//Delete a vendor
+Route::delete('/vendors/{vendor}', [VendorController::class, 'delete']) -> middleware('auth');
+
+//Create new vendor
+Route::post('/vendors', [VendorController::class, 'store']) -> middleware('auth');
 
 //Authenticate user
 Route::post('/authenticate', [UserController::class, 'authenticate']);

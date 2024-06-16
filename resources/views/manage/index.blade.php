@@ -1,4 +1,3 @@
-@props(['categories'])
 <x-layout>
     <header>
         <x-logo></x-logo>
@@ -72,5 +71,19 @@
             </x-form.container>
         </div>
 
+        <div class="mx-[10%] bg-white border drop-shadow-md p-3 mb-4 mt-6">
+            <div>Vendor: </div>
+            @foreach ($vendors as $vendor)
+                <div class="flex items-center w-full">
+                    <div class="flex-grow">{{$vendor -> name}}</div>
+                    <x-form.delete-button url="/vendors/{{$vendor->id}}" name="Delete"></x-form.delete-button> 
+                    <a href="/vendors/{{$vendor -> id}}"><x-button>View listings</x-button></a>
+                </div>
+            @endforeach
+            <x-form.container actionURL="/vendors" formId="createVendor">
+                <x-form.field  inputType="text" field="name" fieldName="Enter new vendor name:" value=""></x-form>
+                <x-button>Create new vendor</x-button>
+            </x-form.container>
+        </div>
     </main>
 </x-layout>

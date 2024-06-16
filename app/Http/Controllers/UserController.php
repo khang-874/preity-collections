@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -37,7 +38,8 @@ class UserController extends Controller
 
     public function manage(){
         return view('manage.index',[
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'vendors' => Vendor::all()
         ]);
     }
 }
