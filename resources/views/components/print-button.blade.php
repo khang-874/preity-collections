@@ -1,17 +1,18 @@
 @props(['details', 'buttonName', 'productId', 'productPriceCode', 'sellingPrice'])
 @php
     $htmlString = "";
-    foreach ($details as $detail){
-            $htmlString .= "<div style='border-width: 1px; border-style:solid; width: 125px; margin: 2px'>";
-            $htmlString .= "<h4 style='word-wrap: break-word; width: 100%;'>PREITY COLLECTION</h4>";
-            $htmlString .= "<h6>SN: " . $productId . "</h6>";
+    foreach ($details as $index=>$detail){
+            $htmlString .= "<div style='border-width: 1px; border-style:solid; width: 230px; margin: 2px'>";
+            $htmlString .= "<h1 style='word-wrap: break-word; width: 100%;'>PREITY COLLECTION</h1>";
+            $htmlString .= "<h3>SN: " . $productId . "</h3>";
 
-            $htmlString  .= "<h6>Price Code: " . $productPriceCode . "</h6>";
-            $htmlString  .= '<h6>Size: ' . $detail -> size . '</h6>';
-            $htmlString  .= "<h6>Color: " . $detail -> color . "</h6>";
-            $htmlString  .= "<h5>MRP: $" . $sellingPrice . "</h5>";
-            $htmlString  .= "<h6>Made in India</h6>";
-            $htmlString  .= "<h6>Dry Clean Only</h6>";
+            $htmlString  .= "<h3>Price Code: " . $productPriceCode . "</h3>";
+            $htmlString  .= '<h3>Size: ' . $detail -> size . '</h3>';
+            $htmlString  .= "<h3>Color: " . $detail -> color . "</h3>";
+            $htmlString  .= "<h2>MRP: $" . $sellingPrice . "</h2>";
+            $htmlString  .= "<h3>Made in India</h3>";
+            $htmlString  .= "<h3>Dry Clean Only</h3>";
+            $htmlString  .= "<div style='display:flex; justify-content:center;'>" . $detail -> listing -> barcode . "</div>";
             $htmlString  .= "</div>";
     }
 @endphp
@@ -25,13 +26,13 @@
                     margin: 0px;
                     padding: 0px;
                 }
-                h4,h5,h6{
+                h1,h2,h3,h4,h5,h6{
                     margin: 5px;
                 }
-            </style>
+            </style> 
         </head>
         <body>
-            <div style='display:flex;'>
+            <div style='display:flex;flex-direction: column;'>
                 {{$htmlString}}    
             </div>
         </body>

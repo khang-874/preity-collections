@@ -87,13 +87,20 @@
         @endforeach
     </div>
     
-    <div>
+    <div class="flex gap-4">
         @foreach ($listing->details as $detail)
             <div>
                 <div>Size : {{$detail -> size}}</div> 
                 <div>Color : {{$detail -> color}}</div> 
                 <div>Inventory : {{$detail -> inventory}}</div> 
                 <div>Sold : {{$detail -> sold}}</div> 
+                <x-print-button :details="[$detail]" 
+                        productId="{{$listing -> product_id}}" 
+                        productPriceCode="{{$listing -> product_price_code}}"
+                        sellingPrice="{{$listing -> selling_price}}"
+                        buttonName="Print tag"
+        ></x-print-button> 
+                <x-form.delete-button url="/details/{{$detail -> id}}" name="Delete detail"></x-form.delete-button>
             </div>
         @endforeach
     </div>

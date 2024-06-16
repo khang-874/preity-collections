@@ -1,6 +1,6 @@
 <x-layout>
     <x-logo></x-logo>
-    <x-cart></x-cart>
+    {{-- <x-cart></x-cart> --}}
     <x-navbar :categories="$categories"></x-navbar>
     <main>
         

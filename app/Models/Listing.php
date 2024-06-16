@@ -39,6 +39,10 @@ class Listing extends Model
     function roundToNearest($x):float{
         return round($x / 5) * 5;
     }
+    function getBarcodeAttribute(){
+        $generator = new \Picqer\Barcode\BarcodeGeneratorSVG();
+        return $generator -> getBarcode($this -> id, $generator::TYPE_CODE_128, 2, 30);
+    }
     public function getSellingPriceAttribute(){
         return $this -> roundToNearest(($this -> initPrice / 55) * 2.5) - 0.01;
     }
