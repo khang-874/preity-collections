@@ -36,15 +36,18 @@ class Listing extends Model
     public function orders() : BelongsToMany{
         return $this -> belongsToMany(Order::class, 'orders_listings', 'listing_id', 'order_id') -> withTimestamps();
     }
-    function roundToNearest($x):float{
+    static function roundToNearest($x):float{
         return round($x / 5) * 5;
+    }
+    static function sellingPrice(float $price) : float{
+        return Listing::roundToNearest(($price / 55) * 2.5) - 0.01; 
     }
     function getBarcodeAttribute(){
         $generator = new \Picqer\Barcode\BarcodeGeneratorSVG();
         return $generator -> getBarcode($this -> id, $generator::TYPE_CODE_128, 2, 30);
     }
     public function getSellingPriceAttribute(){
-        return $this -> roundToNearest(($this -> initPrice / 55) * 2.5) - 0.01;
+        return Listing::sellingPrice($this -> initPrice);
     }
     public function getAvailableAttribute(){
         $total = 0;
@@ -64,8 +67,8 @@ class Listing extends Model
        $acronym .= $this -> id;
        return $acronym;
     } 
-    public function getProductPriceCodeAttribute(){
-        $price = round($this -> initPrice / 5);
+    static function priceCode(float $initPrice) : string{
+        $price = round($initPrice / 5);
         $code = [
             0 => 'C',
             1 => 'M',
@@ -84,6 +87,9 @@ class Listing extends Model
             $price = intdiv($price, 10);
         }
         return $productCode;
+    }
+    public function getProductPriceCodeAttribute(){
+        return Listing::priceCode($this -> initPrice);
     }
     public function getStockAttribute(){
         $stock = 0;
