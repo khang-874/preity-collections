@@ -18,6 +18,7 @@
                         <div>Amount owed: {{$customer -> amountOwed}}</div>
                     </div>
                     <x-button><a href="/customers/{{$customer->id}}">History</a></x-button>
+                    <a href="/customers/{{$customer->id}}/createOrder"><x-button>Create new order</x-button></a>
                 </div>
                 @endforeach
             </div>

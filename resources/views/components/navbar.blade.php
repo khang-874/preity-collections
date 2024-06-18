@@ -16,7 +16,7 @@
         </div>
         @auth
             <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
-            <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage categories</button></a>
+            <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Miscellaneous</button></a>
             <a href="/customers" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage customers</button></a>
             <a href="/orders" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage orders</button></a>
         @endauth

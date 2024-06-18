@@ -57,11 +57,13 @@ Route::delete('/images/{image}' , [ImageController::class, 'destroy']) -> middle
 //Display pending order
 Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
 
+Route::get('/orderes/create/{customer}', [OrderController::class, 'create']) -> middleware('auth');
 //Display a single order
 Route::get('/orders/{order}', [OrderController::class, 'show']) -> middleware('auth');
 
 //Edit an order
 Route::put('/orders/{order}', [OrderController::class, 'edit']) -> middleware('auth');
+
 
 //Create new order;
 Route::post('/orders' ,[OrderController::class, 'create']);

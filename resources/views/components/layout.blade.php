@@ -51,10 +51,12 @@
     })
     </script>
 
+    @livewireStyles
 </head>
 <body class="mb-48 bg-gray-50">
     {{$slot}} 
  
     <x-flash-message></x-flash-message>
+    @livewireScripts
 </body>
 </html>

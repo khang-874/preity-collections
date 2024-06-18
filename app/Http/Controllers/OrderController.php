@@ -45,9 +45,17 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Customer $customer, Request $request)
     {
         //validate request
+        dd($customer);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         $request -> validate([
             'firstName' => 'required',
             'lastName' => 'required',
@@ -89,14 +97,6 @@ class OrderController extends Controller
         }
         // $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
         return redirect('/') -> with('message', 'Place order successfully');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     public function edit(Order $order, Request $request){
