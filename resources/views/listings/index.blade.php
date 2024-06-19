@@ -4,6 +4,9 @@
     <x-navbar :categories="$categories"></x-navbar>
     <main>
         
+        @php
+            // dd($listings)
+        @endphp
         <div class="mt-4 md:mx-[10%] flex"> 
             <div class="hidden lg:block lg:basis-2/12 lg:flex-grow bg-white shadow-md h-full mt-8">
                 <div x-data="{show:false}" class="border-b-[1px] p-2">

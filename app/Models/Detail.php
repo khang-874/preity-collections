@@ -19,7 +19,7 @@ class Detail extends Model
     } 
     
     public function orders() : BelongsToMany{
-        return $this -> belongsToMany(Order::class, 'orders_listings', 'detail_id', 'order_id');
+        return $this -> belongsToMany(Order::class, 'orders_listings', 'detail_id', 'order_id') -> withPivot('listing_id');
     }
     public function getAvailableAttribute(){
         return $this -> inventory != 0;

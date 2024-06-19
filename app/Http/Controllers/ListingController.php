@@ -67,22 +67,22 @@ class ListingController extends Controller
                 'listing_id' => $createdListing -> id
             ]);
         }
-        if($request->hasFile('images')){
-            $files= $request -> file('images');
-            $allowedFileExtension=['jpg','png','jpeg'];
+        // if($request->hasFile('images')){
+        //     $files= $request -> file('images');
+        //     $allowedFileExtension=['jpg','png','jpeg'];
 
-            foreach($files as $file){
-                $extension = $file -> getClientOriginalExtension();
-                $check = in_array($extension, $allowedFileExtension);
-                if($check){
-                   $imageURL = asset('storage/'.$file -> store('photos')); 
-                   Image::create([
-                        'imageURL' => $imageURL,
-                        'listing_id' => $createdListing -> id,
-                   ]);
-                }
-            }
-        }
+        //     foreach($files as $file){
+        //         $extension = $file -> getClientOriginalExtension();
+        //         $check = in_array($extension, $allowedFileExtension);
+        //         if($check){
+        //            $imageURL = asset('storage/'.$file -> store('photos')); 
+        //            Image::create([
+        //                 'imageURL' => $imageURL,
+        //                 'listing_id' => $createdListing -> id,
+        //            ]);
+        //         }
+        //     }
+        // }
         return redirect('/listings/' . $createdListing -> id . '/edit');
     } 
     public function edit(Listing $listing){
@@ -100,22 +100,22 @@ class ListingController extends Controller
             'vendor_id' => 'required',
             'initPrice' => ['required'],
         ]); 
-        if($request->hasFile('images')){
-            $files= $request -> file('images');
-            $allowedFileExtension=['jpg','png','jpeg'];
+        // if($request->hasFile('images')){
+        //     $files= $request -> file('images');
+        //     $allowedFileExtension=['jpg','png','jpeg'];
 
-            foreach($files as $file){
-                $extension = $file -> getClientOriginalExtension();
-                $check = in_array($extension, $allowedFileExtension);
-                if($check){
-                   $imageURL = asset('storage/'.$file -> store('photos')); 
-                   Image::create([
-                        'imageURL' => $imageURL,
-                        'listing_id' => $listing -> id,
-                   ]);
-                }
-            }
-        }
+        //     foreach($files as $file){
+        //         $extension = $file -> getClientOriginalExtension();
+        //         $check = in_array($extension, $allowedFileExtension);
+        //         if($check){
+        //            $imageURL = asset('storage/'.$file -> store('photos')); 
+        //            Image::create([
+        //                 'imageURL' => $imageURL,
+        //                 'listing_id' => $listing -> id,
+        //            ]);
+        //         }
+        //     }
+        // }
         $formFields = $request -> all();
         // dd($formFields);
         $listing -> update($formFields);

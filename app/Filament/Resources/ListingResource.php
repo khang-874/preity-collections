@@ -148,6 +148,8 @@ class ListingResource extends Resource
                 TextColumn::make('name') -> label('Listing name'),
                 TextColumn::make('vendor.name'),
                 ImageColumn::make('images'),
+                TextColumn::make('details_sum_sold') -> label('Sold') -> sum('details', 'sold'),
+                TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory')
             ])
             ->filters([
                 //

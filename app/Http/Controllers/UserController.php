@@ -65,7 +65,7 @@ class UserController extends Controller
             $listing = $detailModel -> listing; 
         }
         // dd($listing);
-        return view('print', [
+        return view('users.print', [
             'details' => $details,
             'listing' => $listing
         ]);
