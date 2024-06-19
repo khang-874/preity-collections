@@ -7,7 +7,9 @@ use App\Filament\Resources\ListingResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Listing;
 use App\Models\Section;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
@@ -20,10 +22,12 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action as ActionsAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ListingResource extends Resource
@@ -96,7 +100,15 @@ class ListingResource extends Resource
                                         $set('../../inventory', $inventory);
                                     }),
                                 TextInput::make('sold') -> numeric() -> default(0),
+                                Forms\Components\Actions::make([
+                                    Forms\Components\Actions\Action::make('print tag')
+                                        -> url(fn(?Model $record) : string => route('print', ['detailId' => $record -> id ]))
+                                        -> openUrlInNewTab(),
+                                ])
                             ]) 
+                            -> deleteAction(
+                                fn(Action $action) => $action -> requiresConfirmation(),
+                            )
                             -> columns(4) 
                             -> grid(2) 
                             -> columnSpanFull() 
@@ -127,6 +139,10 @@ class ListingResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('print tag')
+                -> icon('heroicon-m-printer')
+                -> url(fn(Listing $record) : string => route('print', ['listingId' => $record->id]))
+                -> openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

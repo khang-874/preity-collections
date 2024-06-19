@@ -38,6 +38,7 @@ Route::delete('/listings/{listing}', [ListingController::class, 'destroy']) -> m
 //Get a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
+Route::get('/print') -> name('print');
 
 //Place order
 Route::get('/placeOrder', [OrderController::class, 'placeOrder']);
