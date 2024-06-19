@@ -20,6 +20,8 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -117,7 +119,9 @@ class ListingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name') -> label('Listing name'),
+                TextColumn::make('vendor.name'),
+                ImageColumn::make('images'),
             ])
             ->filters([
                 //
