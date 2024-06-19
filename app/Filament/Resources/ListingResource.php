@@ -71,7 +71,11 @@ class ListingResource extends Resource
                 //         -> required(),
                 Select::make('subsection_id') -> relationship(name:'subsection', titleAttribute:'name') -> required(),
                 Textarea::make('description') -> autosize() -> columnSpanFull(),
-                FileUpload::make('images') -> multiple() -> image() -> columnSpanFull(),
+                FileUpload::make('images') 
+                            -> image() 
+                            -> multiple()
+                            -> directory('photos')
+                            -> columnSpanFull(),
                 Repeater::make('details') 
                             -> relationship('details')
                             -> schema([

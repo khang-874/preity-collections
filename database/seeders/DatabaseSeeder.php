@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         
         Category::factory(3) -> has(Section::factory(5) 
                             -> has(Subsection::factory(rand(3,5)) 
-                            -> has(Listing::factory(10) -> has(Detail::factory(3)) -> has(Image::factory(4)) -> recycle($vendors)
+                            -> has(Listing::factory(10) -> has(Detail::factory(3)) -> recycle($vendors)
                             ))) -> create();
 
         $listings = Listing::all(); 

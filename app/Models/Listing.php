@@ -19,15 +19,11 @@ class Listing extends Model
         'images' => 'array',
     ];
     
-    protected $with = ['details','images'];
+    protected $with = ['details'];
     public function details(): HasMany
     {
         return $this->hasMany(Detail::class);
-    }
-    public function images() : HasMany
-    {
-        return $this -> hasMany(Image::class);
-    }
+    } 
 
     public function vendor() : BelongsTo
     {

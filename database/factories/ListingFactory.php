@@ -24,6 +24,7 @@ class ListingFactory extends Factory
             'name' => fake()->name(),
             'description' => fake() -> realText(1500),
             'weight' => fake() -> randomFloat(),
+            'images' => array_fill(0, 4, fake() -> picsumUrl()), 
             'initPrice' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
         ];
     }
