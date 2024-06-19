@@ -29,10 +29,10 @@ class OrderResource extends Resource
             ->schema([
                 //
                 Select::make('phoneNumber') -> relationship(name:'customer', titleAttribute:'phoneNumber') -> searchable() -> required(),
-                Repeater::make('listings') -> relationship('listings')
-                            -> schema([
-                                Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
-                            ])
+                // Repeater::make('listings') -> relationship('listings')
+                //             -> schema([
+                //                 // Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
+                //             ])
             ]);
     }
 
