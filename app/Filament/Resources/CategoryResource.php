@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers\SectionsRelationManager;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -52,6 +53,7 @@ class CategoryResource extends Resource
     {
         return [
             //
+            SectionsRelationManager::class,
         ];
     }
 

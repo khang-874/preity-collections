@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubsectionResource\Pages;
 use App\Filament\Resources\SubsectionResource\RelationManagers;
+use App\Filament\Resources\SubsectionResource\RelationManagers\ListingsRelationManager;
 use App\Models\Subsection;
 use Faker\Guesser\Name;
 use Filament\Forms;
@@ -57,6 +58,7 @@ class SubsectionResource extends Resource
     {
         return [
             //
+            ListingsRelationManager::class
         ];
     }
 

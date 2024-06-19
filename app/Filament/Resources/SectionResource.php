@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SectionResource\Pages;
 use App\Filament\Resources\SectionResource\RelationManagers;
+use App\Filament\Resources\SectionResource\RelationManagers\SubsectionsRelationManager;
 use App\Models\Section;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
@@ -56,6 +57,7 @@ class SectionResource extends Resource
     {
         return [
             //
+            SubsectionsRelationManager::class
         ];
     }
 
