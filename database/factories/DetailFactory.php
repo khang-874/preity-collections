@@ -17,8 +17,8 @@ class DetailFactory extends Factory
     public function definition(): array
     {
         return [
-            'inventory' => fake() -> numberBetween(int1:1, int2:1000),
-            'sold' => fake() -> numberBetween(int1:1, int2:1000),
+            'inventory' => random_int(1,4),
+            'sold' => random_int(1,4),
             'size' => fake() -> randomElement(['XL', 'L', 'S', 'M']),
             'color' => fake() -> randomElement(['black', 'blue', 'white', 'red']),
         ];

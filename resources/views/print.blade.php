@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        h1,h2,h3,h4,h5,h6{
+            margin: 5px;
+        }
+    </style> 
+</head>
+<body>
+     {{-- $htmlString .= "<div style='border-width: 1px; border-style:solid; width: 230px; margin: 2px'>";
+            $htmlString .= "<h1 style='word-wrap: break-word; width: 100%;'>PREITY COLLECTION</h1>";
+            $htmlString .= "<h3>SN: " . $productId . "</h3>";
+
+            $htmlString  .= "<h3>Price Code: " . $productPriceCode . "</h3>";
+            $htmlString  .= '<h3>Size: ' . $detail -> size . '</h3>';
+            $htmlString  .= "<h3>Color: " . $detail -> color . "</h3>";
+            $htmlString  .= "<h2>MRP: $" . $sellingPrice . "</h2>";
+            $htmlString  .= "<h3>Made in India</h3>";
+            $htmlString  .= "<h3>Dry Clean Only</h3>";
+            $htmlString  .= "<div style='display:flex; justify-content:center;'>" . $detail -> listing -> barcode . "</div>";
+            $htmlString  .= "</div>"; --}}
+    <div style='display:flex;flex-direction: column;'>
+        @foreach($details as $detail)
+            <div style="border-width: 1px; border-style:solid; width: 230px; margin:2px">
+                <h1 style="word-wrap: wrap break-word; width:100%;">PREITY COLLECTION</h1>
+                <h3>SN: {{$listing -> productId}}</h3>
+                <h3>Price Code: {{$listing -> productPriceCode}}</h3>
+                <h3>Sice: {{$detail -> size}}</h3>
+                <h3>Color: {{$detail -> color}}</h3>
+                <h2>MRP: ${{$listing -> sellingPrice}}</h2>
+                <h3>Made in India</h3>
+                <div style="display:flex; justify-content:center;">@php echo $detail -> barcode @endphp</div>
+            </div>
+        @endforeach
+    </div>
+</body>
+</html>

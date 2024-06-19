@@ -41,10 +41,7 @@ class Listing extends Model
     static function sellingPrice(float $price) : float{
         return Listing::roundToNearest(($price / 55) * 2.5) - 0.01; 
     }
-    function getBarcodeAttribute(){
-        $generator = new \Picqer\Barcode\BarcodeGeneratorSVG();
-        return $generator -> getBarcode($this -> id, $generator::TYPE_CODE_128, 2, 30);
-    }
+    
     public function getSellingPriceAttribute(){
         return Listing::sellingPrice($this -> initPrice);
     }
