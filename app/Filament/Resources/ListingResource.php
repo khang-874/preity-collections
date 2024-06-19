@@ -4,10 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ListingResource\Pages;
 use App\Filament\Resources\ListingResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Listing;
+use App\Models\Section;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -52,10 +56,56 @@ class ListingResource extends Resource
                         -> disabled(),
                 TextInput::make('priceCode') -> disabled(),
                 TextInput::make('weight') -> label('Weight (KG)') -> numeric() -> default(1.0),
+                TextInput::make('inventory') -> numeric() -> default(1) -> disabled(),
                 Select::make('vendor_id') -> relationship(name:'vendor', titleAttribute:'name') -> required(),
+                // Select::make('category_id') 
+                //         -> label('Category') 
+                //         -> options(Category::query() -> pluck('name', 'id')) 
+                //         -> required()
+                //         -> live(),
+                // Select::make('section_id')  
+                //         -> label('Section')    
+                //         -> options(function(Get $get){
+                //            return Section::query() -> where('category_id', $get('category_id')) -> pluck('name', 'id'); 
+                //         }) 
+                //         -> required(),
                 Select::make('subsection_id') -> relationship(name:'subsection', titleAttribute:'name') -> required(),
                 Textarea::make('description') -> autosize() -> columnSpanFull(),
-                FileUpload::make('images') -> multiple() -> image()
+                FileUpload::make('images') -> multiple() -> image() -> columnSpanFull(),
+                Repeater::make('details') 
+                            -> relationship('details')
+                            -> schema([
+                                TextInput::make('size'),
+                                TextInput::make('color'),
+                                TextInput::make('inventory') 
+                                    -> numeric() 
+                                    -> default(1)
+                                    -> live(onBlur:true)
+                                    -> afterStateUpdated(function(Get $get, Set $set){
+                                        $details = $get('../../details');
+                                        $inventory = 0;
+                                        foreach($details as $item){
+                                            $inventory += $item['inventory'];
+                                        }
+                                        $set('../../inventory', $inventory);
+                                    }),
+                                TextInput::make('sold') -> numeric() -> default(0),
+                            ]) 
+                            -> columns(4) 
+                            -> grid(2) 
+                            -> columnSpanFull() 
+                            -> collapsible() 
+                            -> cloneable()
+                            -> live(onBlur:true)
+                            -> afterStateUpdated(function(Set $set, array $state){
+                                $inventory = 0;
+                                foreach($state as $item){
+                                    $inventory += $item['inventory'];
+                                }
+                                
+                                $set('inventory', $inventory);
+                            }),
+                    
             ]);
     }
 

@@ -10,10 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 class CreateListing extends CreateRecord
 {
     protected static string $resource = ListingResource::class;
-    protected function handleRecordUpdate(Model $record, array $data) : Model
-    {
-        dd($record,$data);
-
-        return $data;
-    }
+    // protected function handleRecordCreation(array $data): Model
+    // {
+    //     dd($data);
+    //     return $data;
+    // }
 }
