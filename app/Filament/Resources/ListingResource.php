@@ -81,6 +81,7 @@ class ListingResource extends Resource
                             -> image() 
                             -> multiple()
                             -> directory('photos')
+                            -> downloadable()
                             -> columnSpanFull(),
                 Repeater::make('details') 
                             -> relationship('details')
@@ -98,11 +99,24 @@ class ListingResource extends Resource
                                             $inventory += $item['inventory'];
                                         }
                                         $set('../../inventory', $inventory);
+                                    })
+                                    -> afterStateHydrated(function(Get $get, Set $set){
+                                        $details = $get('../../details');
+                                        $inventory = 0;
+                                        foreach($details as $item){
+                                            $inventory += $item['inventory'];
+                                        }
+                                        $set('../../inventory', $inventory);
                                     }),
                                 TextInput::make('sold') -> numeric() -> default(0),
                                 Forms\Components\Actions::make([
                                     Forms\Components\Actions\Action::make('print tag')
-                                        -> url(fn(?Model $record) : string => route('print', ['detailId' => $record -> id ]))
+                                        -> disabled(function(?Model $record){
+                                            if(!$record)
+                                                return true;
+                                            return false;
+                                        }) 
+                                        -> url(fn(?Model $record) : string => route('print', ['detailId' => $record -> id ?? '' ]))
                                         -> openUrlInNewTab(),
                                 ])
                             ]) 
