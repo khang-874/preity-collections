@@ -6,6 +6,7 @@ use App\Mail\NewOrder;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -85,17 +86,26 @@ class OrderController extends Controller
         $order = Order::create([
                 'paymentType' => $payment,
                 'customer_id' => $customer -> id,
+                'amountPaid' => 0
         ]);
        
         $uniqueItems = $this -> getUniquesItems($items);
         
         foreach($uniqueItems as $item){
-            $order -> listings() -> attach($item['listingId'], [
-                'detail_id' => $item['detailId'], 
-                'quantity' => $item['quantity']
-            ]);     
+            OrderListing::create([
+                'listing_id' => $item['listingId'],
+                'detail_id' => $item['detailId'],
+                'quantity' => $item['quantity'],
+                'order_id' => $order -> id,
+            ]);
+            // $order -> listings() -> attach($item['listingId'], [
+            //     'detail_id' => $item['detailId'], 
+            //     'quantity' => $item['quantity']
+            // ]);     
         }
-        // $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
+
+        //Send notificaiton about new email
+        $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
         return redirect('/') -> with('message', 'Place order successfully');
     }
 

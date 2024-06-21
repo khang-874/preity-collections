@@ -32,11 +32,7 @@ class NewOrder extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            from: new Address('khang07087@gmail.com', 'Khang Tran'),
-            replyTo:[
-                new Address('khanguranium@gmail.com', 'Tuan Khang Tran')
-            ],
+        return new Envelope( 
             subject: 'New Order',
         );
     }

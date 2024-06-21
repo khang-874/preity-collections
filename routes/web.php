@@ -10,6 +10,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Mail\MyTestMail;
 use App\Mail\NewOrder;
 use App\Models\Category;
 use App\Models\Customer;
@@ -67,7 +68,7 @@ Route::put('/orders/{order}', [OrderController::class, 'edit']) -> middleware('a
 
 
 //Create new order;
-Route::post('/orders' ,[OrderController::class, 'create']);
+Route::post('/orders' ,[OrderController::class, 'store']);
 
 //Display all customers
 Route::get('/customers', [CustomerController::class, 'index']) -> middleware('auth');
