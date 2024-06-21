@@ -25,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\Action as ActionsAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -132,11 +133,11 @@ class ListingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name') -> label('Listing name'),
+                TextColumn::make('name') -> label('Listing name') -> searchable(),
                 TextColumn::make('vendor.name'),
                 ImageColumn::make('images'),
-                TextColumn::make('details_sum_sold') -> label('Sold') -> sum('details', 'sold'),
-                TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory')
+                TextColumn::make('details_sum_sold') -> label('Sold') -> sum('details', 'sold') -> sortable(),
+                TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory') -> sortable()
             ])
             ->filters([
                 //

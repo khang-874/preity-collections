@@ -40,11 +40,12 @@ class CustomerResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('first_name'),
-                TextColumn::make('last_name'),
-                TextColumn::make('phone_number'),
+                TextColumn::make('first_name') -> searchable(),
+                TextColumn::make('last_name') -> searchable(),
+                TextColumn::make('phone_number') -> searchable(),
                 TextColumn::make('amount_owe') -> label('Amount owe ($CAD)'),
             ])
+            ->searchPlaceholder('Search (Name, Phone)')
             ->filters([
                 //
                 Filter::make('owe') -> query(fn(Builder $query) : Builder => $query -> where('amount_owe', '>', 0)),
