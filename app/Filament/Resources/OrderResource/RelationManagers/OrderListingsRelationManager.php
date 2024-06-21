@@ -28,10 +28,7 @@ class OrderListingsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                // Forms\Components\TextInput::make('id')
-                //     ->required()
-                //     ->maxLength(255), 
+            ->schema([ 
                 Select::make('listing_id') -> relationship('listing', 'name') -> live() -> required(),
                 Select::make('detail.size')  
                         -> options(function(Get $get) : array {

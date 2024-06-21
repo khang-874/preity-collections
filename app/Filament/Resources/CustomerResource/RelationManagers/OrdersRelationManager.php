@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
+use App\Models\Order;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrdersRelationManager extends RelationManager
@@ -18,9 +21,11 @@ class OrdersRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('created_at')
-                    ->required()
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('created_at')
+                //     ->required()
+                //     ->maxLength(255),
+                Hidden::make('paymentType') -> default('pending'),
+                Hidden::make('amountPaid') -> default(0),
             ]);
     }
 
@@ -35,9 +40,17 @@ class OrdersRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                        ->successRedirectUrl(function(Order $record) : string{
+                            return '/admin/orders/' . $record -> id . '/edit';
+                        }),
             ])
             ->actions([
+                Tables\Actions\Action::make('View')
+                    -> icon('heroicon-o-eye')
+                    -> url(function(Order $record) : string{
+                        return '/admin/orders/' . $record -> id . '/edit';
+                    }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
