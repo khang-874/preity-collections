@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\RelationManagers\ListingsRelationManager;
+use App\Filament\Resources\OrderResource\RelationManagers\OrderListingsRelationManager;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
@@ -63,7 +64,8 @@ class OrderResource extends Resource
     {
         return [
             //
-            ListingsRelationManager::class
+            // ListingsRelationManager::class
+            OrderListingsRelationManager::class
         ];
     }
 

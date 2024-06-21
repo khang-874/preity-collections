@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders_listings', function (Blueprint $table) {
+            $table -> id();
             $table->unsignedBigInteger('listing_id');
             $table->foreign('listing_id') -> references('id') -> on('listings') -> onDelete('cascade') -> onUpdate('cascade');
             
@@ -23,7 +24,6 @@ return new class extends Migration
             
             $table -> integer('quantity');
 
-            $table->primary(['listing_id', 'order_id', 'detail_id']);
             $table->timestamps();
 
         });

@@ -32,8 +32,8 @@ class Listing extends Model
     public function subsection(): BelongsTo{
         return $this -> belongsTo(Subsection::class);
     }
-    public function orders() : BelongsToMany{
-        return $this -> belongsToMany(Order::class, 'orders_listings', 'listing_id', 'order_id') -> withTimestamps() -> withPivot('detail_id');
+    public function orderListings() : HasMany{
+        return $this -> hasMany(OrderListing::class);
     }
     static function roundToNearest($x):float{
         return round($x / 5) * 5;

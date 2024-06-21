@@ -8,6 +8,7 @@ use App\Models\Detail;
 use App\Models\Image;
 use App\Models\Listing;
 use App\Models\Order;
+use App\Models\OrderListing;
 use App\Models\Section;
 use App\Models\Size;
 use App\Models\Subsection;
@@ -51,9 +52,11 @@ class DatabaseSeeder extends Seeder
             foreach($randomListings as $listing){
                 $details = $listing -> details;
                 foreach($details as $detail){
-                    $order -> listings() -> attach($listing -> id, [
+                    OrderListing::factory(1) -> create([
                         'detail_id' => $detail -> id,
-                        'quantity' => rand(1,3),
+                        'listing_id' => $listing -> id,
+                        'order_id' => $order -> id,
+                        'quantity' => random_int(1, $detail -> inventory),
                     ]);
                 }
             } 
