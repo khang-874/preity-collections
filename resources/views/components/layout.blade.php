@@ -32,7 +32,7 @@
             getSubtotal(){
                 subtotal = 0;
                 for(let i = 0; i < this.items.length; ++i)
-                    subtotal += this.items[i]['price'];
+                    subtotal += this.items[i]['price'] * this.items[i]['quantity'];
                 return subtotal;
             }
         });

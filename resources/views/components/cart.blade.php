@@ -35,6 +35,8 @@
         <template x-if="$store.cart.items.length != 0">
             <div class="mx-auto w-fit text-lg font-medium">
                 <div x-text="'Subtotal: $' + $store.cart.getSubtotal().toFixed(2)"></div>
+                <div x-text="'HST: $' + ($store.cart.getSubtotal() * .13).toFixed(2)"></div>
+                <div x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
                 <a href="/placeOrder"><x-button>Order now</x-button></a>
             </div>
         </template>

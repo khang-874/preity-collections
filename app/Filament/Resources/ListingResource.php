@@ -41,7 +41,7 @@ class ListingResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->label('Product name')->required(),
-                TextInput::make('initPrice') 
+                TextInput::make('init_price') 
                     -> label('Price(INR)') 
                     -> numeric() 
                     -> live(onBlur:true) 
@@ -63,19 +63,8 @@ class ListingResource extends Resource
                 TextInput::make('priceCode') -> disabled(),
                 TextInput::make('weight') -> label('Weight (KG)') -> numeric() -> default(1.0),
                 TextInput::make('inventory') -> numeric() -> default(1) -> disabled(),
-                Select::make('vendor_id') -> relationship(name:'vendor', titleAttribute:'name') -> required(),
-                // Select::make('category_id') 
-                //         -> label('Category') 
-                //         -> options(Category::query() -> pluck('name', 'id')) 
-                //         -> required()
-                //         -> live(),
-                // Select::make('section_id')  
-                //         -> label('Section')    
-                //         -> options(function(Get $get){
-                //            return Section::query() -> where('category_id', $get('category_id')) -> pluck('name', 'id'); 
-                //         }) 
-                //         -> required(),
-                Select::make('subsection_id') -> relationship(name:'subsection', titleAttribute:'name') -> required(),
+                Select::make('vendor_id') -> relationship(name:'vendor', titleAttribute:'name') -> required(), 
+                Select::make('subsection_id') -> relationship(name:'subsection', titleAttribute:'name') -> searchable() -> required(),
                 Textarea::make('description') -> autosize() -> columnSpanFull(),
                 FileUpload::make('images') 
                             -> image() 
@@ -120,9 +109,7 @@ class ListingResource extends Resource
                                         -> openUrlInNewTab(),
                                 ])
                             ]) 
-                            -> deleteAction(
-                                fn(Action $action) => $action -> requiresConfirmation(),
-                            )
+                            -> deleteAction(fn(Action $action) => $action -> requiresConfirmation(),)
                             -> columns(4) 
                             -> grid(2) 
                             -> columnSpanFull() 
@@ -131,8 +118,8 @@ class ListingResource extends Resource
                             -> live(onBlur:true)
                             -> afterStateUpdated(function(Set $set, array $state){
                                 $inventory = 0;
-                                foreach($state as $item){
-                                    $inventory += $item['inventory'];
+                                foreach($state as $detail){
+                                    $inventory += $detail['inventory'];
                                 }
                                 
                                 $set('inventory', $inventory);

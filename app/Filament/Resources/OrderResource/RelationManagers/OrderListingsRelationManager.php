@@ -5,6 +5,7 @@ namespace App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Detail;
 use App\Models\Listing;
 use App\Models\OrderListing;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -48,7 +49,13 @@ class OrderListingsRelationManager extends RelationManager
                             // dd($detail, $result);
                             return $result;
                         }) -> required(),
-                TextInput::make('quantity') -> numeric() -> required(),
+                TextInput::make('quantity') -> numeric() -> required() -> rules([
+                    fn (Get $get) : Closure => function(string $attribute, $value, Closure $fail) use ($get){
+                        $detail = Detail::find($get('detail.color'));
+                        if($detail -> inventory < $value)
+                            $fail('Not enough inventory');
+                    }
+                ]),
             ]);
     }
 

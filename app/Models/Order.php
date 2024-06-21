@@ -13,7 +13,7 @@ class Order extends Model
     use HasFactory;
     public $withTimestamps = true;
     protected $with = ['orderListings', 'details'];
-    protected $fillable = ['paymentType', 'customer_id'];
+    protected $fillable = ['payment_type', 'customer_id', 'amount_paid'];
 
     public function customer() : BelongsTo{
         return $this -> belongsTo(Customer::class);

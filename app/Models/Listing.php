@@ -14,7 +14,7 @@ class Listing extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','description','vendor_id', 'weight', 'initPrice', 'subsection_id'];
+    protected $fillable = ['name','description','vendor_id', 'weight', 'init_price', 'subsection_id'];
     protected $casts = [
         'images' => 'array',
     ];
@@ -85,7 +85,7 @@ class Listing extends Model
         return $productCode;
     }
     public function getProductPriceCodeAttribute(){
-        return Listing::priceCode($this -> initPrice);
+        return Listing::priceCode($this -> init_price);
     }
     public function getStockAttribute(){
         $stock = 0;

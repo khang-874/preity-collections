@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->float('initPrice');
+            $table->float('init_price');
             $table->float('weight');
             $table->text('images');
             $table -> unsignedBigInteger('subsection_id');

@@ -14,6 +14,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -45,10 +47,20 @@ class OrderResource extends Resource
                 TextColumn::make('customer.firstName') -> label("Customer's name"),
                 TextColumn::make('created_at') -> date(),
                 TextColumn::make('paymentType'),
+                TextColumn::make('subtotal'),
                 TextColumn::make('total') -> numeric(),
             ])
             ->filters([
                 //
+                // Filter::make('pending') -> query(fn (Builder $query) : Builder => $query -> where('paymentType', 'pending')),
+                SelectFilter::make('paymentType') 
+                        -> options([
+                            'pending' => 'Pending',
+                            'credit' => 'Credit',
+                            'debit' => 'Debit',
+                            'cash' => 'Cash',
+                        ])
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

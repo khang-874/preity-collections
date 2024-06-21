@@ -10,6 +10,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Livewire\Counter;
 use App\Mail\MyTestMail;
 use App\Mail\NewOrder;
 use App\Models\Category;
@@ -119,3 +120,4 @@ Route::post('/authenticate', [UserController::class, 'authenticate']);
 
 //Logout user
 Route::post('/logout', [UserController::class, 'logout']);
+

@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -27,10 +28,10 @@ class CustomerResource extends Resource
         return $form
             ->schema([
                 //
-                TextInput::make('firstName'),
-                TextInput::make('lastName'),
-                TextInput::make('phoneNumber') -> required(),
-                TextInput::make('amountOwed') -> numeric(),
+                TextInput::make('first_name'),
+                TextInput::make('last_name'),
+                TextInput::make('phone_number') -> required(),
+                TextInput::make('amount_owe') -> numeric(),
             ]);
     }
 
@@ -39,13 +40,14 @@ class CustomerResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('firstName'),
-                TextColumn::make('lastName'),
-                TextColumn::make('phoneNumber'),
-                TextColumn::make('amountOwed') -> label('Amoun owed ($CAD)'),
+                TextColumn::make('first_name'),
+                TextColumn::make('last_name'),
+                TextColumn::make('phone_number'),
+                TextColumn::make('amount_owe') -> label('Amount owe ($CAD)'),
             ])
             ->filters([
                 //
+                Filter::make('owe') -> query(fn(Builder $query) : Builder => $query -> where('amount_owe', '>', 0)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

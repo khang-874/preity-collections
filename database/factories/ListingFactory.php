@@ -28,7 +28,7 @@ class ListingFactory extends Factory
                 $element = fake() -> picsumUrl();
                 return $element;
             }, array_fill(0, 3, '')), 
-            'initPrice' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
+            'init_price' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
         ];
     }
 }
