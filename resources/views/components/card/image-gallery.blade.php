@@ -10,7 +10,11 @@
    @foreach ($listing->images as $image)
       <div x-show="activeSlide === {{$count++}}"
                {{$attributes->merge(['class' => 'h-40 flex items-center justify-center'])}}>
-               <img x-cloak src='{{$image}}' class='object-cover h-full overflow-hidden'/>
+               @if (Storage::exists($image))
+                  <img x-cloak src='{{Storage::url($image)}}' class='object-cover h-full overflow-hidden'/>
+               @else
+                  <img x-cloak src='{{$image}}' class='object-cover h-full overflow-hidden'/>
+               @endif
       </div>   
    @endforeach
 

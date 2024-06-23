@@ -70,7 +70,9 @@ class ListingResource extends Resource
                 FileUpload::make('images') 
                             -> image() 
                             -> multiple()
+                            -> disk('public')
                             -> directory('photos')
+                            -> visibility('public')
                             -> downloadable()
                             -> columnSpanFull(),
                 Repeater::make('details') 

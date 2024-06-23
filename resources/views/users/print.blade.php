@@ -27,11 +27,12 @@
                 <h1 style="word-wrap: wrap break-word; width:100%;">PREITY COLLECTION</h1>
                 <h3>SN: {{$listing -> productId}}</h3>
                 <h3>Price Code: {{$listing -> productPriceCode}}</h3>
-                <h3>Sice: {{$detail -> size}}</h3>
+                <h3>Size: {{$detail -> size}}</h3>
                 <h3>Color: {{$detail -> color}}</h3>
                 <h2>MRP: ${{$listing -> sellingPrice}}</h2>
                 <h3>Made in India</h3>
-                <div style="display:flex; justify-content:center;">@php echo $detail -> barcode @endphp</div>
+                {{-- <div style="display:flex; justify-content:center;">@php echo $detail -> barcode @endphp</div> --}}
+                <h3>Dry clean only</h3>
             </div>
         @endforeach
     </div>

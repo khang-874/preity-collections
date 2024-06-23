@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Listing;
+use App\Observers\ListingObserver;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Model::unguard();
+        Listing::observe(ListingObserver::class);
     }
 }

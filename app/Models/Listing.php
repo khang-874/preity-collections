@@ -43,7 +43,7 @@ class Listing extends Model
     }
     
     public function getSellingPriceAttribute(){
-        return Listing::sellingPrice($this -> initPrice);
+        return Listing::sellingPrice($this -> init_price);
     }
     public function getAvailableAttribute(){
         $total = 0;
