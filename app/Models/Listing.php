@@ -54,15 +54,7 @@ class Listing extends Model
             return false;
         return true;
     }
-    public function getProductIdAttribute(){
-       $words = explode(' ', $this -> subsection -> name); 
-       $acronym = "";
-       foreach($words as $word){
-            $acronym .= mb_substr($word, 0, 1);
-       }
-       $acronym .= $this -> id;
-       return $acronym;
-    } 
+    
     static function priceCode(float $initPrice) : string{
         $price = round($initPrice / 5);
         $code = [

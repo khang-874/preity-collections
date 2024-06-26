@@ -29,8 +29,8 @@ class SubsectionResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('section_id') -> relationship(name:'section', titleAttribute:'name'),
-                TextInput::make('name'),
+                Select::make('section_id') -> relationship(name:'section', titleAttribute:'name') -> required(),
+                TextInput::make('name') -> required(),
             ]) -> columns(1);
     }
 

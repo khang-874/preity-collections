@@ -27,7 +27,7 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
+                TextInput::make('name') -> required(),
             ]);
     }
 

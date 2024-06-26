@@ -31,7 +31,7 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('phoneNumber') -> relationship(name:'customer', titleAttribute:'phoneNumber') -> searchable() -> required(),
+                Select::make('phone_number') -> relationship(name:'customer', titleAttribute:'phone_number') -> searchable() -> required(),
                 // Repeater::make('listings') -> relationship('listings')
                 //             -> schema([
                 //                 // Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
@@ -46,7 +46,7 @@ class OrderResource extends Resource
                 //
                 TextColumn::make('customer.firstName') -> label("Customer's name"),
                 TextColumn::make('created_at') -> date(),
-                TextColumn::make('paymentType'),
+                TextColumn::make('payment_type'),
                 TextColumn::make('subtotal'),
                 TextColumn::make('total') -> numeric(),
             ])

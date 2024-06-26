@@ -28,8 +28,9 @@ class SectionResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('category_id') -> relationship(name:'category', titleAttribute:'name'),
-                TextInput::make('name'),
+                Select::make('category_id') -> relationship(name:'category', titleAttribute:'name') -> required(),
+                TextInput::make('name') -> required(),
+                TextInput::make('serial_number') -> disabled(),
             ]) -> columns(1);
     }
 
@@ -39,6 +40,7 @@ class SectionResource extends Resource
             ->columns([
                 //
                 TextColumn::make('name'),
+                TextColumn::make('serial_number'),
             ])
             ->filters([
                 //

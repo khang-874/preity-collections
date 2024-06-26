@@ -15,13 +15,12 @@ class ListingChart extends ChartWidget
     {
     $trend = DB::table('listings')
                 -> join('details', 'details.listing_id', '=', 'listings.id')
-                -> selectRaw('sum(details.inventory) as sum')
-                -> groupBy('listings.id')
+                -> selectRaw('sum(details.sold) as sum')
                 -> get();
                 // -> groupBy('listings.id')
                 // -> get();
     
-    dd($trend);
+    // dd($trend);
 
     return [
             //

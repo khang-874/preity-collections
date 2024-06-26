@@ -31,7 +31,7 @@ class SubsectionsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name') -> sortable(),
             ])
             ->filters([
                 //
@@ -41,7 +41,7 @@ class SubsectionsRelationManager extends RelationManager
             ])
             ->actions([
                 Action::make('View Subsection')
-                    -> url(fn(Subsection $subsection) : string => '/admin/sections/' . $subsection-> id . '/edit'),
+                    -> url(fn(Subsection $subsection) : string => '/admin/subsections/' . $subsection-> id . '/edit'),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

@@ -7,12 +7,15 @@ use App\Filament\Resources\ListingResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Listing;
 use App\Models\Section;
+use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -62,10 +65,11 @@ class ListingResource extends Resource
                         -> label('Selling price') 
                         -> disabled(),
                 TextInput::make('priceCode') -> disabled(),
+                TextInput::make('serial_number') -> hidden(fn(string $operation) : bool => $operation === 'create') -> disabled(),
                 TextInput::make('weight') -> label('Weight (KG)') -> numeric() -> default(1.0),
                 TextInput::make('inventory') -> numeric() -> default(1) -> disabled(),
                 Select::make('vendor_id') -> relationship(name:'vendor', titleAttribute:'name') -> required(), 
-                Select::make('subsection_id') -> relationship(name:'subsection', titleAttribute:'name') -> searchable() -> required(),
+                Select::make('subsection_id') -> relationship(name:'subsection', titleAttribute:'name') -> required(),
                 Textarea::make('description') -> autosize() -> columnSpanFull(),
                 FileUpload::make('images') 
                             -> image() 
@@ -78,8 +82,8 @@ class ListingResource extends Resource
                 Repeater::make('details') 
                             -> relationship('details')
                             -> schema([
-                                TextInput::make('size'),
-                                TextInput::make('color'),
+                                TextInput::make('size') -> required(),
+                                TextInput::make('color') -> required(),
                                 TextInput::make('inventory') 
                                     -> numeric() 
                                     -> default(1)
@@ -135,6 +139,7 @@ class ListingResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('serial_number') -> searchable(),
                 TextColumn::make('name') -> label('Listing name') -> searchable(),
                 TextColumn::make('vendor.name'),
                 ImageColumn::make('images'),
@@ -145,11 +150,16 @@ class ListingResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('View')
+                    -> icon('heroicon-m-eye')
+                    -> url(fn(Listing $listing) : string => '/listings/' . $listing -> id)
+                    -> openUrlInNewTab(),
                 Tables\Actions\Action::make('print tag')
-                -> icon('heroicon-m-printer')
-                -> url(fn(Listing $record) : string => route('print', ['listingId' => $record->id]))
-                -> openUrlInNewTab(),
+                    -> icon('heroicon-m-printer')
+                    -> url(fn(Listing $record) : string => route('print', ['listingId' => $record->id]))
+                    -> openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
