@@ -11,12 +11,14 @@ use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section as ComponentsSection;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -26,6 +28,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action as ActionsAction;
+use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -45,26 +48,35 @@ class ListingResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->label('Product name')->required(),
-                TextInput::make('init_price') 
-                    -> label('Price(INR)') 
-                    -> numeric() 
-                    -> live(onBlur:true) 
-                    -> afterStateUpdated(function($state, Set $set){
-                        $set('sellingPrice', Listing::sellingPrice($state));
-                        $set('priceCode', Listing::priceCode($state));
-                    }) 
-                    -> afterStateHydrated(function($state, Set $set){
-                        if(!$state){
-                            return;
-                        }
-                        $set('sellingPrice', Listing::sellingPrice($state));
-                        $set('priceCode', Listing::priceCode($state)); 
-                    })
-                    -> required(),
-                TextInput::make('sellingPrice') 
-                        -> label('Selling price') 
-                        -> disabled(),
-                TextInput::make('priceCode') -> disabled(),
+                Fieldset::make('Price') -> schema([
+                    TextInput::make('init_price') 
+                        -> label('Price(INR)') 
+                        -> numeric() 
+                        -> live(onBlur:true) 
+                        -> afterStateUpdated(function($state, Set $set, Get $get){
+                            $set('sellingPrice', Listing::sellingPrice($state, $get('sale_percentage')));
+                            $set('priceCode', Listing::priceCode($state));
+                        }) 
+                        -> afterStateHydrated(function($state, Set $set, Get $get){
+                            if(!$state){
+                                return;
+                            }
+                            $set('sellingPrice', Listing::sellingPrice($state, $get('sale_percentage')));
+                            $set('priceCode', Listing::priceCode($state)); 
+                        })
+                        -> required(), 
+                    // TextInput::make('priceCode') -> disabled(),
+                    TextInput::make('sale_percentage') -> numeric() -> default(0) -> required() -> live(onBlur:true), 
+                    Checkbox::make('is_clearance') -> inline() -> label('On clearance'),
+                    Placeholder::make('sellingPrice') 
+                            -> content(function(Get $get) : string{
+                                return Listing::sellingPrice($get('init_price'), $get('sale_percentage') == '' ? 0 : $get('sale_percentage'));
+                            }),
+                    Placeholder::make('priceCode')
+                            -> content(function(Get $get) : string{
+                                return Listing::priceCode($get('init_price'));
+                            })
+                ]) -> columns(3),
                 TextInput::make('serial_number') -> hidden(fn(string $operation) : bool => $operation === 'create') -> disabled(),
                 TextInput::make('weight') -> label('Weight (KG)') -> numeric() -> default(1.0),
                 TextInput::make('inventory') -> numeric() -> default(1) -> disabled(),
@@ -132,7 +144,7 @@ class ListingResource extends Resource
                                 $set('inventory', $inventory);
                             }),
                     
-            ]);
+            ]) -> columns(2);
     }
 
     public static function table(Table $table): Table
@@ -143,11 +155,13 @@ class ListingResource extends Resource
                 TextColumn::make('name') -> label('Listing name') -> searchable(),
                 TextColumn::make('vendor.name'),
                 ImageColumn::make('images'),
+                TextColumn::make('sellingPrice'),
                 TextColumn::make('details_sum_sold') -> label('Sold') -> sum('details', 'sold') -> sortable(),
                 TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory') -> sortable()
             ])
             ->filters([
                 //
+                Filter::make('is_clearance') -> query(fn(Builder $query) : Builder => $query -> where('is_clearance' , true)),
             ])
             ->actions([
                 Tables\Actions\Action::make('View')

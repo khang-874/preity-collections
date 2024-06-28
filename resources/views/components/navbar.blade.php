@@ -31,5 +31,19 @@
                     @endforeach
             </x-navbar-card>
         @endforeach 
+    <x-navbar-card showVariable="showOnclearance" outsideDivStyle='' insideDiveStyle='' link='/?isClearance=true' name="Clearance">
+        @foreach($categories as $category) 
+            <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}?isClearance=true" name="{{$category -> name}}">
+                    @foreach ($category -> sections as $section)
+                        <x-navbar-card showVariable="showSubsection" outsideDivStyle='border-t-2 py-2 pl-4' insideDivStyle='flex flex-col' link="/?section={{$section->id}}?isClearance=true" name="{{$section->name}}">
+                            @foreach($section -> subsections as $subsection)
+                                <a class="w-full pl-2 py-1 border-t-2"href="/?subsection={{$subsection->id}}?isClearance=true">{{$subsection -> name}}</a>
+                            @endforeach
+                        </x-navbar-card>
+                    @endforeach
+            </x-navbar-card>
+        @endforeach 
+
+    </x-navbar-card>
     </div> 
 </div>

@@ -17,6 +17,7 @@ class Listing extends Model
     protected $fillable = ['name','description','vendor_id', 'weight', 'init_price', 'subsection_id'];
     protected $casts = [
         'images' => 'array',
+        'is_clearance' => 'boolean',
     ];
     
     protected $with = ['details'];
@@ -38,12 +39,14 @@ class Listing extends Model
     static function roundToNearest($x):float{
         return round($x / 5) * 5;
     }
-    static function sellingPrice(float $price) : float{
-        return Listing::roundToNearest(($price / 55) * 2.5) - 0.01; 
+    static function sellingPrice(float $price, float $sale_percentage) : float{
+        if($sale_percentage == '' || $sale_percentage == null)
+            $sale_percentage = 0;
+        return Listing::roundToNearest(Listing::roundToNearest(($price / 55) * 2.5) * ((100 - $sale_percentage) / 100))- 0.01; 
     }
     
     public function getSellingPriceAttribute(){
-        return Listing::sellingPrice($this -> init_price);
+        return Listing::sellingPrice($this -> init_price, $this -> sale_percentage);
     }
     public function getAvailableAttribute(){
         $total = 0;
@@ -132,6 +135,9 @@ class Listing extends Model
         }
         if($filters['search'] ?? false){
             $query -> where('listings.name', 'like', '%' . request('search') . '%');
+        }
+        if($filters['isClearance'] ?? false){
+            $query -> where('listings.isClearance', '=', false);
         }
     }
 }
