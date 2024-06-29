@@ -32,10 +32,14 @@ use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint\Operators\EqualsOperator;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\DB;
 
 class ListingResource extends Resource
 {
@@ -161,7 +165,31 @@ class ListingResource extends Resource
             ])
             ->filters([
                 //
-                Filter::make('is_clearance') -> query(fn(Builder $query) : Builder => $query -> where('is_clearance' , true)),
+                Filter::make('on_clearance') -> query(function(Builder $query) : Builder {
+                    $query -> where('is_clearance' , true);
+                    return $query;
+                }),
+                Filter::make('on_sale') -> query(fn(Builder $query) : Builder => $query -> where('sale_percentage', '>' ,'0')),
+                Filter::make('sell_out') -> query(function(Builder $query) : Builder{
+                    $tmpQuery = clone $query;
+                    $queryData = $tmpQuery -> join('details', 'details.listing_id', '=', 'listings.id')
+                                        -> selectRAW('sum(details.inventory) as inventory, listings.*')
+                                        -> groupBy('listings.id')
+                                        -> having('inventory', '=', '0')
+                                        -> get(); 
+                    $query -> whereIn('id', $queryData -> pluck('id') -> toArray());
+                    return $query;
+                }), 
+                Filter::make('on_inventory') -> query(function(Builder $query) : Builder{
+                    $tmpQuery = clone $query;
+                    $queryData = $tmpQuery -> join('details', 'details.listing_id', '=', 'listings.id')
+                                        -> selectRAW('sum(details.inventory) as inventory, listings.*')
+                                        -> groupBy('listings.id')
+                                        -> having('inventory', '>', '0')
+                                        -> get(); 
+                    $query -> whereIn('id', $queryData -> pluck('id') -> toArray());
+                    return $query;
+                })
             ])
             ->actions([
                 Tables\Actions\Action::make('View')

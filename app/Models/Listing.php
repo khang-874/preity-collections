@@ -82,12 +82,12 @@ class Listing extends Model
     public function getProductPriceCodeAttribute(){
         return Listing::priceCode($this -> init_price);
     }
-    public function getStockAttribute(){
-        $stock = 0;
+    public function getInventoryAttribute(){
+        $inventory = 0;
         foreach($this -> details as $detail){
-            $stock += $detail -> inventory;
+            $inventory += $detail -> inventory;
         }
-        return $stock;
+        return $inventory;
     }
     public function scopeSize($query, $size){
        //Filter based on size 
