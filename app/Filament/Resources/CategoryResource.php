@@ -8,6 +8,7 @@ use App\Filament\Resources\CategoryResource\RelationManagers\SectionsRelationMan
 use App\Models\Category;
 use App\Models\Section;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -36,6 +37,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
+                TextColumn::make('index'),
             ])
             ->filters([
                 //
@@ -47,7 +49,9 @@ class CategoryResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            -> reorderable('index')
+            -> defaultSort('index');
     }
 
     public static function getRelations(): array
