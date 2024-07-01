@@ -14,12 +14,12 @@
             <p>Categories</p>
             <button @click="$store.showMenu.toggle()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        @auth
+        {{-- @auth
             <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
             <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Miscellaneous</button></a>
             <a href="/customers" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage customers</button></a>
             <a href="/orders" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage orders</button></a>
-        @endauth
+        @endauth --}}
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">
                     @foreach ($category -> sections as $section)
@@ -31,6 +31,13 @@
                     @endforeach
             </x-navbar-card>
         @endforeach 
+    @php
+        // $categories = $categories -> sortBy(function($category){
+        //     return $category -> index;
+        // });
+        // print_r($categories -> sortBy('index') -> values() -> all());
+    @endphp
+
     <x-navbar-card showVariable="showOnclearance" outsideDivStyle='' insideDiveStyle='' link='/?isClearance=true' name="Clearance">
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}?isClearance=true" name="{{$category -> name}}">

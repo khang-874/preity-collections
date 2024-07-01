@@ -15,7 +15,7 @@ class Category extends Model
     protected $fillable = ['name'];
 
     public function sections():HasMany{
-        return $this->hasMany(Section::class);
+        return $this->hasMany(Section::class) -> orderBy('index');
     }
     
 }

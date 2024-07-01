@@ -13,7 +13,7 @@ class Section extends Model
     protected $fillable = ['name', 'category_id'];
 
     public function subsections(): HasMany{
-        return $this->hasMany(Subsection::class);
+        return $this->hasMany(Subsection::class) -> orderBy('index');
     }
     public function category(): BelongsTo{
         return $this->belongsTo(Category::class);

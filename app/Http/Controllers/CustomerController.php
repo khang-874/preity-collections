@@ -16,7 +16,7 @@ class CustomerController extends Controller
     {
         return view('customers.index', [
             'customers' => Customer::filter(request(['search'])) -> get(),
-            'categories' => Category::all(),
+            'categories' => Category::all() -> sortBy('index'),
         ]);
     }
 
