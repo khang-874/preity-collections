@@ -60,7 +60,7 @@ class OrderController extends Controller
         $request -> validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'phoneNumber' => ['required', 'unique:App\Models\Customer,phoneNumber']
+            'phoneNumber' => ['required', 'unique:App\Models\Customer,phone_number']
             
         ]);
         $firstName = $request -> input('firstName');
@@ -74,19 +74,21 @@ class OrderController extends Controller
             return redirect('/') -> with('message', "You don't have any items in cart");
         }
 
-        $customer = Customer::where('phoneNumber', $phoneNumber) -> firstOr(function() use ($firstName, $lastName, $phoneNumber){
+        $customer = Customer::where('phone_number', $phoneNumber) 
+                            -> orWhere('first_name', $firstName) 
+                            -> firstOr(function() use ($firstName, $lastName, $phoneNumber){
             return Customer::create([
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'phoneNumber' => $phoneNumber,
-                'amountOwed' => 0.0
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'phone_number' => $phoneNumber,
+                'amount_owe' => 0.0
             ]);
         });
 
         $order = Order::create([
-                'paymentType' => $payment,
+                'payment_type' => $payment,
                 'customer_id' => $customer -> id,
-                'amountPaid' => 0
+                'amount_paid' => 0
         ]);
        
         $uniqueItems = $this -> getUniquesItems($items);
@@ -115,8 +117,8 @@ class OrderController extends Controller
         ]);
         
         $customer = $order -> customer;
-        $customer -> amountOwed += $order -> getTotalAttribute() - $request -> input('amount');
-        $order -> paymentType = $request -> input('paymentType');
+        $customer -> amount_owe += $order -> getTotalAttribute() - $request -> input('amount');
+        $order -> payment_type = $request -> input('paymentType');
         $customer -> save();
         $order -> save();
         return redirect('/customers/' . $order -> customer_id) -> with('message', 'Pay for order successfully');

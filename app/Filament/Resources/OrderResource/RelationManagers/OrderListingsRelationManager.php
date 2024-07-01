@@ -68,6 +68,8 @@ class OrderListingsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('detail.size') -> label('Size'),
                 TextColumn::make('detail.color') -> label('color'),
                 TextColumn::make('quantity'),
+                TextColumn::make('listing.sellingPrice') -> label('Selling price'),
+                TextColumn::make('subtotal')
             ])
             ->filters([
                 //

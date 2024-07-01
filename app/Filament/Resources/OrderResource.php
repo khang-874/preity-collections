@@ -10,6 +10,7 @@ use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -31,11 +32,21 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('phone_number') -> relationship(name:'customer', titleAttribute:'phone_number') -> searchable() -> required(),
+                Select::make('phone_number') -> relationship(name:'customer', titleAttribute:'phone_number') -> searchable() -> required() -> disabled(),
                 // Repeater::make('listings') -> relationship('listings')
                 //             -> schema([
                 //                 // Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
                 //             ])
+                TextInput::make('amount_paid'),
+                Select::make('payment_type') 
+                        -> options([
+                            'pending' => 'Pending',
+                            'credit' => 'Credit',
+                            'debit' => 'Debit',
+                            'cash' => 'Cash',
+                        ]),
+                TextInput::make('subtotal') -> disabled(),
+                TextInput::make('total') -> disabled(),
             ]);
     }
 
@@ -44,7 +55,7 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('customer.firstName') -> label("Customer's name"),
+                TextColumn::make('customer.first_name') -> label("Customer's name"),
                 TextColumn::make('created_at') -> date(),
                 TextColumn::make('payment_type'),
                 TextColumn::make('subtotal'),
@@ -53,7 +64,7 @@ class OrderResource extends Resource
             ->filters([
                 //
                 // Filter::make('pending') -> query(fn (Builder $query) : Builder => $query -> where('paymentType', 'pending')),
-                SelectFilter::make('paymentType') 
+                SelectFilter::make('payment_type') 
                         -> options([
                             'pending' => 'Pending',
                             'credit' => 'Credit',

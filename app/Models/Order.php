@@ -27,7 +27,7 @@ class Order extends Model
     public function getSubtotalAttribute() : float{
         $total = 0;
         foreach($this -> orderListings as $orderListing){
-            $total += $orderListing -> listing -> getSellingPriceAttribute();
+            $total += $orderListing -> listing -> getSellingPriceAttribute() * $orderListing -> quantity;
         }
         return $total;
     }

@@ -21,4 +21,7 @@ class OrderListing extends Pivot
     public function detail() : BelongsTo{
         return $this -> belongsTo(Detail::class, 'detail_id');
     }
+    public function getSubtotalAttribute() : float{
+        return $this -> listing -> sellingPrice * $this -> quantity;
+    }
 }
