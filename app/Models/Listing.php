@@ -114,6 +114,11 @@ class Listing extends Model
                 -> distinct();
     }
     
+    public function scopeClearance($query, $isClearance){
+        if($isClearance != null){
+            $query -> where('listings.is_clearance', '=', true);
+        }
+    }
     public function scopeFilter($query, array $filters){
         if($filters['category'] ?? false){
             $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
@@ -136,8 +141,6 @@ class Listing extends Model
         if($filters['search'] ?? false){
             $query -> where('listings.name', 'like', '%' . request('search') . '%');
         }
-        if($filters['isClearance'] ?? false){
-            $query -> where('listings.isClearance', '=', false);
-        }
+        
     }
 }
