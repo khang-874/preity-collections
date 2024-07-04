@@ -3,19 +3,17 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Detail;
-use App\Models\Listing;
 use Filament\Widgets\ChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
-use Illuminate\Support\Facades\DB;
 
-class ListingChart extends ChartWidget
+class SoldListingsChart extends ChartWidget
 {
-    protected static ?string $heading = 'Inventory in each month';
+    protected static ?string $heading = 'Listings sold each month';
 
     protected function getData(): array
-    { 
-        $data = Trend::query(
+    {
+            $data = Trend::query(
                 Detail::query()
             )
             -> between(
@@ -23,13 +21,13 @@ class ListingChart extends ChartWidget
                 end: now()->endOfYear(),
             )
             -> perMonth()
-            -> sum('inventory');
+            -> sum('sold');
  
         return [
                 //
                 'datasets' => [
                     [
-                        'label' => 'Inventory',
+                        'label' => 'sold',
                         'data' => $data -> map(fn (TrendValue $value) => $value -> aggregate),
                         'backgroundColor' => '#36A2EB',
                         'borderColor' => '#9BD0F5',
@@ -37,6 +35,10 @@ class ListingChart extends ChartWidget
                 ],
                 'labels' => $data -> map(fn (TrendValue $value) => $value -> date),
             ];
+
+        return [
+            //
+        ];
     }
 
     protected function getType(): string

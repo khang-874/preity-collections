@@ -80,5 +80,6 @@
         @if(method_exists($listings, "links")) 
             <div class="mt-6 p-4">{{$listings->links()}}</div>
         @endif
+        
     </main>
 </x-layout>

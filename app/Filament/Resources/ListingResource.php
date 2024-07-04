@@ -52,35 +52,21 @@ class ListingResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->label('Product name')->required(),
-                Fieldset::make('Price') -> schema([
-                    TextInput::make('init_price') 
-                        -> label('Price(INR)') 
-                        -> numeric() 
-                        -> live(onBlur:true) 
-                        -> afterStateUpdated(function($state, Set $set, Get $get){
-                            $set('sellingPrice', Listing::sellingPrice($state, $get('sale_percentage')));
-                            $set('priceCode', Listing::priceCode($state));
-                        }) 
-                        -> afterStateHydrated(function($state, Set $set, Get $get){
-                            if(!$state){
-                                return;
-                            }
-                            $set('sellingPrice', Listing::sellingPrice($state, $get('sale_percentage')));
-                            $set('priceCode', Listing::priceCode($state)); 
-                        })
-                        -> required(), 
-                    // TextInput::make('priceCode') -> disabled(),
-                    TextInput::make('sale_percentage') -> numeric() -> default(0) -> required() -> live(onBlur:true), 
-                    Checkbox::make('is_clearance') -> inline() -> label('On clearance'),
-                    Placeholder::make('sellingPrice') 
-                            -> content(function(Get $get) : string{
-                                return Listing::sellingPrice($get('init_price'), $get('sale_percentage') == '' ? 0 : $get('sale_percentage'));
-                            }),
-                    Placeholder::make('priceCode')
-                            -> content(function(Get $get) : string{
-                                return Listing::priceCode($get('init_price'));
-                            })
-                ]) -> columns(3),
+                TextInput::make('init_price') 
+                    -> label('Price(INR)') 
+                    -> numeric() 
+                    -> live(onBlur:true) 
+                    -> required(), 
+                TextInput::make('sale_percentage') -> numeric() -> default(0) -> required() -> live(onBlur:true), 
+                Checkbox::make('is_clearance') -> inline() -> label('On clearance'),
+                Placeholder::make('sellingPrice') 
+                        -> content(function(Get $get) : string{
+                            return Listing::sellingPrice($get('init_price') == null ? 0 : $get('init_price'), $get('sale_percentage') == null ? 0 : $get('sale_percentage'));
+                        }),
+                Placeholder::make('priceCode')
+                        -> content(function(Get $get) : string{
+                            return Listing::priceCode($get('init_price') == null ? 0 : $get('init_price'));
+                        }),
                 TextInput::make('serial_number') -> hidden(fn(string $operation) : bool => $operation === 'create') -> disabled(),
                 TextInput::make('weight') -> label('Weight (KG)') -> numeric() -> default(1.0),
                 TextInput::make('inventory') -> numeric() -> default(1) -> disabled(),
