@@ -8,6 +8,7 @@ use App\Filament\Resources\OrderResource\RelationManagers\ListingsRelationManage
 use App\Filament\Resources\OrderResource\RelationManagers\OrderListingsRelationManager;
 use App\Models\Order;
 use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -45,8 +46,8 @@ class OrderResource extends Resource
                             'debit' => 'Debit',
                             'cash' => 'Cash',
                         ]),
-                TextInput::make('subtotal') -> disabled(),
-                TextInput::make('total') -> disabled(),
+                Placeholder::make('total') 
+                            -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> total),
             ]);
     }
 
@@ -58,8 +59,8 @@ class OrderResource extends Resource
                 TextColumn::make('customer.first_name') -> label("Customer's name"),
                 TextColumn::make('created_at') -> date(),
                 TextColumn::make('payment_type'),
-                TextColumn::make('subtotal'),
                 TextColumn::make('total') -> numeric(),
+                TextColumn::make('amount_paid'),
             ])
             ->filters([
                 //

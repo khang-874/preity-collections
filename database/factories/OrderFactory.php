@@ -18,7 +18,7 @@ class OrderFactory extends Factory
     {
         return [
             'payment_type' => fake() -> randomElement(['cash', 'debit', 'credit']),
-            'amount_paid' => fake() -> randomFloat(2,0, 10)
+            'amount_paid' => fake() -> randomFloat(2,10, 20)
         ];
     }
 }

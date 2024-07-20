@@ -13,13 +13,7 @@
         <div class="p-2 text-lg font-medium flex gap-x-2 border-b-2 mb-2 justify-between">
             <p>Categories</p>
             <button @click="$store.showMenu.toggle()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        {{-- @auth
-            <a href="/listings/create" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Create new listing</button></a>
-            <a href="/manage" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Miscellaneous</button></a>
-            <a href="/customers" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage customers</button></a>
-            <a href="/orders" class=""><button class="p-2 border rounded-sm mb-2 w-full font-medium">Manage orders</button></a>
-        @endauth --}}
+        </div> 
         @foreach($categories as $category) 
             <x-navbar-card showVariable="showSection" outsideDivStyle='p-2 border-2 rounded-sm' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">
                     @foreach ($category -> sections as $section)
@@ -30,13 +24,7 @@
                         </x-navbar-card>
                     @endforeach
             </x-navbar-card>
-        @endforeach 
-    @php
-        // $categories = $categories -> sortBy(function($category){
-        //     return $category -> index;
-        // });
-        // print_r($categories -> sortBy('index') -> values() -> all());
-    @endphp
+        @endforeach  
 
     <x-navbar-card showVariable="showOnclearance" outsideDivStyle='' insideDiveStyle='' link='/?isClearance=true' name="Clearance">
         @foreach($categories as $category) 

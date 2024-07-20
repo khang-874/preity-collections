@@ -44,22 +44,36 @@ class DatabaseSeeder extends Seeder
 
         $listings = Listing::all(); 
 
-        Customer::factory(10) -> has(Order::factory(5)) -> create();
-        $orders = Order::all();
-        $details = Detail::all();
-        foreach($orders as $order){
-            $randomListings = $listings -> random(rand(2,5)) -> unique();
-            foreach($randomListings as $listing){
-                $details = $listing -> details;
-                foreach($details as $detail){
-                    OrderListing::factory(1) -> create([
-                        'detail_id' => $detail -> id,
-                        'listing_id' => $listing -> id,
-                        'order_id' => $order -> id,
-                        'quantity' => random_int(1, $detail -> inventory),
-                    ]);
-                }
-            } 
-        };
+        Customer::factory(10) -> has(Order::factory(5) -> has(OrderListing::factory(rand(3,8)) -> state(function() use ($listings){
+            $listing = $listings -> random(1) -> get('0');
+            $detail = $listing -> details -> random(1) -> get('0'); 
+            return [
+                'detail_id' => $detail -> id,
+                'listing_id' => $listing -> id,
+                'quantity' => random_int(1, $detail -> inventory),
+            ];
+        }))) -> create();
+        $customer = Customer::all() -> random(1) -> get('0');
+        $amount_owe = 0;
+        foreach($customer -> orders as $order){
+            $amount_owe += $order -> remaining;
+        }
+        dd($customer -> amount_owe, $amount_owe);
+        // $orders = Order::all();
+        // $details = Detail::all();
+        // foreach($orders as $order){
+        //     $randomListings = $listings -> random(rand(2,5)) -> unique();
+        //     foreach($randomListings as $listing){
+        //         $details = $listing -> details;
+        //         foreach($details as $detail){
+        //             OrderListing::factory(1) -> create([
+        //                 'detail_id' => $detail -> id,
+        //                 'listing_id' => $listing -> id,
+        //                 'order_id' => $order -> id,
+        //                 'quantity' => random_int(1, $detail -> inventory),
+        //             ]);
+        //         }
+        //     } 
+        // };
     }
 }

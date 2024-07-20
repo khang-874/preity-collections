@@ -1,11 +1,12 @@
-<div class='w-full h-24 flex justify-between items-center px-[10%] bg-white drop-shadow-md'>
+<div class='w-full h-16 flex justify-between items-center px-[10%] bg-white'>
     <div class='flex items-center gap-3'>
-        <button x-data @click="$store.showMenu.toggle()"><i class="fa-solid fa-bars fa-lg"></i></button>
-        <a href="/" class="w-14 font-serif font-bold">
+        <button x-data @click="$store.showMenu.toggle()" class="md:hidden"><i class="fa-solid fa-bars fa-lg"></i></button>
+        <a href="/" class="w-max font-serif font-bold text-3xl">
             Preity's Collection
         </a>
     </div>
-    
+   
+    {{-- {{$slot}} --}}
     
     <ul class="flex gap-4 items-center">
         <li class="h-full"><x-search></x-search></li>

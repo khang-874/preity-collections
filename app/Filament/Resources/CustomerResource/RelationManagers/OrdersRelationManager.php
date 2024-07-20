@@ -8,6 +8,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,10 @@ class OrdersRelationManager extends RelationManager
             ->recordTitleAttribute('created_at')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at') -> dateTime(),
+                TextColumn::make('total'),
+                TextColumn::make('amount_paid'),
+                TextColumn::make('remaining'),
+                TextColumn::make('payment_type')
             ])
             ->filters([
                 //

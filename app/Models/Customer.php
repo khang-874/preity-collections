@@ -14,7 +14,7 @@ class Customer extends Model
     protected $fillable = ['first_name', 'last_name', 'phone_number', 'amount_owe'];
     public function orders() : HasMany{
         return $this -> hasMany(Order::class);
-    }
+    } 
     // public function scopeFilter($query , array $filters){
     //     if($filters['search'] ?? false){
     //         $query  -> select('customers.*')

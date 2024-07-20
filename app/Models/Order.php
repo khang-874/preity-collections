@@ -33,6 +33,10 @@ class Order extends Model
     }
 
     public function getTotalAttribute() : float{
-        return $this -> getSubTotalAttribute() * 1.13;
+        return round($this -> getSubTotalAttribute() * 1.13, 2);
+    }
+
+    public function getRemainingAttribute() : float{
+        return round($this -> total - $this -> amount_paid, 2);
     }
 }

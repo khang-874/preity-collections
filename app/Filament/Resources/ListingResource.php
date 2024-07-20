@@ -144,10 +144,10 @@ class ListingResource extends Resource
                 TextColumn::make('serial_number') -> searchable(),
                 TextColumn::make('name') -> label('Listing name') -> searchable(),
                 TextColumn::make('vendor.name'),
-                ImageColumn::make('images'),
                 TextColumn::make('sellingPrice'),
                 TextColumn::make('details_sum_sold') -> label('Sold') -> sum('details', 'sold') -> sortable(),
-                TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory') -> sortable()
+                TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory') -> sortable(),
+                TextColumn::make('subsection.section.name') -> searchable()
             ])
             ->filters([
                 //
@@ -175,7 +175,17 @@ class ListingResource extends Resource
                                         -> get(); 
                     $query -> whereIn('id', $queryData -> pluck('id') -> toArray());
                     return $query;
-                })
+                }),
+                Filter::make('section')
+                    -> form([
+                        Select::make('section'),
+                    ])
+                    -> query(function (Builder $query, array $data) : Builder{
+                        return $query -> when(
+                            $data['section'],
+                            fn (Builder $query, string $name) : Builder => $query -> where('name', '=', $name)
+                        );
+                    })
             ])
             ->actions([
                 Tables\Actions\Action::make('View')

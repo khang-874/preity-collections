@@ -5,6 +5,13 @@ export default {
     './vendor/**/*.php'
   ],
   theme: {
+    fontFamily: {
+      sans: [
+        'Montserrat',
+        // 'Roboto',
+        'sans-serif',
+      ],
+    },
     extend: {},
   },
   plugins: [],

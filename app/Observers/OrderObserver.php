@@ -12,7 +12,22 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        //
+        
+        if($order -> payment_type != 'pending'){
+            //Updating inventory and sold
+            foreach($order -> orderListings as $orderListing){
+                $orderListing -> detail -> inventory -= $orderListing -> quantity;
+                $orderListing -> detail -> sold += $orderListing -> quantity;
+                $orderListing -> detail -> save();
+            } 
+            $customer = $order -> customer;
+            $amount_owe = 0;
+            foreach($customer -> orders as $order){
+                $amount_owe += $order -> remaining;
+            }
+            $customer -> amount_owe = $amount_owe;
+            $customer -> save();
+        }
     }
 
     /**
@@ -30,6 +45,13 @@ class OrderObserver
                 $orderListing -> detail -> sold += $orderListing -> quantity;
                 $orderListing -> detail -> save();
             } 
+            $customer = $order -> customer;
+            $amount_owe = 0;
+            foreach($customer -> orders as $order){
+                $amount_owe += $order -> remaining;
+            }
+            $customer -> amount_owe = $amount_owe;
+            $customer -> save();
         }
         Log::debug('Processing new order');
     }
