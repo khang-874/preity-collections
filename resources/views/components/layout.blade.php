@@ -58,7 +58,7 @@
 
     @livewireStyles
 </head>
-<body class="mb-48 bg-gray-50">
+<body class="mb-48">
     {{$slot}} 
  
     <x-flash-message></x-flash-message>
