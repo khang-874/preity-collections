@@ -90,10 +90,11 @@ class Listing extends Model
         return $inventory;
     }
     public function scopeSize($query, $size){
-       //Filter based on size 
+        //Filter based on size 
+        $query -> join('details', 'listings.id', '=', 'details.listing_id');
         if($size != null){
-            $query -> join('details', 'listings.id', '=', 'details.listing_id')
-                    -> where('details.size', '=', $size);
+            // dd($query -> joins);
+            $query -> whereIn('details.size', $size);
         }
     }
     public function scopeAllSize($query){
@@ -104,8 +105,8 @@ class Listing extends Model
     public function scopeColor($query, $color){
        //Filter based on color
         if($color != null){
-            $query -> join('details', 'listings.id', '=', 'details.listing_id')
-                    -> where('details.color', '=', $color);
+            // dd($query -> joins);
+            $query -> whereIn('details.color', $color);
         }
     }
     public function scopeAllColor($query){

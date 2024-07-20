@@ -10,8 +10,8 @@
                 <a href="/?category={{$category -> id}}" class="text-base rounded-md" :class="openCategory ? 'font-semibold' : ''">{{$category -> name}}</a>
                 <ul x-show="openCategory"
                     x-transition:enter="transition ease-out duration-500 transform"
-                    x-transition:enter-start="opacity-0 -translate-y-2"
-                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:enter-start="opacity-0 "
+                    x-transition:enter-end="opacity-100"
                     x-transition:leave="transition ease-out duration-200"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"

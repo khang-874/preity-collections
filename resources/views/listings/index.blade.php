@@ -17,11 +17,13 @@
             }
         @endphp
         <div class="flex gap-6"> 
-            <div class="hidden lg:block basis-2/12 flex-grow bg-white h-full pl-[2%]">
-                <x-filters :items="$stdSizes" property="size"></x-filters>
-                <x-filters :items="$stdColors" property="color"></x-filters>
+            <div class="hidden md:block basis-2/12 flex-grow bg-white h-full pl-[2%]">
+                {{-- <x-filters :items="$stdSizes" property="size"></x-filters> --}}
+                {{-- <x-filters :items="$stdColors" property="color"></x-filters> --}}
+                <livewire:filters :options="$stdSizes" property="size"/>
+                <livewire:filters :options="$stdColors" property="color"/>
             </div>
-            <div class="lg:w-10/12">
+            <div class="md:w-9/12 lg:w-10/12">
                 <x-layouts.index-title></x-layouts.index-title>
                 <div class="flex flex-wrap gap-1">
                     @unless(count($listings) == 0)

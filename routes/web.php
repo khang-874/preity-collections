@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 //Get all listing
-Route::get('/', [ListingController::class, 'index']);
+Route::get('/', [ListingController::class, 'index']) -> name('listings.index');
 
 //show create form
 Route::get('/listings/create', [ListingController::class, 'create']) -> middleware('auth');
@@ -54,8 +54,8 @@ Route::delete('/details/{detail}', [DetailController::class, 'destroy']) -> midd
 //Create new deatil
 Route::post('/details', [DetailController::class, 'create']) -> middleware('auth');
 
-//Delete image
-Route::delete('/images/{image}' , [ImageController::class, 'destroy']) -> middleware('auth');
+// //Delete image
+// Route::delete('/images/{image}' , [ImageController::class, 'destroy']) -> middleware('auth');
 
 //Display pending order
 Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
@@ -106,14 +106,14 @@ Route::post('/subsections', [SubsectionController::class, 'store']) -> middlewar
 //Delete a subsection
 Route::delete('/subsections/{subsection}', [SubsectionController::class, 'delete']) -> middleware('auth');
 
-//View all listings belonged to a vendor
-Route::get("/vendors/{vendor}", [VendorController::class, 'show']) -> middleware('auth');
+// //View all listings belonged to a vendor
+// Route::get("/vendors/{vendor}", [VendorController::class, 'show']) -> middleware('auth');
 
-//Delete a vendor
-Route::delete('/vendors/{vendor}', [VendorController::class, 'delete']) -> middleware('auth');
+// //Delete a vendor
+// Route::delete('/vendors/{vendor}', [VendorController::class, 'delete']) -> middleware('auth');
 
-//Create new vendor
-Route::post('/vendors', [VendorController::class, 'store']) -> middleware('auth');
+// //Create new vendor
+// Route::post('/vendors', [VendorController::class, 'store']) -> middleware('auth');
 
 //Authenticate user
 Route::post('/authenticate', [UserController::class, 'authenticate']);
