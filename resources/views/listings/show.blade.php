@@ -7,10 +7,10 @@
     <x-navbar :categories="$categories"></x-navbar>
        <main> 
             <div class="px-2 lg:mx-[10%] lg:flex lg:flex-wrap lg:gap-2 mt-2">
-                <div class='h-full lg:flex-grow lg:basis-[50%]'>            
+                <div class='h-full md:flex-grow md:basis-[20rem]'>            
                     <x-card.image-gallery class='!w-full !h-full' :listing="$listing" cover="bg-white drop-shadow-md"></x-card.image-gallery>
                 </div>
-                <div class="bg-white drop-shadow-md p-2 lg:flex-grow lg:basis-[45%]">
+                <div class="bg-white drop-shadow-md p-2 lg:flex-grow">
                     <div>
                         <h4 class="w-full font-medium text-xl">{{$listing -> name}}</h4>
                         <p class="font-medium">CA$ {{$listing -> selling_price}}</p>

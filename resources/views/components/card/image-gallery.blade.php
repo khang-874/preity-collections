@@ -9,11 +9,11 @@
 <div x-data = "{activeSlide: 0}" class="relative w-full h-auto {{$cover}}">
    @foreach ($listing->images as $image)
       <div x-show="activeSlide === {{$count++}}"
-               {{$attributes->merge(['class' => 'h-40 flex items-center justify-center'])}}>
+               {{$attributes->merge(['class' => 'w-full flex items-center justify-center'])}}>
                @if (Storage::exists($image))
-                  <img x-cloak src='{{Storage::url($image)}}' class='object-cover h-full overflow-hidden'/>
+                  <img x-cloak src='{{Storage::url($image)}}' class='object-none w-full object-center'/>
                @else
-                  <img x-cloak src='{{$image}}' class='object-cover h-full overflow-hidden'/>
+                  <img x-cloak src='{{$image}}' class='object-none w-full object-center'/>
                @endif
       </div>   
    @endforeach

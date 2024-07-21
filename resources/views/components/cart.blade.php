@@ -6,38 +6,52 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 translate-x-1/2"        
-            class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm ml-auto overflow-y-scroll pb-8"
+            class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm ml-auto overflow-y-scroll grid gap-y-1"
+            style="grid-template-rows: auto 1fr auto;"
             @click.outside="$store.showCart.toggle()"> 
-        <div class="p-2 text-lg font-medium flex gap-x-2 border-b-2 mb-2">
+        <div class="p-2 text-lg text-white bg-black font-medium flex gap-x-2 border-b-2">
             <button @click="$store.showCart.toggle()"><i class="fa-solid fa-xmark"></i></button>
             <p>Shopping cart</p>
         </div>
-        <div class="flex flex-col gap-y-2 px-1 justify-center">
+        <div class="flex flex-col overflow-y-scroll  gap-y-2 px-1 items-center">
             <template x-for="(item,index) in $store.cart.items" :key="index">
-                <div x-data="{quantity: item.quantiyt}"class="flex gap-x-2 border-2 p-1 relative">
-                    <img :src="item.imageURL" class="w-24 object-cover"alt="">
-                    <div >
-                        <p x-text="item.name" class="font-medium"></p>    
-                        <p x-text="'Size: ' + item.size"></p>
-                        <p x-text="'Color: ' + item.color"></p>
-                        <p>Quantity: </p>
-                        <div class="flex items-center gap-2">
-                            <i @click="item.quantity++" class="fa-solid fa-plus"></i>
-                            <p x-text="item.quantity"></p>
-                            <i @click="() => {if(item.quantity > 1) item.quantity--;}" class="fa-solid fa-minus"></i>
+                <div class='w-full'>
+                    <div x-data="{quantity: item.quantiyt}"class="flex gap-x-2 relative">
+                        <img :src="item.imageURL" class="w-24 h-auto"alt="">
+                        <div>
+                            <p x-text="item.name" class="font-medium"></p>    
+                            <p x-text="'Size: ' + item.size" class="text-sm"></p>
+                            <p x-text="'Color: ' + item.color" class="text-sm"></p>
+                            <div class="flex gap-2">
+                                <p class="text-sm">Quantity: </p>
+                                <div class="flex items-center gap-2">
+                                    <button @click="item.quantity++" >
+                                        <i class="fa-solid fa-plus fa-sm"></i>
+                                    </button>
+                                    <p x-text="item.quantity" class="text-sm"></p>
+                                    <button @click="() => {
+                                            if(item.quantity > 1) 
+                                                item.quantity--; 
+                                            else
+                                                $store.cart.removeFromCart(index);
+                                        }">
+                                        <i class="fa-solid fa-minus fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p x-text="'CA$ ' + item.price" class="font-semibold"></p>
+                            {{-- <button @click="$store.cart.removeFromCart(index)" class="absolute -top-1 -right-1 text-gray-500"><i class="fa-solid fa-trash"></i></button> --}}
                         </div>
-                        <p x-text="'CA$ ' + item.price" class="font-semibold"></p>
-                        <button @click="$store.cart.removeFromCart(index)" class="absolute -top-1 -right-1 text-gray-500"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             </template> 
         </div>
         <template x-if="$store.cart.items.length != 0">
-            <div class="mx-auto w-fit text-lg font-medium">
-                <div x-text="'Subtotal: $' + $store.cart.getSubtotal().toFixed(2)"></div>
-                <div x-text="'HST: $' + ($store.cart.getSubtotal() * .13).toFixed(2)"></div>
-                <div x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
-                <a href="/placeOrder"><x-button>Order now</x-button></a>
+            <div class="font-medium bottom-0 border-t-2 pb-2">
+                <div class="text-center" x-text="'Subtotal: $' + $store.cart.getSubtotal().toFixed(2)"></div>
+                <div class="text-center" x-text="'HST: $' + ($store.cart.getSubtotal() * .13).toFixed(2)"></div>
+                <div class="text-center font-extrabold" x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
+                <div class="flex justify-center mt-1"><a href="/placeOrder"><x-button>Order now</x-button></a></div>
             </div>
         </template>
     </div> 
