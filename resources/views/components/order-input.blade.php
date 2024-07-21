@@ -104,7 +104,7 @@
             }
         }
     }
-}" class=" mt-4 flex flex-wrap gap-2">
+}" class=" mt-4 grid grid-rows-2 gap-y-1">
     <div class="flex-grow mb-1 basis-[45%]">
         <p class="mb-1">Select size:</p> 
         <div x-ref="size" class="flex gap-2 flex-wrap ml-2">
@@ -143,10 +143,10 @@
     <div class="flex gap-2 basis-[100%]">
         <label for="quantity" class="">Quantity:</label>
         <div class="flex items-center ">
-            <button @click="quantity++" class="flex items-center border"><i class="fa-solid fa-plus fa-xl"></i></button>
+            <button @click="quantity++" class="flex items-center"><i class="fa-solid fa-plus"></i></button>
             <input type="number" x-model.number="quantity" id="quantity" class="w-8 text-center"/>
             <button @click="() => {if(quantity > 1)quantity--;}" 
-                    class="flex items-center border rounded-lg"><i class="fa-solid fa-minus fa-xl"></i></button>
+                    class="flex items-center"><i class="fa-solid fa-minus"></i></button>
         </div>
     </div>
 

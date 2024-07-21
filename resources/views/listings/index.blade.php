@@ -1,7 +1,9 @@
 <x-layout>
-    <x-logo></x-logo>
     <x-cart></x-cart>
-    <x-navbar-large :categories="$categories"></x-navbar-large>
+    <div class="sticky inset-0 z-10">
+        <x-logo></x-logo>
+        <x-navbar-large :categories="$categories"></x-navbar-large>
+    </div>
     <x-navbar :categories="$categories"></x-navbar>
     <main>
         
@@ -17,7 +19,7 @@
             }
         @endphp
         <div class="flex gap-6"> 
-            <div class="hidden md:block basis-2/12 flex-grow bg-white h-full pl-[2%]">
+            <div class="hidden md:block basis-2/12 flex-grow bg-white h-full pl-[2%] ">
                 {{-- <x-filters :items="$stdSizes" property="size"></x-filters> --}}
                 {{-- <x-filters :items="$stdColors" property="color"></x-filters> --}}
                 <livewire:filters :options="$stdSizes" property="size"/>
@@ -25,7 +27,7 @@
             </div>
             <div class="md:w-9/12 lg:w-10/12">
                 <x-layouts.index-title></x-layouts.index-title>
-                <div class="flex flex-wrap gap-1">
+                <div class="flex flex-wrap gap-2 justify-center md:justify-normal">
                     @unless(count($listings) == 0)
                         @foreach ($listings as $listing)
                             @if ($listing -> available == true)

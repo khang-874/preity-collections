@@ -1,7 +1,7 @@
 <div class='w-full h-16 flex justify-between items-center px-[2%] bg-black text-white'>
     <div class='flex items-center gap-3'>
         <button x-data @click="$store.showMenu.toggle()" class="md:hidden"><i class="fa-solid fa-bars fa-lg"></i></button>
-        <a href="/" class="w-max font-serif font-bold text-3xl">
+        <a href="/" class="w-max font-serif font-bold text-xl md:text-3xl">
             Preity's Collection
         </a>
     </div>

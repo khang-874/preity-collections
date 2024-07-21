@@ -1,5 +1,8 @@
 <x-layout>
-    <x-logo></x-logo>
+    <div class="sticky inset-0 z-10">
+        <x-logo></x-logo>
+        <x-navbar-large :categories="$categories"></x-navbar-large>
+    </div>
     <x-cart></x-cart>
     <x-navbar :categories="$categories"></x-navbar>
        <main> 
@@ -9,14 +12,14 @@
                 </div>
                 <div class="bg-white drop-shadow-md p-2 lg:flex-grow lg:basis-[45%]">
                     <div>
-                        <h4 class="w-full font-medium text-2xl">{{$listing -> name}}</h4>
-                        <p class="font-medium text-xl">CA$ {{$listing -> selling_price}}</p>
+                        <h4 class="w-full font-medium text-xl">{{$listing -> name}}</h4>
+                        <p class="font-medium">CA$ {{$listing -> selling_price}}</p>
                     </div>  
                     <x-order-input :listing="$listing" :details="$listing->details"></x-order-input>                             
                 </div> 
                 <div class="p-2 bg-white drop-shadow-md mt-2 lg:flex-grow">
                     <p class="font-semibold">Description:</p>
-                    <p>{{$listing -> description}}</p>
+                    <p class="text-sm">{{$listing -> description}}</p>
                 </div>
             </div>
             
