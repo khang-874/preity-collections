@@ -1,12 +1,8 @@
 <x-layout>
-    <x-cart></x-cart>
-    <div class="sticky inset-0 z-10">
-        <x-logo></x-logo>
-        <x-navbar-large :categories="$categories"></x-navbar-large>
-    </div>
-    <x-navbar :categories="$categories"></x-navbar>
-    <main>
-        
+    <header>
+        <x-header :categories="$categories"></x-header>
+    </header>
+    <main> 
         @php
             // dd($listings)
             $stdColors = [];
@@ -42,7 +38,6 @@
         </div>
         @if(method_exists($listings, "links")) 
             <div class="mt-6 p-4">{{$listings->links()}}</div>
-        @endif
-        
+        @endif 
     </main>
 </x-layout>
