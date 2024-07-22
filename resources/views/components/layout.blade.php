@@ -48,7 +48,7 @@
             }
         });
         Alpine.store('showMenu', {
-            on: false,
+            on: true,
             toggle(){
                 this.on = !this.on;
             }
