@@ -11,9 +11,9 @@
       <div x-show="activeSlide === {{$count++}}"
                {{$attributes->merge(['class' => 'w-full flex items-center justify-center'])}}>
                @if (Storage::exists($image))
-                  <img x-cloak src='{{Storage::url($image)}}' class='object-none w-full object-center'/>
+                  <img x-cloak src='{{Storage::url($image)}}' class='object-cover w-full object-center'/>
                @else
-                  <img x-cloak src='{{$image}}' class='object-none w-full object-center'/>
+                  <img x-cloak src='{{$image}}' class='object-cover w-full object-center'/>
                @endif
       </div>   
    @endforeach

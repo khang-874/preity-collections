@@ -8,7 +8,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 -translate-x-1/2"        
-            class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm mr-auto overflow-y-scroll pb-8"
+            class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm mr-auto pb-8"
             @click.outside="$store.showMenu.toggle()"> 
         <div class="p-2 text-xl text-white bg-black font-medium flex gap-x-2 border-b-2 mb-2 justify-between">
             <p>Categories</p>
