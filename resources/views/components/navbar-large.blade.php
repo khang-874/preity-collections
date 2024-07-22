@@ -11,7 +11,7 @@
             <ul x-show="showNavbarMenu"
                 class="absolute flex gap-x-8 px-[2%] left-0 mt-2 text-black bg-white border-t-2 w-full gap-4 pt-1 pb-2" 
             >
-                <x-navbar-large-menu :categories="$categories"></x-navbar-large-menu>
+                <x-navbar-large-menu :categories="$categories" clearance="true"></x-navbar-large-menu>
             </ul>
         </li>
     </ul>
