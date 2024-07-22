@@ -27,8 +27,9 @@ class Filters extends Component
     public function updated(){
         // $this -> redirect(url('/'), true);   
         $url = session() -> get('_previous')['url'];
-        $query = parse_url($url)['query'];
-        parse_str($query, $queryParameters); 
+        $query = parse_url($url)['query'] ?? [];
+        if($query)
+            parse_str($query, $queryParameters); 
         // dd($queryParameters);
         $queryParameters[$this -> property] = $this -> currentOptions;
 

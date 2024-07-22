@@ -1,10 +1,8 @@
 <div x-data="{show:{{$currentOptions == [] ? 'false' : 'true'}}}" class="py-2">
-    <div @click="show = !show" class="flex justify-between items-center">
+    <div @click="show = !show" class="flex justify-between items-center cursor-pointer">
         <p class="uppercase font-medium text-sm">{{$property}}</p>
-        <button >
-            <i x-show="!show" class="fa-solid fa-plus"></i>
-            <i x-show="show" class="fa-solid fa-minus"></i>
-        </button>
+        <i x-show="!show" class="fa-solid fa-plus"></i>
+        <i x-show="show" class="fa-solid fa-minus"></i>
     </div>
     <div    x-show="show"
             x-transition:enter="transition linear duration-400 transform"

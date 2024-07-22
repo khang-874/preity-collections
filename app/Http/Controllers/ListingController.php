@@ -21,7 +21,7 @@ class ListingController extends Controller
         return view('listings.index', [
                 'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
                                 -> size(request('size')) -> color(request('color')) 
-                                -> clearance(request() -> query('isClearance')) -> paginate(30),
+                                -> clearance(request() -> query('isClearance')) -> paginate(40),
                 'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search', 'isClearance'])) 
                                 -> allSize() -> clearance(request('isClearance')) -> get(),
                 'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search', 'isClearance'])) 
