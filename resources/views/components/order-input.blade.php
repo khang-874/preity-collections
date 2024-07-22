@@ -92,6 +92,7 @@
 
             if(!availableOption.includes(inputValue)){
                 children[i].classList.add('opacity-50');
+                {{-- children[i].classList.add('opacity-50 after:absolute after:left-0 after:top-1/2 after:h-[1px] after:bg-black after:w-full after:block'); --}}
             }
             else{
                 children[i].classList.remove('opacity-50');
@@ -104,13 +105,15 @@
             }
         }
     }
-}" class=" mt-4 grid grid-rows-2 gap-y-1">
-    <div class="flex-grow mb-1 basis-[45%]">
+}" 
+    x-init="showAvailableOption({{$initialColor}}, $refs.size, $refs.color, 'size', 'color')"
+    class=" mt-4 grid grid-rows-2 gap-y-1">
+    <div class="">
         <p class="mb-1">Select size:</p> 
         <div x-ref="size" class="flex gap-2 flex-wrap ml-2">
             @foreach ($sizes as $size => $quantity) 
                 @if($quantity != 0)
-                    <div x-id="['size']" class="flex items-center ps-2 border-gray-200 rounded border">
+                    <div x-id="['size']" class="flex items-center ps-2 border-gray-200 rounded border relative">
                         <input type="radio" x-model="size" :id="$id('size')" value="{{$size}}" @change="showAvailableOption(size, $refs.size, $refs.color, 'size', 'color')"
                                 class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 disabled:opacity-50"
                         > 
@@ -123,12 +126,12 @@
         </div>
     </div>
 
-    <div class="flex-grow mb-1 basis-[45%]">
+    <div class="">
         <p class="mb-1">Select color:</p> 
         <div x-ref="color" class="flex gap-2 flex-wrap ml-2">
             @foreach ($colors as $color => $quantity) 
                 @if($quantity != 0)
-                    <div x-id="['color']" class="flex items-center ps-2 border-gray-200 rounded border">
+                    <div x-id="['color']" class="flex items-center ps-2 border-gray-200 rounded border relative">
                         <input type="radio" x-model="color" :id="$id('color')" value="{{$color}}" @change="showAvailableOption(color, $refs.color, $refs.size, 'color', 'size')"
                                 class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 disabled:opacity-50"
                         > 

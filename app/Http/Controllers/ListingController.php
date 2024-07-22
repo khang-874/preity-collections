@@ -8,10 +8,13 @@ use App\Models\Vendor;
 use App\Models\Listing;
 use App\Models\Section;
 use App\Models\Category;
+use App\Models\Subsection;
 use Carbon\Carbon;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
@@ -31,9 +34,32 @@ class ListingController extends Controller
 
     }
     public function show(Listing $listing){
+        $section_id = '';
+        $category_id = '';
+        $categories = Category::all();
+
+        foreach($categories as $category)
+            foreach($category->sections as $section)
+                foreach($section->subsections as $subsection)
+                    if($subsection->id == $listing->subsection_id){
+                        $section_id = $section->id;
+                        $category_id = $category->id;
+                        break 3;
+                    }    
+                    
+        // dd($listing, $section_id, $category_id);
+        $randomSubsectionListings = Subsection::find($listing -> subsection_id) -> randomAvailableListings(4);
+        // dd($randomSubsectionListings);
+
+        $randomSectionListings = Section::find($section_id) -> subsections -> random(1) -> get(0) -> randomAvailableListings(3);
+        $randomCategoryListings = Category::find($category_id) -> sections -> random(1) -> get(0) 
+                                    -> subsections -> random(1) -> get(0) -> randomAvailableListings(3);
+        $recommend =  array_merge($randomCategoryListings, $randomSectionListings, $randomSubsectionListings);
+
         return view('listings.show', [
             'listing' => $listing,
             'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+            'recommendListings' => $recommend
         ]);
     }
     public function create(){

@@ -53,9 +53,7 @@ class Listing extends Model
         foreach($this -> details as $detail){
             $total += $detail -> inventory;
         }
-        if($total == 0)
-            return false;
-        return true;
+        return $total != 0;
     }
     
     static function priceCode(float $initPrice) : string{

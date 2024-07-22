@@ -18,6 +18,18 @@
                 <p class="font-semibold">Description:</p>
                 <p class="text-sm">{{$listing -> description}}</p>
             </div>
+
+            <div class="p-2 bg-white drop-shadow-md mt-2 w-full">
+                <p class="font-semibold">You might like:</p>
+                <div class="overflow-y-scroll overflow-x-auto py-2 h-max">
+                    <div class="flex gap-x-2">
+                        @foreach ($recommendListings as $listing)
+                            <x-card.listing-card :listing="$listing"/>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
         </div> 
 </main>
 </x-layout>

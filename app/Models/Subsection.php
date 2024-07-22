@@ -19,4 +19,20 @@ class Subsection extends Model
     public function listings() : HasMany{
         return $this -> hasMany(Listing::class);
     }
+
+    public function availableListings(){
+        $listings = $this -> listings;
+        $result = [];
+        foreach($listings as $listing){
+            if($listing -> available){
+                $result []= $listing;
+            }
+        }
+        return $result;
+    }
+
+    public function randomAvailableListings(int $number){
+        $listings = $this -> availableListings();
+        return array_map(fn($index) => $listings[$index] ,array_rand($listings, min($number, count($listings))));
+    }
 }
