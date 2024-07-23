@@ -21,13 +21,17 @@
 
             <div class="p-2 bg-white drop-shadow-md mt-2 w-full">
                 <p class="font-semibold">You might like:</p>
-                <div class="overflow-y-scroll overflow-x-auto py-2 h-max">
-                    <div class="flex gap-x-2">
-                        @foreach ($recommendListings as $listing)
-                            <x-card.listing-card :listing="$listing"/>
-                        @endforeach
-                    </div>
-                </div>
+                @mobile
+                    <livewire:slideshow :items="$recommendListings" perShow="2" />
+                @endmobile
+
+                @tablet
+                    <livewire:slideshow :items="$recommendListings" perShow="3" />
+                @endtablet
+
+                @desktop
+                    <livewire:slideshow :items="$recommendListings" perShow="4" />
+                @enddesktop 
             </div>
 
         </div> 

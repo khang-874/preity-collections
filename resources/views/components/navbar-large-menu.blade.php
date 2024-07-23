@@ -6,7 +6,7 @@
     @mouseleave="openCategory=false"
     class="py-2"
 >
-    <a href="/?category={{$category -> id}}{{$clearance == 'true' ? '&isClearance=true' : ''}}" class="text-base" :class="openCategory ? 'font-semibold' : ''">{{$category -> name}}</a>
+    <a href="/listings/?category={{$category -> id}}{{$clearance == 'true' ? '&isClearance=true' : ''}}" class="text-base" :class="openCategory ? 'font-semibold' : ''">{{$category -> name}}</a>
     <ul x-show="openCategory"
         x-transition:enter="transition ease-out duration-500 transform"
         x-transition:enter-start="opacity-0 "
@@ -25,11 +25,11 @@
                 <div class="ml-8">
             @endif
                 <li>
-                    <a href="/?section={{$section -> id}}{{$clearance == 'true' ? '&isClearance=true' : ''}}" class="text-sm">{{$section -> name}}</a>
+                    <a href="/listings/?section={{$section -> id}}{{$clearance == 'true' ? '&isClearance=true' : ''}}" class="text-sm">{{$section -> name}}</a>
                     <ul class="pl-2">
                             @foreach ($section -> subsections as $subsection)
                                 <li>
-                                    <a href="/?subsection={{$subsection -> id}}{{$clearance == 'true' ? '&isClearance=true' : ''}}" class="text-xs hover:underline-offset-2 hover:underline">{{$subsection -> name}}</a>
+                                    <a href="/listings/?subsection={{$subsection -> id}}{{$clearance == 'true' ? '&isClearance=true' : ''}}" class="text-xs hover:underline-offset-2 hover:underline">{{$subsection -> name}}</a>
                                 </li> 
                             @endforeach
                     </ul>

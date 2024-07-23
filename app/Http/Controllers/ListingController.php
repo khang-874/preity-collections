@@ -51,9 +51,9 @@ class ListingController extends Controller
         $randomSubsectionListings = Subsection::find($listing -> subsection_id) -> randomAvailableListings(4);
         // dd($randomSubsectionListings);
 
-        $randomSectionListings = Section::find($section_id) -> subsections -> random(1) -> get(0) -> randomAvailableListings(3);
+        $randomSectionListings = Section::find($section_id) -> subsections -> random(1) -> get(0) -> randomAvailableListings(4);
         $randomCategoryListings = Category::find($category_id) -> sections -> random(1) -> get(0) 
-                                    -> subsections -> random(1) -> get(0) -> randomAvailableListings(3);
+                                    -> subsections -> random(1) -> get(0) -> randomAvailableListings(4);
         $recommend =  array_merge($randomCategoryListings, $randomSectionListings, $randomSubsectionListings);
 
         return view('listings.show', [

@@ -19,8 +19,10 @@ use App\Models\Listing;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+Route::view('/', 'home', ['categories' =>Category::all() -> sortBy(function($category){return $category -> index;})]);
+
 //Get all listing
-Route::get('/', [ListingController::class, 'index']) -> name('listings.index');
+Route::get('/listings', [ListingController::class, 'index']) -> name('listings.index');
 
 //show create form
 Route::get('/listings/create', [ListingController::class, 'create']) -> middleware('auth');

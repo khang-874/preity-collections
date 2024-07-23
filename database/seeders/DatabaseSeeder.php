@@ -59,21 +59,6 @@ class DatabaseSeeder extends Seeder
             $amount_owe += $order -> remaining;
         }
         dd($customer -> amount_owe, $amount_owe);
-        // $orders = Order::all();
-        // $details = Detail::all();
-        // foreach($orders as $order){
-        //     $randomListings = $listings -> random(rand(2,5)) -> unique();
-        //     foreach($randomListings as $listing){
-        //         $details = $listing -> details;
-        //         foreach($details as $detail){
-        //             OrderListing::factory(1) -> create([
-        //                 'detail_id' => $detail -> id,
-        //                 'listing_id' => $listing -> id,
-        //                 'order_id' => $order -> id,
-        //                 'quantity' => random_int(1, $detail -> inventory),
-        //             ]);
-        //         }
-        //     } 
-        // };
+        
     }
 }

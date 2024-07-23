@@ -13,7 +13,7 @@
             x-transition:leave-end="opacity-0"
             x-cloak 
             class="grid grid-cols-2">
-        {{-- <form> --}}
+
             @foreach ($options as $option)
                 <div x-id="['{{$property}}']" class="flex items-center gap-2">     
                     {{-- <input type="radio" name="size" :id="$id('{{$property}}')" @click="handleClick" value="{{$item}}"> --}}
@@ -21,6 +21,5 @@
                     <label :for="$id('{{$property}}')" class="capitalize">{{$option}}</label>
                 </div>
             @endforeach
-        {{-- </form> --}}
     </div>
 </div>
