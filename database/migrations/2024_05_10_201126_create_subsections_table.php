@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('index') -> nullable();
             $table->foreignId('section_id')->constrained()->onDelete('cascade');
+            $table->string('images') -> nullable();
             $table->timestamps();
         });
     }

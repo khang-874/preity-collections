@@ -11,7 +11,10 @@ class Section extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'category_id'];
-
+    protected $casts = [
+        'images' => 'array',
+    ];
+ 
     public function subsections(): HasMany{
         return $this->hasMany(Subsection::class) -> orderBy('index');
     }

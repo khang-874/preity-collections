@@ -13,7 +13,9 @@ class Category extends Model
     use HasFactory;   
     protected $with = ['sections.subsections'];
     protected $fillable = ['name'];
-
+    protected $casts = [
+        'images' => 'array',
+    ];
     public function sections():HasMany{
         return $this->hasMany(Section::class) -> orderBy('index');
     }

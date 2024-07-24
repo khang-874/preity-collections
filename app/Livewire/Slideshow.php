@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use DeviceDetector\Parser\Client\Browser;
+use hisorange\BrowserDetect\Stages\BrowserDetect;
 use Livewire\Component;
 
 class Slideshow extends Component
@@ -10,13 +12,23 @@ class Slideshow extends Component
     public int $offset = 0;
     public array $items = [];
     public array $currentItems = [];
+    public string $type = '';
 
-    public function mount(int $perShow = 1, array $items){
+    public function mount(array $items, string $type){
         $this -> items = $items;
-        if($perShow >= count($items))
+        $this -> type = $type;
+        if(Browser::isMobile()){
+            $this -> perShow = 2;
+        }
+        if(BrowserDetect::isTablet()){
+            $this -> perShow = 3;
+        }
+        if(BrowserDetect::isDesktop()){
+            $this -> perShow = 4;
+        }
+        if($this -> perShow >= count($items))
             $this -> perShow = count($items);
         else
-            $this -> perShow = $perShow;
         $this -> currentItems = array_slice($this -> items, $this -> offset, $this -> perShow, true);
     }
 

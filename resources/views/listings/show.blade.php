@@ -21,17 +21,7 @@
 
             <div class="p-2 bg-white drop-shadow-md mt-2 w-full">
                 <p class="font-semibold">You might like:</p>
-                @mobile
-                    <livewire:slideshow :items="$recommendListings" perShow="2" />
-                @endmobile
-
-                @tablet
-                    <livewire:slideshow :items="$recommendListings" perShow="3" />
-                @endtablet
-
-                @desktop
-                    <livewire:slideshow :items="$recommendListings" perShow="4" />
-                @enddesktop 
+                    <livewire:slideshow :items="$recommendListings" type="listing" />
             </div>
 
         </div> 

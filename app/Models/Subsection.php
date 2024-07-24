@@ -12,7 +12,10 @@ class Subsection extends Model
 {
     use HasFactory;
     protected $fillable=['name', 'section_id'];
-
+    protected $casts = [
+        'images' => 'array',
+    ];
+ 
     public function section() : BelongsTo{
         return $this->belongsTo(Section::class);
     } 

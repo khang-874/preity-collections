@@ -27,7 +27,7 @@
                     @unless(count($listings) == 0)
                         @foreach ($listings as $listing)
                             @if ($listing -> available == true)
-                                <x-card.listing-card :listing="$listing"/>
+                                <x-card.listing-card :item="$listing" type="listing"/>
                             @endif
                         @endforeach
                     @else

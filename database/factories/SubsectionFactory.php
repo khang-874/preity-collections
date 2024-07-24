@@ -19,6 +19,11 @@ class SubsectionFactory extends Factory
         return [
             //
             'name' => fake() -> name(),
+            'images' => array_map(function($element) {
+                $element = fake() -> picsumUrl();
+                return $element;
+            }, array_fill(0, 3, '')),
+
         ];
     }
 }

@@ -15,7 +15,6 @@
             x-ref="input"
             x-model="inputText"
             x-on:input="(inputText.length != 0) ? disableSubmit = false : disableSubmit = true" 
-            {{-- x-on:change="(inputText.length == 0) ? $refs.input.blur() : $refs.input.focus()" --}}
             placeholder="Search"
             type="text"
             name="search"
@@ -25,13 +24,6 @@
         <x-form.retained-search-value name="category"></x-form.retained-search-value>
         <x-form.retained-search-value name="section"></x-form.retained-search-value>
         <x-form.retained-search-value name="subsection"></x-form.retained-search-value>
-        {{-- <div class="absolute top-2 right-2">
-            <button
-                type="submit"
-                class="h-10 w-20 text-white rounded-lg bg-red-500 hover:bg-red-600"
-            >
-                Search 
-            </button>
-        </div> --}}
+       
     </div>
 </form>
