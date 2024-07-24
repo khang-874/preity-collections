@@ -20,8 +20,7 @@
             </div>
 
             <div class="p-2 bg-white drop-shadow-md mt-2 w-full">
-                <p class="font-semibold">You might like:</p>
-                    <livewire:slideshow :items="$recommendListings" type="listing" />
+                <livewire:slideshow :items="$recommendListings" type="listing" title="You might like"/>
             </div>
 
         </div> 

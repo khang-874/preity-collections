@@ -18,7 +18,7 @@
             $link = '/listings?subsection=' . $item -> id;
             break;
     }
-    $titleStyle = $type == 'listing' ? '' : '!text-base'
+    $titleStyle = $type == 'listing' ? '' : '!text-base text-center'
 @endphp
 <a class="cursor-pointer" href="{{$link}}" >
     <x-card class="relative">

@@ -6,9 +6,11 @@
             $sections = array_merge($sections, $category -> sections -> all());    
     @endphp
     <main>
-        <x-home-slideshow :items="$categories->all()" type="category" title="Shop by category"></x-home-slideshow>  
-        <x-home-slideshow :items="$sections" type="section" title="Shop by section"></x-home-slideshow>   
-        <x-home-slideshow :items="$newArrival" type="listing" title="Shop new arrival"></x-home-slideshow>  
+        {{-- <x-home-slideshow :items="$categories->all()" type="category" title="Shop by category"></x-home-slideshow>    --}}
 
+
+        <livewire:slideshow :items="$categories->all()" type="category" title="Shop by category"/>
+        <livewire:slideshow :items="$sections" type="section" title="Shop by section"/>
+        <livewire:slideshow :items="$newArrival" type="listing" title="Shop new arrival"/>
     </main>
 </x-layout>
