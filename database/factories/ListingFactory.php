@@ -29,6 +29,8 @@ class ListingFactory extends Factory
                 return $element;
             }, array_fill(0, 3, '')), 
             'init_price' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
+            'sale_percentage' => fake() -> randomElement([0, (rand() / getrandmax()) * 100]),
+            'is_clearance' => fake() -> randomElement([true, false])
         ];
     }
 }

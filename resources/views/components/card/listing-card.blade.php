@@ -30,7 +30,17 @@
         <div class="h-[75%] lg:h-[80%] overflow-hidden"><img src="{{$showingImage}}" alt="" class="h-full min-w-full"></div>
         <p class="w-[95%] text-xs pt-1 text-nowrap overflow-hidden {{$titleStyle}}">{{$item->name}}</p>
         @if($type == 'listing')
-            <p class="text-sm font-medium">CA$ {{$item->selling_price}}</p> 
+            @if ($item -> sale_percentage != 0)
+                <div class="">
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm font-medium text-red-500">CA$ {{$item->selling_price}}</p> 
+                        <p class="text-xs font-medium line-through">CA$ {{$item->base_price}}</p> 
+                    </div>
+                    <p class="text-sm font-medium text-red-500">{{round($item->sale_percentage)}}% off</p> 
+                </div>
+            @else
+                <p class="text-sm font-medium">CA$ {{$item->selling_price}}</p> 
+            @endif
         @endif
     </x-card>
 </a>
