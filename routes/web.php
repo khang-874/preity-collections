@@ -29,7 +29,7 @@ Route::view('/', 'home', [
 Route::get('/listings', [ListingController::class, 'index']) -> name('listings.index');
 
 //Get all clearance listings
-Route::get('/listings/clearance', [ListingController::class, 'indexClearance']);
+Route::get('/listings/clearance', [ListingController::class, 'indexClearance']) -> name('listings.indexClearance');
 //show create form
 Route::get('/listings/create', [ListingController::class, 'create']) -> middleware('auth');
 

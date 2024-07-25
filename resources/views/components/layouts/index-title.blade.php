@@ -1,20 +1,14 @@
-<div class="w-full flex justify-center mb-2">
-    @if (request('category'))
-    @php
-        $categoryName= \App\Models\Category::find(request('category')) -> name
-    @endphp
-        <p class="text-lg font-medium">{{$categoryName}}</p>
-    @endif
-    @if (request('section'))
-    @php
-        $sectionName = \App\Models\Section::find(request('section')) -> name
-    @endphp
-        <p class="text-lg font-medium">{{$sectionName}}</p>
-    @endif
-    @if (request('subsection'))
-    @php
-        $subsectionName = \App\Models\Subsection::find(request('subsection')) -> name
-    @endphp
-        <p class="text-lg font-medium">{{$subsectionName}}</p>
-    @endif
+@php
+    $name = '';
+    if(request('category'))
+        $name= \App\Models\Category::find(request('category')) -> name;
+    if(request('section'))
+        $name= \App\Models\Section::find(request('section')) -> name;
+    if(request('subsection'))
+        $name = \App\Models\Subsection::find(request('subsection')) -> name;
+    if(Route::currentRouteName() == 'listings.indexClearance')
+        $name .= ' Clearance';
+@endphp
+<div class="w-full flex justify-center md:block mb-2">  
+    <p class="text-lg font-medium">{{$name}}</p> 
 </div>

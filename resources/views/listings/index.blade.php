@@ -14,7 +14,7 @@
                 $stdSizes[] = $size -> size;
             }
         @endphp
-        <div class="flex gap-6"> 
+        <div class="flex gap-6 mt-2"> 
             <div class="hidden md:block basis-2/12 flex-grow bg-white h-full pl-[2%] ">
                 {{-- <x-filters :items="$stdSizes" property="size"></x-filters> --}}
                 {{-- <x-filters :items="$stdColors" property="color"></x-filters> --}}
