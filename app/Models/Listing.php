@@ -119,6 +119,11 @@ class Listing extends Model
             $query -> where('listings.is_clearance', '=', true);
         }
     }
+    public function scopeAvailable($query){
+        $query  -> selectRAW('sum(details.inventory) as inventory, listings.*')
+                -> groupBy('listings.id')
+                -> having('inventory', '>', '0');
+    }
     public function scopeFilter($query, array $filters){
         if($filters['category'] ?? false){
             $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')

@@ -94,7 +94,7 @@ class ListingResource extends Resource
                                         $details = $get('../../details');
                                         $inventory = 0;
                                         foreach($details as $item){
-                                            $inventory += $item['inventory'];
+                                            $inventory += $item['inventory'] == '' ? 0 : $item['inventory'];
                                         }
                                         $set('../../inventory', $inventory);
                                     })
@@ -102,7 +102,7 @@ class ListingResource extends Resource
                                         $details = $get('../../details');
                                         $inventory = 0;
                                         foreach($details as $item){
-                                            $inventory += $item['inventory'];
+                                            $inventory += $item['inventory'] == '' ? 0 : $item['inventory'];
                                         }
                                         $set('../../inventory', $inventory);
                                     }),
