@@ -7,7 +7,7 @@
             @mouseleave="showNavbarMenu=false"
             class="py-2 text-base"
         >
-            <a href="/listings/?isClearance=true" class="hover:font-semibold" :class="showNavbarMenu ? 'font-semibold' : ''">Clearance</a>
+            <a href="/listings/clearance/" class="hover:font-semibold" :class="showNavbarMenu ? 'font-semibold' : ''">Clearance</a>
             <ul x-show="showNavbarMenu"
                 class="absolute flex gap-x-8 px-[2%] left-0 mt-2 text-black bg-white border-y w-full gap-4 pt-1 pb-1" 
                 x-cloak

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HigherOrderWhenProxy;
 
 class Listing extends Model
@@ -114,13 +115,11 @@ class Listing extends Model
                 -> distinct();
     }
     
-    public function scopeClearance($query, $isClearance){
-        if($isClearance != null){
-            $query -> where('listings.is_clearance', '=', true);
-        }
+    public function scopeClearance($query){
+        $query -> where('listings.is_clearance', '=', true);
     }
     public function scopeAvailable($query){
-        $query  -> selectRAW('sum(details.inventory) as inventory, listings.*')
+        $query  -> select(DB::raw('sum(details.inventory) as inventory, listings.*'))
                 -> groupBy('listings.id')
                 -> having('inventory', '>', '0');
     }
@@ -129,18 +128,15 @@ class Listing extends Model
             $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
                     -> join('sections', 'subsections.section_id', '=', 'sections.id')
                     -> join('categories', 'sections.category_id', '=', 'categories.id')
-                    -> select('listings.*')
                     -> where('categories.id', '=', request('category'));
         }
         if($filters['section'] ?? false){
             $query  -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
                     -> join('sections', 'subsections.section_id', '=', 'sections.id')
-                    -> select('listings.*')
                     -> where('sections.id', '=', request('section'));
         }
         if($filters['subsection'] ?? false){
             $query -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')            
-            -> select('listings.*')
             -> where('subsections.id', '=', request('subsection'));
         }
         if($filters['search'] ?? false){

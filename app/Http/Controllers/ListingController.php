@@ -24,11 +24,23 @@ class ListingController extends Controller
         return view('listings.index', [
                 'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
                                 -> size(request('size')) -> color(request('color')) -> available() 
-                                -> clearance(request() -> query('isClearance')) -> paginate(40),
-                'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search', 'isClearance'])) 
-                                -> allSize() -> clearance(request('isClearance')) -> get(),
+                                -> paginate(40),
+                'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
+                                -> allSize() -> get(),
                 'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search', 'isClearance'])) 
-                                -> allColor() -> clearance(request('isClearance')) -> get(),
+                                -> allColor() -> get(),
+                'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+        ]);
+    }
+    public function indexClearance(){
+        return view('listings.index', [
+                'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
+                                -> size(request('size')) -> color(request('color')) -> available() 
+                                -> clearance() -> paginate(40),
+                'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
+                                -> allSize() -> clearance() -> get(),
+                'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
+                                -> allColor() -> clearance() -> get(),
                 'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
         ]);
 
