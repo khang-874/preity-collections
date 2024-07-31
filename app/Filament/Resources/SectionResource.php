@@ -7,6 +7,7 @@ use App\Filament\Resources\SectionResource\RelationManagers;
 use App\Filament\Resources\SectionResource\RelationManagers\SubsectionsRelationManager;
 use App\Models\Section;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -30,7 +31,17 @@ class SectionResource extends Resource
                 //
                 Select::make('category_id') -> relationship(name:'category', titleAttribute:'name') -> required(),
                 TextInput::make('name') -> required(),
+                FileUpload::make('images') 
+                            -> image() 
+                            -> multiple()
+                            -> disk('public')
+                            -> directory('photos')
+                            -> visibility('public')
+                            -> downloadable()
+                            -> columnSpanFull(),
+
                 TextInput::make('serial_number') -> disabled(),
+
             ]) -> columns(1);
     }
 

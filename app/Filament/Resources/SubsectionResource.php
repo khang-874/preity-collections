@@ -8,6 +8,7 @@ use App\Filament\Resources\SubsectionResource\RelationManagers\ListingsRelationM
 use App\Models\Subsection;
 use Faker\Guesser\Name;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -31,6 +32,16 @@ class SubsectionResource extends Resource
                 //
                 Select::make('section_id') -> relationship(name:'section', titleAttribute:'name') -> required(),
                 TextInput::make('name') -> required(),
+                FileUpload::make('images') 
+                            -> image() 
+                            -> multiple()
+                            -> disk('public')
+                            -> directory('photos')
+                            -> visibility('public')
+                            -> downloadable()
+                            -> columnSpanFull(),
+
+
             ]) -> columns(1);
     }
 

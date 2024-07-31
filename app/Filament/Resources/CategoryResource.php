@@ -8,6 +8,7 @@ use App\Filament\Resources\CategoryResource\RelationManagers\SectionsRelationMan
 use App\Models\Category;
 use App\Models\Section;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -29,6 +30,14 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name') -> required(),
+                FileUpload::make('images') 
+                            -> image() 
+                            -> multiple()
+                            -> disk('public')
+                            -> directory('photos')
+                            -> visibility('public')
+                            -> downloadable()
+                            -> columnSpanFull()
             ]);
     }
 
