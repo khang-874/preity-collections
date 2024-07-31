@@ -20,10 +20,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home', [
+Route::get('/', function() {
+    return view('home' ,[
     'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
     'newArrival' => Listing::orderBy('created_at', 'DESC') -> take(20) -> get() -> all()
-]);
+    ]);
+});
 
 //Get all listing
 Route::get('/listings', [ListingController::class, 'index']) -> name('listings.index');

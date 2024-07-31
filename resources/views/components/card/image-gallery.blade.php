@@ -3,6 +3,10 @@
 
 @php
    $count = 0;
+   // dd($listing -> images);
+   foreach ($listing->images as $image) {
+      // dd(Storage::url($image));
+   }
 @endphp
 
 
@@ -11,8 +15,14 @@
       <div x-show="activeSlide === {{$count++}}"
                {{$attributes->merge(['class' => 'w-full flex items-center justify-center'])}}>
                @if (Storage::exists($image))
+                  @php
+                     //  dd(Storage::url($image));
+                  @endphp
                   <img x-cloak src='{{Storage::url($image)}}' class='object-cover w-full object-center'/>
                @else
+                  @php
+                      dd(Storage::url($image));
+                  @endphp
                   <img x-cloak src='{{$image}}' class='object-cover w-full object-center'/>
                @endif
       </div>   

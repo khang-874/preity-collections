@@ -45,6 +45,13 @@ class ListingController extends Controller
         ]);
 
     }
+
+    private function randomListings(array $listing, int $number){
+        $randomListing = array_rand($listing, min($number, count($listing))); 
+        if(gettype($randomListing) == gettype(1))
+            return [$listing[0]];
+        else return array_map(fn($index) => $listing[$index], $randomListing);
+    }
     public function show(Listing $listing){
         $section_id = '';
         $category_id = '';
@@ -59,13 +66,28 @@ class ListingController extends Controller
                         break 3;
                     }    
                     
-        // dd($listing, $section_id, $category_id);
-        $randomSubsectionListings = Subsection::find($listing -> subsection_id) -> randomAvailableListings(4);
-        // dd($randomSubsectionListings);
+        $subsectionListings = Subsection::find($listing -> subsection_id) -> listings -> all();
+        // dd(array_rand($subsectionListings, min(4, count($subsectionListings))));
+        // dd( array_intersect_key( $subsectionListings, array_flip( array_rand( $subsectionListings, 2 ) ) ) );
+        $randomSubsectionListings = $this -> randomListings($subsectionListings, 4);
+        // $randomSubsectionListings = [];
 
-        $randomSectionListings = Section::find($section_id) -> subsections -> random(1) -> get(0) -> randomAvailableListings(4);
-        $randomCategoryListings = Category::find($category_id) -> sections -> random(1) -> get(0) 
-                                    -> subsections -> random(1) -> get(0) -> randomAvailableListings(4);
+        $sectionListings = [];
+        $section = Section::find($section_id);
+        foreach($section -> subsections as $subsection){
+            $sectionListings = array_merge($sectionListings, $subsection -> listings -> all());  
+        }
+
+        $categoryListings = [];
+        $category = Category::find($category_id);
+        $categoryListings = [];
+        foreach($category -> sections as $section){
+            foreach($section -> subsections as $subsection){
+                $categoryListings = array_merge($categoryListings, $subsection -> listings -> all());
+            }
+        }
+        $randomSectionListings = $this -> randomListings($sectionListings, 4);
+        $randomCategoryListings = $this -> randomListings($categoryListings, 4);
         $recommend =  array_merge($randomCategoryListings, $randomSectionListings, $randomSubsectionListings);
 
         return view('listings.show', [

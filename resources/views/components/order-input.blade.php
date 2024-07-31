@@ -106,7 +106,7 @@
         }
     }
 }" 
-    x-init="showAvailableOption({{$initialColor}}, $refs.size, $refs.color, 'size', 'color')"
+    x-init="showAvailableOption('{{$initialColor}}', $refs.size, $refs.color, 'size', 'color')"
     class=" mt-4 grid grid-rows-2 gap-y-1">
     <div class="">
         <p class="mb-1">Select size:</p> 
