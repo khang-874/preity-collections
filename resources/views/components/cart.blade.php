@@ -17,7 +17,7 @@
             <template x-for="(item,index) in $store.cart.items" :key="index">
                 <div class='w-full'>
                     <div x-data="{quantity: item.quantiyt}"class="flex gap-x-2 relative">
-                        <img :src="item.imageURL" class="w-24 h-auto"alt="">
+                        <img x-bind:src="`{{url('/')}}/public/storage/${item.imageURL}`" class="w-24 h-auto"alt="">
                         <div>
                             <p x-text="item.name" class="font-medium"></p>    
                             <p x-text="'Size: ' + item.size" class="text-sm"></p>

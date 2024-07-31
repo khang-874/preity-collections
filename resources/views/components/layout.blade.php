@@ -29,6 +29,7 @@
         Alpine.store('cart', {
             items: Alpine.$persist([]),  
             addToCart(product) { 
+                alert('Item add successfully');
                 this.items.push(product);
             },
             removeFromCart(index){

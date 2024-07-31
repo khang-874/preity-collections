@@ -1,6 +1,6 @@
 @props(['categories'])
 
-<div x-data x-cloak x-show="$store.showMenu.on" class="fixed inset-0 z-10 bg-black bg-opacity-50 w-screen h-screen">
+<div x-data x-cloak x-show="$store.showMenu.on" class="fixed inset-0 z-30 bg-black bg-opacity-50 w-screen h-screen">
     <div    x-show="$store.showMenu.on" 
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 scale-100 -translate-x-1/2"
