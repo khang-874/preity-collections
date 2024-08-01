@@ -27,7 +27,7 @@
             if(Storage::exists($showingImage))
                 $showingImage = Storage::url($showingImage);
         @endphp
-        <div class="h-[75%] lg:h-[80%] overflow-hidden"><img src="{{$showingImage}}" alt="" class="h-full min-w-full"></div>
+        <div class="h-[75%] lg:h-[80%] overflow-hidden"><img src="{{$showingImage}}" alt="" class="h-full min-w-full object-scale-down object-center"></div>
         <p class="w-[95%] text-xs pt-1 text-nowrap overflow-hidden {{$titleStyle}}">{{$item->name}}</p>
         @if($type == 'listing')
             @if ($item -> sale_percentage != 0)

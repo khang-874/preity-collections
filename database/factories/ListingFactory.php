@@ -25,7 +25,7 @@ class ListingFactory extends Factory
             'description' => fake() -> realText(1500),
             'weight' => fake() -> randomFloat(),
             'images' => array_map(function($element) {
-                $element = fake() -> picsumUrl();
+                $element = fake() -> picsumUrl(width:random_int(2560, 5460), height: random_int(2560, 8090));
                 return $element;
             }, array_fill(0, 3, '')), 
             'init_price' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),
