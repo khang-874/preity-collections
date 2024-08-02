@@ -25,7 +25,7 @@
         @foreach($details as $detail)
             <div style="border-width: 1px; border-style:solid; width: 230px; margin:2px">
                 <h1 style="word-wrap: wrap break-word; width:100%;">PREITY COLLECTION</h1>
-                <h3>SN: {{$listing -> productId}}</h3>
+                <h3>SN: {{$listing -> serial_number}}</h3>
                 <h3>Price Code: {{$listing -> productPriceCode}}</h3>
                 <h3>Size: {{$detail -> size}}</h3>
                 <h3>Color: {{$detail -> color}}</h3>

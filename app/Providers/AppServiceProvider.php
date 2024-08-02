@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Customer;
 use App\Models\Listing;
 use App\Models\Order;
+use App\Observers\CustomerObserver;
 use App\Observers\ListingObserver;
 use App\Observers\OrderObserver;
 use Illuminate\Console\View\Components\Task;
@@ -32,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
         Listing::observe(ListingObserver::class);
         Order::observe(OrderObserver::class);
+        Customer::observe(CustomerObserver::class);
     }
 }

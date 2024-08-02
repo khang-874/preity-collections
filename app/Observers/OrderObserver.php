@@ -19,15 +19,9 @@ class OrderObserver
                 $orderListing -> detail -> inventory -= $orderListing -> quantity;
                 $orderListing -> detail -> sold += $orderListing -> quantity;
                 $orderListing -> detail -> save();
-            } 
-            $customer = $order -> customer;
-            $amount_owe = 0;
-            foreach($customer -> orders as $order){
-                $amount_owe += $order -> remaining;
-            }
-            $customer -> amount_owe = $amount_owe;
-            $customer -> save();
+            }  
         }
+        Log::debug('Createing new order');
     }
 
     /**
@@ -44,14 +38,7 @@ class OrderObserver
                 $orderListing -> detail -> inventory -= $orderListing -> quantity;
                 $orderListing -> detail -> sold += $orderListing -> quantity;
                 $orderListing -> detail -> save();
-            } 
-            $customer = $order -> customer;
-            $amount_owe = 0;
-            foreach($customer -> orders as $order){
-                $amount_owe += $order -> remaining;
-            }
-            $customer -> amount_owe = $amount_owe;
-            $customer -> save();
+            }  
         }
         Log::debug('Processing new order');
     }

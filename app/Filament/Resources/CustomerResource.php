@@ -31,7 +31,7 @@ class CustomerResource extends Resource
                 TextInput::make('first_name'),
                 TextInput::make('last_name'),
                 TextInput::make('phone_number') -> required(),
-                TextInput::make('amount_owe') -> numeric(),
+                TextInput::make('amount_owe') -> numeric() -> disabled(),
             ]);
     }
 
