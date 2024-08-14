@@ -33,7 +33,8 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('phone_number') -> relationship(name:'customer', titleAttribute:'phone_number') -> searchable() -> required() -> disabled(),
+                Select::make('first_name') -> relationship(name:'customer', titleAttribute:'first_name') -> label('First name') -> disabled(),
+                Select::make('phone_number') -> relationship(name:'customer', titleAttribute:'phone_number') -> label('Phone number') -> disabled(),
                 // Repeater::make('listings') -> relationship('listings')
                 //             -> schema([
                 //                 // Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
@@ -46,8 +47,13 @@ class OrderResource extends Resource
                             'debit' => 'Debit',
                             'cash' => 'Cash',
                         ]),
+                Placeholder::make('subtotal') 
+                            -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> subtotal),
                 Placeholder::make('total') 
                             -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> total),
+                Placeholder::make('amount_owe')
+                            -> content(fn (?Order $order) : string => $order == null ? '' : '$'  . $order -> remaining),
+                
             ]);
     }
 
@@ -57,7 +63,7 @@ class OrderResource extends Resource
             ->columns([
                 //
                 TextColumn::make('customer.first_name') -> label("Customer's name"),
-                TextColumn::make('created_at') -> date(),
+                TextColumn::make('created_at') -> date() -> sortable(),
                 TextColumn::make('payment_type'),
                 TextColumn::make('total') -> numeric(),
                 TextColumn::make('amount_paid'),

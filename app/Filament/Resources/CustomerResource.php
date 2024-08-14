@@ -43,7 +43,7 @@ class CustomerResource extends Resource
                 TextColumn::make('first_name') -> searchable(),
                 TextColumn::make('last_name') -> searchable(),
                 TextColumn::make('phone_number') -> searchable(),
-                TextColumn::make('amount_owe') -> label('Amount owe ($CAD)'),
+                TextColumn::make('amount_owe') -> label('Amount owe ($CAD)') -> sortable(),
             ])
             ->searchPlaceholder('Search (Name, Phone)')
             ->filters([

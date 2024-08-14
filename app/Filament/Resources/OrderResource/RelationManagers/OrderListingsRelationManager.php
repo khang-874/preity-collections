@@ -30,7 +30,9 @@ class OrderListingsRelationManager extends RelationManager
     {
         return $form
             ->schema([ 
-                Select::make('listing_id') -> relationship('listing', 'name') -> live() -> required(),
+                Select::make('listing_id') -> relationship('listing', 'name') -> live() -> searchable() 
+                -> getSearchResultsUsing(fn (string $search): array => Listing::where('serial_number', '=', "{$search}")->pluck('name', 'id')->toArray())
+                -> required(),
                 Select::make('detail.size')  
                         -> options(function(Get $get) : array {
                             if(!$get('listing_id'))
@@ -52,6 +54,8 @@ class OrderListingsRelationManager extends RelationManager
                 TextInput::make('quantity') -> numeric() -> required() -> rules([
                     fn (Get $get) : Closure => function(string $attribute, $value, Closure $fail) use ($get){
                         $detail = Detail::find($get('detail.color'));
+                        if($value <= 0)
+                            $fail('Enter number more than 0');
                         if($detail -> inventory < $value)
                             $fail('Not enough inventory');
                     }
@@ -64,7 +68,8 @@ class OrderListingsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('listing.name') -> label('Listing name'),
+                TextColumn::make("listing.serial_number") -> label('Serial number'),
+                Tables\Columns\TextColumn::make('listing.name') -> label('Name'),
                 Tables\Columns\TextColumn::make('detail.size') -> label('Size'),
                 TextColumn::make('detail.color') -> label('color'),
                 TextColumn::make('quantity'),

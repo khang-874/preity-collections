@@ -21,12 +21,9 @@ class OrdersRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                // Forms\Components\TextInput::make('created_at')
-                //     ->required()
-                //     ->maxLength(255),
-                Hidden::make('paymentType') -> default('pending'),
-                Hidden::make('amountPaid') -> default(0),
+            ->schema([ 
+                Hidden::make('payment_type') -> default('pending'),
+                Hidden::make('amount_paid') -> default(0),
             ]);
     }
 
