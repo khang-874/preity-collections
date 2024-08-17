@@ -50,6 +50,7 @@ class CostOfGoodsSoldChart extends ChartWidget
                         'label' => 'Cost of good sold ($INR)',
                         'data' => $inventories -> map(fn (TrendValue $value) => $value -> aggregate), 
                         'maxBarThickness' => 40,
+                        'minBarLength' => 5,
                     ],
                 ],
                 'labels' => $inventories -> map(fn (TrendValue $value) => $value -> date),

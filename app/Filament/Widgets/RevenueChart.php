@@ -45,16 +45,17 @@ class RevenueChart extends ChartWidget
                 start: $startDate,
                 end: $endDate,
             ) -> perMonth() -> sum('amount_paid');
-        foreach($data as $key => $value){
-            if($key != 0)
-                $value -> aggregate += $data[$key - 1] -> aggregate;
-        }
+        // foreach($data as $key => $value){
+        //     if($key != 0)
+        //         $value -> aggregate += $data[$key - 1] -> aggregate;
+        // }
         return [
                 'datasets' => [
                     [
                         'label' => 'Revenue ($CAD)',
                         'data' => $data -> map(fn (TrendValue $value) => $value -> aggregate), 
                         'maxBarThickness' => 40,
+                        'minBarLength' => 5,
                     ],
                 ],
                 'labels' => $data -> map(fn (TrendValue $value) => $value -> date),
