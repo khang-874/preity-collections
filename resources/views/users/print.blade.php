@@ -10,7 +10,7 @@
             padding: 0px;
         }
         h1,h2,h3,h4,h5,h6{
-            margin: 5px;
+            margin: 2px;
         }
     </style> 
     <script>
@@ -23,15 +23,15 @@
 <body> 
     <div style='display:flex;flex-direction: column;'>
         @foreach($details as $detail)
-            <div style="border-width: 1px; border-style:solid; width: 230px; margin:2px">
-                <h1 style="word-wrap: wrap break-word; width:100%;">PREITY COLLECTION</h1>
+            <div style="width: 230px; height: 289px">
+                <h2>PREITY</h2>
+				<h2>COLLECTION</h2>
                 <h3>SN: {{$listing -> serial_number}}</h3>
                 <h3>Price Code: {{$listing -> productPriceCode}}</h3>
                 <h3>Size: {{$detail -> size}}</h3>
                 <h3>Color: {{$detail -> color}}</h3>
                 <h2>MRP: ${{$listing -> sellingPrice}}</h2>
-                <h3>Made in India</h3>
-                {{-- <div style="display:flex; justify-content:center;">@php echo $detail -> barcode @endphp</div> --}}
+				<h3>Made in India</h3>
                 <h3>Dry clean only</h3>
             </div>
         @endforeach
