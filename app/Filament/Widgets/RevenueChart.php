@@ -27,11 +27,11 @@ class RevenueChart extends ChartWidget
         $endDate = $this -> filters['endDate'] ?? now(); 
         if($startDate != now() -> startOfYear()){
             $startDate = Carbon::createFromFormat('Y-m-d', $startDate);
-        }
-        if($endDate != now()){
+        } 
+        if(gettype($endDate) == 'string'){
             $endDate = Carbon::createFromFormat('Y-m-d', $endDate);
         }
-        // dd($startDate, $endDate);
+
         $activeFilter = $this -> filter;
         $query = null;
         
@@ -58,11 +58,7 @@ class RevenueChart extends ChartWidget
                     ],
                 ],
                 'labels' => $data -> map(fn (TrendValue $value) => $value -> date),
-            ];
-
-        return [
-            //
-        ];
+            ]; 
     }
 
     protected function getType(): string

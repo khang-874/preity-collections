@@ -26,9 +26,10 @@ class CostOfGoodsSoldChart extends ChartWidget
         if($startDate != now() -> startOfYear()){
             $startDate = SupportCarbon::createFromFormat('Y-m-d', $startDate);
         }
-        if($endDate != now()){
+        if(gettype($endDate) == 'string'){
             $endDate = SupportCarbon::createFromFormat('Y-m-d', $endDate);
         }
+
         $inventories = Trend::query(
                 Listing::query()
                     -> selectRAW('listings.id')
