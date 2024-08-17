@@ -11,10 +11,12 @@ use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 use Illuminate\Support\Facades\DB;
 
-class ListingChart extends ChartWidget
+class InventoryChart extends ChartWidget
 {
     protected static ?string $heading = 'Inventory';
     protected static ?string $pollingInterval = null;
+    protected static string $color = 'gray';
+    protected static ?int $sort = 3;
 
     protected function getData(): array
     { 
@@ -47,9 +49,7 @@ class ListingChart extends ChartWidget
                 'datasets' => [
                     [
                         'label' => 'Inventory',
-                        'data' => $inventories -> map(fn (TrendValue $value) => $value -> aggregate),
-                        'backgroundColor' => 'blue',
-                        'borderColor' => 'blue',
+                        'data' => $inventories -> map(fn (TrendValue $value) => $value -> aggregate), 
                     ],
                 ],
                 'labels' => $inventories -> map(fn (TrendValue $value) => $value -> date),
@@ -58,6 +58,6 @@ class ListingChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line';
+        return 'bar';
     }
 }

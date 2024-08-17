@@ -14,7 +14,9 @@ class SoldListingsChart extends ChartWidget
 {
     protected static ?string $heading = 'Sold';
     protected static ?string $pollingInterval = null;
-
+    protected static ?int $sort = 4;
+    protected static string $color = 'primary';
+    
     protected function getData(): array
     {
         $sold = Trend::query(OrderListing::query() -> join('details', 'details.id', '=', 'orders_listings.order_id'))
@@ -31,9 +33,7 @@ class SoldListingsChart extends ChartWidget
                 'datasets' => [
                     [
                         'label' => 'Sold',
-                        'data' => $sold -> map(fn (TrendValue $value) => $value -> aggregate),
-                        'backgroundColor' => '#36A2EB',
-                        'borderColor' => '#9BD0F5',
+                        'data' => $sold -> map(fn (TrendValue $value) => $value -> aggregate), 
                     ],
                 ],
                 'labels' => $sold -> map(fn (TrendValue $value) => $value -> date),
@@ -46,6 +46,6 @@ class SoldListingsChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line';
+        return 'bar';
     } 
 }
