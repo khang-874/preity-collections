@@ -50,6 +50,7 @@ class InventoryChart extends ChartWidget
                     [
                         'label' => 'Inventory',
                         'data' => $inventories -> map(fn (TrendValue $value) => $value -> aggregate), 
+                        'minBarLength' => 5,
                     ],
                 ],
                 'labels' => $inventories -> map(fn (TrendValue $value) => $value -> date),

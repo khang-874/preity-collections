@@ -5,6 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SectionResource\Pages;
 use App\Filament\Resources\SectionResource\RelationManagers;
 use App\Filament\Resources\SectionResource\RelationManagers\SubsectionsRelationManager;
+use App\Filament\Resources\SectionResource\Widgets\CostOfGoodsSoldChart;
+use App\Filament\Resources\SectionResource\Widgets\InventoryOverview;
+use App\Filament\Resources\SectionResource\Widgets\RevenueChart;
+use App\Filament\Resources\SectionResource\Widgets\SoldOverview;
 use App\Models\Section;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -71,6 +75,16 @@ class SectionResource extends Resource
         return [
             //
             SubsectionsRelationManager::class
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            RevenueChart::class,
+            CostOfGoodsSoldChart::class,
+            InventoryOverview::class,
+            SoldOverview::class,
         ];
     }
 

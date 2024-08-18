@@ -34,6 +34,8 @@ class SoldListingsChart extends ChartWidget
                     [
                         'label' => 'Sold',
                         'data' => $sold -> map(fn (TrendValue $value) => $value -> aggregate), 
+                        'minBarLength' => 5,
+                
                     ],
                 ],
                 'labels' => $sold -> map(fn (TrendValue $value) => $value -> date),
