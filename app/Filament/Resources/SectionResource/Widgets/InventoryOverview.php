@@ -51,18 +51,15 @@ class InventoryOverview extends BaseWidget
             -> perMonth()
             -> sum('sold'); 
             
-        // dd($inventories, $sold, $this -> record);
-        $totalInventory = 0;
         foreach($inventories as $key => $value){
             if($key != 0){
                 $value -> aggregate += $inventories[$key - 1] -> aggregate;
             }
             $value -> aggregate -= $sold[$key] -> aggregate;
-            $totalInventory += $value -> aggregate;
         }
         return [
             //
-            Stat::make('Inventory', $totalInventory)
+            Stat::make('Inventory', $inventories -> last() -> aggregate)
                 -> chart($inventories -> map(fn (TrendValue $value) => $value -> aggregate) -> all())
                 -> color('gray')
         ];
