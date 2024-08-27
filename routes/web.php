@@ -52,6 +52,9 @@ Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
 Route::get('/print', [UserController::class, 'print']) -> name('print');
 
+//Print receipt
+Route::get('/printReceipt', [UserController::class, 'printReceipt']) -> name('printReceipt');
+
 //Place order
 Route::get('/placeOrder', [OrderController::class, 'placeOrder']);
 
@@ -115,15 +118,6 @@ Route::post('/subsections', [SubsectionController::class, 'store']) -> middlewar
 
 //Delete a subsection
 Route::delete('/subsections/{subsection}', [SubsectionController::class, 'delete']) -> middleware('auth');
-
-// //View all listings belonged to a vendor
-// Route::get("/vendors/{vendor}", [VendorController::class, 'show']) -> middleware('auth');
-
-// //Delete a vendor
-// Route::delete('/vendors/{vendor}', [VendorController::class, 'delete']) -> middleware('auth');
-
-// //Create new vendor
-// Route::post('/vendors', [VendorController::class, 'store']) -> middleware('auth');
 
 //Authenticate user
 Route::post('/authenticate', [UserController::class, 'authenticate']);

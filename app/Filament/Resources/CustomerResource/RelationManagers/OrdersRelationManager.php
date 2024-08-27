@@ -18,6 +18,11 @@ class OrdersRelationManager extends RelationManager
 {
     protected static string $relationship = 'Orders';
 
+    protected static ?string $modelLabel = 'Sale';
+    protected static ?string $pluralModelLabel = 'Sales';
+    protected static ?string $pluralLabel = 'Sales';
+    protected static ?string $title = "Sales";
+
     public function form(Form $form): Form
     {
         return $form

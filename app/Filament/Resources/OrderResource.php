@@ -8,6 +8,7 @@ use App\Filament\Resources\OrderResource\RelationManagers\ListingsRelationManage
 use App\Filament\Resources\OrderResource\RelationManagers\OrderListingsRelationManager;
 use App\Models\Order;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -27,6 +28,9 @@ class OrderResource extends Resource
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $modelLabel = 'Sale';
+    protected static ?string $pluralModelLabel = 'Sales';
 
     public static function form(Form $form): Form
     {
@@ -77,8 +81,23 @@ class OrderResource extends Resource
                             'credit' => 'Credit',
                             'debit' => 'Debit',
                             'cash' => 'Cash',
-                        ])
-
+                        ]),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

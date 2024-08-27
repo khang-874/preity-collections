@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Detail;
 use App\Models\Listing;
+use App\Models\Order;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -68,6 +69,13 @@ class UserController extends Controller
         return view('users.print', [
             'details' => $details,
             'listing' => $listing
+        ]);
+    }
+
+    public function printReceipt(){
+        $order = Order::find(request() -> query('orderId'));
+        return view('users.printReceipt',[
+            'order' => $order,
         ]);
     }
 }
