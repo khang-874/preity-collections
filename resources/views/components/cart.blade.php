@@ -47,11 +47,36 @@
             </template> 
         </div>
         <template x-if="$store.cart.items.length != 0">
-            <div class="font-medium bottom-0 border-t-2 pb-2">
+            <div class="font-medium bottom-0 border-t-2 pb-2" 
+                x-data="{submitData(event){
+                            let items = $store.cart.items;
+                            console.log(items);
+                            let form = event.target;
+                            let data = [];
+                            for(let i = 0; i < items.length; ++i){
+                                data.push({
+                                    'listingId': items[i]['listingId'],
+                                    'detailId' : items[i]['detailId'],
+                                    'quantity' : items[i]['quantity']
+                                })
+                
+                            } 
+                            let inputField = document.createElement('input');
+                            inputField.type = 'hidden';
+                            inputField.name = 'items';
+                            inputField.value = JSON.stringify(data);
+                            form.appendChild(inputField);
+                            {{-- localStorage.clear(); --}}
+                            form.submit();
+                }}">
                 <div class="text-center" x-text="'Subtotal: $' + $store.cart.getSubtotal().toFixed(2)"></div>
                 <div class="text-center" x-text="'HST: $' + ($store.cart.getSubtotal() * .13).toFixed(2)"></div>
                 <div class="text-center font-extrabold" x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
-                <div class="flex justify-center mt-1"><a href="/placeOrder"><x-button>Order now</x-button></a></div>
+                {{-- <div class="flex justify-center mt-1"><a href="/placeOrder"><x-button>Check out</x-button></a></div> --}}
+                <form action="{{route('stripe.checkout')}}" method="post" @submit.prevent='submitData'>
+                    @csrf
+                    <div class="flex justify-center mt-1"><x-button>Check out</x-button></div>
+                </form>
             </div>
         </template>
     </div> 

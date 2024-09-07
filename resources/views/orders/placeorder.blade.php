@@ -23,7 +23,7 @@
                     inputField.name = 'items';
                     inputField.value = JSON.stringify(data);
                     form.appendChild(inputField);
-                    localStorage.clear();
+                    {{-- localStorage.clear(); --}}
                     form.submit();
                 }
             }"  
@@ -77,7 +77,7 @@
                         <div class="text-center font-extrabold" x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
                     </div>
                 </template>
-                <x-button class="w-[80%] mx-[10%]">Place order</x-button>
+                <x-button class="w-[80%] mx-[10%]">Check out</x-button>
                 <a href="/"><x-button class="w-[80%] mx-[10%] mt-2">Return to mainpage</x-button></a>
             </div>
         </div>

@@ -30,6 +30,7 @@ class CustomerResource extends Resource
                 //
                 TextInput::make('first_name'),
                 TextInput::make('last_name'),
+                TextInput::make('email'),
                 TextInput::make('phone_number') -> required(),
                 TextInput::make('amount_owe') -> numeric() -> disabled(),
             ]);
@@ -42,6 +43,7 @@ class CustomerResource extends Resource
                 //
                 TextColumn::make('first_name') -> searchable(),
                 TextColumn::make('last_name') -> searchable(),
+                TextColumn::make('email'),
                 TextColumn::make('phone_number') -> searchable(),
                 TextColumn::make('amount_owe') -> label('Amount owe ($CAD)') -> sortable(),
             ])

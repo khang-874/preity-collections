@@ -30,6 +30,11 @@
             items: Alpine.$persist([]),  
             addToCart(product) { 
                 alert('Item add successfully');
+                for(let i = 0; i < this.items.length; ++i)
+                    if(this.items[i]['detailId'] == product['detailId']){
+                        this.items[i]['quantity'] += product['quantity'];
+                        return;
+                    }
                 this.items.push(product);
             },
             removeFromCart(index){

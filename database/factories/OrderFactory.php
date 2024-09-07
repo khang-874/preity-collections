@@ -17,6 +17,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
+            'address' => fake() -> address(),
             'payment_type' => fake() -> randomElement(['cash', 'debit', 'credit']),
             'amount_paid' => fake() -> randomFloat(2,10, 20)
         ];

@@ -20,29 +20,7 @@ class OrderController extends Controller
         return view('orders.index', [
             'orders' => Order::where('paymenType', '=', 'pending'),
         ]);
-    }
-
-    private function getUniquesItems(array $items){
-        $uniqueItems = [];
-        for($i = 0; $i < sizeof($items); ++$i){
-                $inArray = true;
-                for($j = 0; $j < sizeof($uniqueItems); ++$j){
-                    if($uniqueItems[$j]['listingId'] == $items[$i]['listingId'] && $uniqueItems[$j]['detailId'] == $items[$i]['detailId']){
-                        $inArray= false;
-                        break;
-                    }
-                }
-                if(!$inArray)
-                    continue;
-                $uniqueItems[] = $items[$i];
-                for($j = $i + 1; $j < sizeof($items); ++$j){
-                    if($items[$i]['listingId'] == $items[$j]['listingId'] && $items[$i]['detailId'] == $items[$j]['detailId']){
-                            $uniqueItems[sizeof($uniqueItems) - 1]['quantity'] += $items[$j]['quantity'];
-                    }
-                } 
-            }
-        return $uniqueItems;
-    }
+    } 
     /**
      * Show the form for creating a new resource.
      */
@@ -75,35 +53,31 @@ class OrderController extends Controller
         }
 
         $customer = Customer::where('phone_number', $phoneNumber) 
-                            -> orWhere('first_name', $firstName) 
-                            -> firstOr(function() use ($firstName, $lastName, $phoneNumber){
+                        -> orWhere('first_name', $firstName) 
+                        -> firstOr(function() use ($firstName, $lastName, $phoneNumber){
             return Customer::create([
                 'first_name' => $firstName,
-                'last_name' => $lastName,
+                'last_name' => '',
+                'email' => '',
                 'phone_number' => $phoneNumber,
                 'amount_owe' => 0.0
             ]);
         });
 
         $order = Order::create([
-                'payment_type' => $payment,
+                'payment_type' => 'online',
                 'customer_id' => $customer -> id,
                 'amount_paid' => 0
         ]);
        
-        $uniqueItems = $this -> getUniquesItems($items);
         
-        foreach($uniqueItems as $item){
+        foreach($items as $item){
             OrderListing::create([
                 'listing_id' => $item['listingId'],
                 'detail_id' => $item['detailId'],
                 'quantity' => $item['quantity'],
                 'order_id' => $order -> id,
-            ]);
-            // $order -> listings() -> attach($item['listingId'], [
-            //     'detail_id' => $item['detailId'], 
-            //     'quantity' => $item['quantity']
-            // ]);     
+            ]); 
         }
 
         //Send notificaiton about new email
@@ -111,6 +85,52 @@ class OrderController extends Controller
         return redirect('/') -> with('message', 'Place order successfully');
     }
 
+    private function getAddress($addressObject){
+        return $addressObject -> line1 . $addressObject -> line2 . ', ' 
+        . $addressObject -> city . ', '
+        . $addressObject -> state . ', '
+        . $addressObject -> country . ', '
+        . $addressObject -> postal_code . '.';
+    }
+    public function createOnlineOrder($orderItems, $customer, $amount_paid){
+        $name = $customer -> name;
+        $email = $customer -> email;
+        $phone = $customer -> phone;
+        $addressObject = $customer -> address;
+        $address = $this -> getAddress($addressObject);
+
+        $customer = Customer::where('phone_number', $phone) 
+                        -> orWhere('first_name', $name) 
+                        -> orWhere('email', $email)
+                        -> firstOr(function() use ($name, $email, $phone){
+            return Customer::create([
+                'first_name' => $name,
+                'last_name' => '',
+                'email' => $email,
+                'phone_number' => $phone == null ? '' : $phone,
+                'amount_owe' => 0.0
+            ]);
+        });
+
+        $order = Order::create([
+            'address' => $address,
+            'payment_type' => 'online',
+            'customer_id' => $customer -> id,
+            'amount_paid' => floatval($amount_paid) / 100
+        ]);
+
+        foreach($orderItems as $item){
+            OrderListing::create([
+                'listing_id' => $item['listingId'],
+                'detail_id' => $item['detailId'],
+                'quantity' => $item['quantity'],
+                'order_id' => $order -> id,
+            ]); 
+        }
+
+        //Send notificaiton about new email
+        $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
+    }
     public function edit(Order $order, Request $request){
         $request -> validate([
             'amount' => 'required'

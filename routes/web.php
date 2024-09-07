@@ -7,6 +7,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -25,7 +26,7 @@ Route::get('/', function() {
     'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
     'newArrival' => Listing::orderBy('created_at', 'DESC') -> take(20) -> get() -> all()
     ]);
-});
+}) -> name('index');
 
 //Get all listing
 Route::get('/listings', [ListingController::class, 'index']) -> name('listings.index');
@@ -125,3 +126,7 @@ Route::post('/authenticate', [UserController::class, 'authenticate']);
 //Logout user
 Route::post('/logout', [UserController::class, 'logout']);
 
+// Stripe
+Route::post('stripe/checkout', [StripePaymentController::class, 'stripeCheckout'])->name('stripe.checkout');
+
+Route::post('stripe/webhook', [StripePaymentController::class, 'handle']) -> name('stripe.webhook');

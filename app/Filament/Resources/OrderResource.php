@@ -43,6 +43,7 @@ class OrderResource extends Resource
                 //             -> schema([
                 //                 // Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
                 //             ])
+                TextInput::make('address'),
                 TextInput::make('amount_paid'),
                 Select::make('payment_type') 
                         -> options([
@@ -50,6 +51,7 @@ class OrderResource extends Resource
                             'credit' => 'Credit',
                             'debit' => 'Debit',
                             'cash' => 'Cash',
+                            'online' => 'Online',
                         ]),
                 Placeholder::make('subtotal') 
                             -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> subtotal),
@@ -81,6 +83,7 @@ class OrderResource extends Resource
                             'credit' => 'Credit',
                             'debit' => 'Debit',
                             'cash' => 'Cash',
+                            'online' => 'Online',
                         ]),
                 Filter::make('created_at')
                     ->form([
