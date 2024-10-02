@@ -21,13 +21,25 @@
     $titleStyle = $type == 'listing' ? '' : '!text-base text-center'
 @endphp
 <a class="cursor-pointer" href="{{$link}}" >
-    <x-card class="relative">
+    <div class="relative hover:scale-[101%] transition duration-200">
         @php
+            // if($item && $item -> images)
+            //     $showingImage = $item -> images[0];
+            // else{
+            //     if($item){
+            //         if($type != 'listing')
+            //             $showingImage = $item -> randomListing() -> images[0] ?? '';
+            //         else 
+            //             $showingImage = '';
+            //     }else{
+            //         $showingImage = '';
+            //     }
+            // }
             $showingImage = $item -> images[0] ?? '';
             if(Storage::exists($showingImage))
                 $showingImage = Storage::url($showingImage);
         @endphp
-        <div class="h-[75%] lg:h-[80%] overflow-hidden"><img src="{{$showingImage}}" alt="" class="h-full min-w-full object-scale-down object-center"></div>
+        <div class=""><img src="{{$showingImage}}" alt="" class="h-[14rem] w-full object-cover object-center"></div>
         <p class="w-[95%] text-xs pt-1 text-nowrap overflow-hidden {{$titleStyle}}">{{$item->name}}</p>
         @if($type == 'listing')
             @if ($item -> sale_percentage != 0)
@@ -42,5 +54,5 @@
                 <p class="text-sm font-medium">CA$ {{$item->selling_price}}</p> 
             @endif
         @endif
-    </x-card>
+    </div>
 </a>

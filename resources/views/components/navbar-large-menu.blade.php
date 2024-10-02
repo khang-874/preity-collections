@@ -4,7 +4,7 @@
 <li x-data="{openCategory:false}" 
     @mouseenter="openCategory=true" 
     @mouseleave="openCategory=false"
-    class="py-2"
+    class="py-2 font-medium"
 >
     <a href="/listings/{{$clearance == 'true' ? 'clearance/' : ''}}?category={{$category -> id}}" class="text-base" :class="openCategory ? 'font-semibold' : ''">{{$category -> name}}</a>
     <ul x-show="openCategory"
@@ -15,7 +15,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         x-cloak                
-        class="absolute flex left-0 mt-2 bg-black/70 text-white w-full gap-4 pt-1 pb-2" 
+        class="absolute flex left-0 mt-2 bg-primary/80 text-white w-full gap-4 pt-1 pb-2" 
         @mouseenter="openCategory = true"
     >
         @foreach ($category -> sections as $section)

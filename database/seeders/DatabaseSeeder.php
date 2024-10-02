@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Listing;
 use App\Models\Order;
 use App\Models\OrderListing;
+use App\Models\Promotion;
 use App\Models\Section;
 use App\Models\Size;
 use App\Models\Subsection;
@@ -53,12 +54,7 @@ class DatabaseSeeder extends Seeder
                 'quantity' => random_int(1, $detail -> inventory),
             ];
         }))) -> create();
-        $customer = Customer::all() -> random(1) -> get('0');
-        $amount_owe = 0;
-        foreach($customer -> orders as $order){
-            $amount_owe += $order -> remaining;
-        }
-        dd($customer -> amount_owe, $amount_owe);
         
+        Promotion::factory(3) -> recycle($listings) -> create(); 
     }
 }

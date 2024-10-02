@@ -15,15 +15,13 @@
             }
         @endphp
         <div class="flex gap-6 mt-2"> 
-            <div class="hidden md:block basis-2/12 flex-grow bg-white h-full pl-[2%] ">
-                {{-- <x-filters :items="$stdSizes" property="size"></x-filters> --}}
-                {{-- <x-filters :items="$stdColors" property="color"></x-filters> --}}
+            <div class="hidden md:block basis-[15rem] flex-grow bg-white h-full pl-[2%] "> 
                 <livewire:filters :options="$stdSizes" property="size"/>
                 <livewire:filters :options="$stdColors" property="color"/>
             </div>
-            <div class="md:w-9/12 lg:w-10/12">
+            <div class="flex-grow-[9999] pr-[2%]">
                 <x-layouts.index-title></x-layouts.index-title>
-                <div class="flex flex-wrap gap-2 justify-center md:justify-normal">
+                <div class="grid gap-2 " style="grid-template-columns: repeat(auto-fit, minmax(min(16rem,100%), 1fr))">
                     @unless(count($listings) == 0)
                         @foreach ($listings as $listing)
                             @if ($listing -> available == true)

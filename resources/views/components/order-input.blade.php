@@ -107,7 +107,7 @@
     }
 }" 
     x-init="showAvailableOption('{{$initialColor}}', $refs.size, $refs.color, 'size', 'color')"
-    class=" mt-4 grid grid-rows-2 gap-y-1">
+    class= "mt-2 grid grid-rows-2 gap-y-2">
     <div class="">
         <p class="mb-1">Select size:</p> 
         <div x-ref="size" class="flex gap-2 flex-wrap ml-2">
@@ -153,8 +153,8 @@
         </div>
     </div>
 
-    <button @click="handleClick" class="p-2 bg-blue-600 rounded-md font-medium text-white gap-2 flex-grow">   
+    <button @click="handleClick" class="p-2 bg-primary rounded-md font-medium text-white gap-2 w-52 text-base flex items-center justify-center">   
         <i class="fa-solid fa-cart-shopping" ></i>
-        Add to cart
+        <p>Add to cart</p>
     </button>
 </div>

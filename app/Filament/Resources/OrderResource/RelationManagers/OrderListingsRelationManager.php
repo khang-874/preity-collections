@@ -30,7 +30,7 @@ class OrderListingsRelationManager extends RelationManager
     {
         return $form
             ->schema([ 
-                Select::make('listing_id') -> relationship('listing', 'name') -> live() -> searchable() 
+                Select::make('listing_id') -> relationship('listing', titleAttribute:'serial_number') -> live() -> searchable() 
                 -> getSearchResultsUsing(fn (string $search): array => Listing::where('serial_number', '=', "{$search}")->pluck('name', 'id')->toArray())
                 -> required(),
                 Select::make('detail.size')  

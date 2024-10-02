@@ -1,8 +1,8 @@
-<div class='w-full h-16 flex justify-between items-center px-[2%] bg-black text-white'>
+<div class='w-full h-16 md:h-20 flex justify-between items-center px-[2%] bg-primary text-white'>
     <div class='flex items-center gap-3'>
         <button x-data @click="$store.showMenu.toggle()" class="md:hidden"><i class="fa-solid fa-bars fa-lg"></i></button>
         <a href="/" class="w-max font-serif font-bold text-xl md:text-2xl flex gap-1 items-center">
-            <img src="{{url('/')}}/images/logo.png" class="h-10 w-auto object-scale-down" alt="">
+            <img src="{{url('/')}}/images/logo_white.png" class="h-10 w-auto object-scale-down" alt="">
             <div class="w-min leading-none">Preity Collection</div> 
         </a>
     </div>

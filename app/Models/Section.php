@@ -21,4 +21,7 @@ class Section extends Model
     public function category(): BelongsTo{
         return $this->belongsTo(Category::class);
     }
+    public function randomListing() {
+        return $this -> subsections -> random() -> randomListing();
+    }
 }

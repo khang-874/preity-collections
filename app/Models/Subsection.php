@@ -25,17 +25,26 @@ class Subsection extends Model
 
     public function availableListings(){
         $listings = $this -> listings;
-        $result = [];
+        $result = collect();
         foreach($listings as $listing){
             if($listing -> available){
-                $result []= $listing;
+                $result -> add($listing);
             }
         }
         return $result;
     }
 
     public function randomAvailableListings(int $number){
-        $listings = $this -> availableListings();
-        return array_map(fn($index) => $listings[$index] ,array_rand($listings, min($number, count($listings))));
+        $listing = $this -> availableListings();
+        if($listing -> count() == 0)
+            return null;
+        return $listing -> random(min($number, $listing -> count()));
+    }
+
+    public function randomListing(): ?Listing{
+       $randomListing = $this -> randomAvailableListings(1);
+		if($randomListing == null)
+			return null;
+        return $randomListing -> get(0); 
     }
 }

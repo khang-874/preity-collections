@@ -17,14 +17,16 @@ use App\Mail\NewOrder;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Listing;
+use App\Models\Promotion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function() {
     return view('home' ,[
-    'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
-    'newArrival' => Listing::orderBy('created_at', 'DESC') -> take(20) -> get() -> all()
+        'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+        'newArrival' => Listing::orderBy('created_at', 'DESC') -> take(20) -> get() -> all(),
+        'promotions' => Promotion::all()
     ]);
 }) -> name('index');
 

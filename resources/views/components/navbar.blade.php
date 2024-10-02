@@ -10,7 +10,7 @@
             x-transition:leave-end="opacity-0 -translate-x-1/2"        
             class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm mr-auto pb-8"
             @click.outside="$store.showMenu.toggle()"> 
-        <div class="p-2 text-xl text-white bg-black font-medium flex gap-x-2 border-b-2 mb-2 justify-between">
+        <div class="p-2 text-xl h-16 md:h-20 text-white bg-primary font-medium flex gap-x-2 border-b-2 mb-2 justify-between items-center">
             <p>Categories</p>
             <button @click="$store.showMenu.toggle()"><i class="fa-solid fa-xmark"></i></button>
         </div> 

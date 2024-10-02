@@ -22,10 +22,10 @@ class ListingFactory extends Factory
         return [
             'vendor_id' => Vendor::factory(),
             'name' => fake()->name(),
-            'description' => fake() -> realText(1500),
+            'description' => fake() -> realText(50),
             'weight' => fake() -> randomFloat(),
             'images' => array_map(function($element) {
-                $element = fake() -> picsumUrl(width:random_int(2560, 5460), height: random_int(2560, 8090));
+                $element = fake() -> picsumUrl(width:2240, height:4020);
                 return $element;
             }, array_fill(0, 3, '')), 
             'init_price' => fake() -> randomFloat(nbMaxDecimals:2,min:0,max:300),

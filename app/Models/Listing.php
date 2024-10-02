@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HigherOrderWhenProxy;
 
@@ -27,6 +28,10 @@ class Listing extends Model
         return $this->hasMany(Detail::class);
     } 
 
+    public function promotion(): HasOne
+    {
+        return $this -> hasOne(Promotion::class);
+    }
     public function vendor() : BelongsTo
     {
         return $this -> belongsTo(Vendor::class);

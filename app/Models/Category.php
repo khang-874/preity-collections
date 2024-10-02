@@ -19,5 +19,7 @@ class Category extends Model
     public function sections():HasMany{
         return $this->hasMany(Section::class) -> orderBy('index');
     }
-    
+    public function randomListing() : Listing{
+        return $this -> sections -> random() -> subsections -> random() -> randomListing();
+    } 
 }

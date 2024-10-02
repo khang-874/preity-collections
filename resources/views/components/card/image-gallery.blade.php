@@ -10,20 +10,14 @@
 @endphp
 
 
-<div x-data = "{activeSlide: 0}" class="relative w-full max-w-[25rem] h-auto max-h-[40rem] {{$cover}}">
+<div x-data = "{activeSlide: 0}" class="relative {{$cover}}">
    @foreach ($listing->images as $image)
       <div x-show="activeSlide === {{$count++}}"
-               {{$attributes->merge(['class' => 'w-full flex items-center justify-center'])}}>
-               @if (Storage::exists($image))
-                  @php
-                     //  dd(Storage::url($image));
-                  @endphp
-                  <img x-cloak src='{{Storage::url($image)}}' class='object-scale-down w-full object-center'/>
+               {{$attributes->merge(['class' => 'flex items-center justify-center'])}}>
+               @if (Storage::exists($image)) 
+                  <img x-cloak src='{{Storage::url($image)}}' class='object-cover w-full object-center' style="max-height: 30rem;"/>
                @else
-                  @php
-                     //  dd(Storage::url($image));
-                  @endphp
-                  <img x-cloak src='{{$image}}' class='object-scale-down w-full object-center'/>
+                  <img x-cloak src='{{$image}}' class='object-cover  w-full object-center' style="max-height: 30rem;/>
                @endif
       </div>   
    @endforeach

@@ -12,7 +12,12 @@ export default {
         'sans-serif',
       ],
     },
-    extend: {},
+    extend: {
+      colors:{
+        'primary' : '#34AEBA',
+        'secondary' : '#9a256b'
+      }
+    },
   },
   plugins: [],
 }
