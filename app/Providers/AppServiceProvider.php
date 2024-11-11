@@ -5,8 +5,10 @@ namespace App\Providers;
 use App\Models\Customer;
 use App\Models\Listing;
 use App\Models\Order;
+use App\Models\OrderListing;
 use App\Observers\CustomerObserver;
 use App\Observers\ListingObserver;
+use App\Observers\OrderListingObserver;
 use App\Observers\OrderObserver;
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Database\Eloquent\Model;
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Listing::observe(ListingObserver::class);
         Order::observe(OrderObserver::class);
         Customer::observe(CustomerObserver::class);
+        OrderListing::observe(OrderListingObserver::class);
     }
 }

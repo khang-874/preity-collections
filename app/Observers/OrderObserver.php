@@ -29,8 +29,6 @@ class OrderObserver
      */
     public function updated(Order $order): void
     {
-        //
-        // dd();
         //Only change update the inventory when make a payment
         if($order -> isDirty('payment_type') && $order -> getOriginal('payment_type') === 'pending'){
             //Updating inventory and sold
@@ -44,26 +42,17 @@ class OrderObserver
     }
 
     /**
-     * Handle the Order "deleted" event.
+     * Handle the Order "deleting" event.
+     * Undo the action on inventory to properly manage it
      */
-    public function deleted(Order $order): void
+    public function deleting(Order $order): void
     {
         //
-    }
+       foreach($order -> orderListings as $orderListing){
+            $orderListing -> detail -> inventory += $orderListing -> quantity;
+            $orderListing -> detail -> sold -= $orderListing -> quantity;
+            $orderListing -> detail -> save();
 
-    /**
-     * Handle the Order "restored" event.
-     */
-    public function restored(Order $order): void
-    {
-        //
-    }
-
-    /**
-     * Handle the Order "force deleted" event.
-     */
-    public function forceDeleted(Order $order): void
-    {
-        //
+       } 
     }
 }

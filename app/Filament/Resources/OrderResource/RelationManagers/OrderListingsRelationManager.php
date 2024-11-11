@@ -85,9 +85,8 @@ class OrderListingsRelationManager extends RelationManager
                             $detailId = $data['detail']['color'];
                             unset($data['detail']);
                             $data['detail_id'] = $detailId;
-                            // dd($data);
                             return $data;
-                        }),
+                        }) -> label('New listing'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
