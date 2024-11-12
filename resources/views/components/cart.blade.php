@@ -72,11 +72,11 @@
                 <div class="text-center" x-text="'Subtotal: $' + $store.cart.getSubtotal().toFixed(2)"></div>
                 <div class="text-center" x-text="'HST: $' + ($store.cart.getSubtotal() * .13).toFixed(2)"></div>
                 <div class="text-center font-extrabold" x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
-                {{-- <div class="flex justify-center mt-1"><a href="/placeOrder"><x-button>Check out</x-button></a></div> --}}
-                <form action="{{route('stripe.checkout')}}" method="post" @submit.prevent='submitData'>
+                <div class="flex justify-center mt-1"><a href="/placeOrder"><x-button>Check out</x-button></a></div>
+                {{-- <form action="{{route('stripe.checkout')}}" method="post" @submit.prevent='submitData'>
                     @csrf
                     <div class="flex justify-center mt-1"><x-button>Check out</x-button></div>
-                </form>
+                </form> --}}
             </div>
         </template>
     </div> 

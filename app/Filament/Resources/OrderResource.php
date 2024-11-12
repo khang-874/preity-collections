@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Exports\SaleExporter;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\RelationManagers\ListingsRelationManager;
 use App\Filament\Resources\OrderResource\RelationManagers\OrderListingsRelationManager;
 use App\Models\Order;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
@@ -106,10 +108,17 @@ class OrderResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
+            ->headerActions([
+                Tables\Actions\ExportAction::make()->exporter(SaleExporter::class) -> label('Export'),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+                Tables\ACtions\ExportBulkAction::make()->exporter(SaleExporter::class) -> label('Export sales') 
+                    ->formats([
+                        ExportFormat::Xlsx,
+                    ])
             ]);
     }
 

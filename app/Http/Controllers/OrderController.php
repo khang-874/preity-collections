@@ -48,7 +48,7 @@ class OrderController extends Controller
 
         $payment = 'pending';
 
-        if(sizeof($items) == 0){
+        if(!$items || sizeof($items) == 0){
             return redirect('/') -> with('message', "You don't have any items in cart");
         }
 
@@ -57,7 +57,7 @@ class OrderController extends Controller
                         -> firstOr(function() use ($firstName, $lastName, $phoneNumber){
             return Customer::create([
                 'first_name' => $firstName,
-                'last_name' => '',
+                'last_name' => $lastName,
                 'email' => '',
                 'phone_number' => $phoneNumber,
                 'amount_owe' => 0.0
@@ -70,7 +70,7 @@ class OrderController extends Controller
                 'amount_paid' => 0
         ]);
        
-        
+
         foreach($items as $item){
             OrderListing::create([
                 'listing_id' => $item['listingId'],

@@ -8,7 +8,7 @@
                 submitData(event){
                     let items = $store.cart.items;
                     console.log(items);
-                    let form = event.target;
+                    let form = $refs.form;
                     let data = [];
                     for(let i = 0; i < items.length; ++i){
                         data.push({
@@ -32,11 +32,13 @@
         >
             <div>
                 <div class="font-semibold text-lg md:text-2xl">Order information: </div>
-                <form action="/orders" method="post" @submit.prevent="submitData" class="text-sm md:text-base flex flex-col gap-2">
+                <form action="/orders" method="post" @submit.prevent="submitData" class="text-sm md:text-base flex flex-col gap-2" x-ref="form">
                     @csrf 
                     <input type="text" name="firstName" id="firstName" placeholder="First name" class="border border-gray-600 rounded-md p-1">
                     <input type="text" name="lastName" id="phoneNumber" placeholder="Last name" class="border border-gray-600 rounded-md p-1">
                     <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Phone number" class="border border-gray-600 rounded-md p-1">
+                    <input type="text" name="email" id = "email" placeholder="Email" class="border border-gray-600 rounded-md p-1">
+                    <input type="text" name="address" id = "address" placeholder="Address" class="border border-gray-600 rounded-md p-1">
 
                 </form>
             </div>
@@ -77,7 +79,7 @@
                         <div class="text-center font-extrabold" x-text="'Total: $' + ($store.cart.getSubtotal() * 1.13).toFixed(2)"></div>
                     </div>
                 </template>
-                <x-button class="w-[80%] mx-[10%]">Check out</x-button>
+                <x-button class="w-[80%] mx-[10%]"><div @click="submitData">Check out</div></x-button>
                 <a href="/"><x-button class="w-[80%] mx-[10%] mt-2">Return to mainpage</x-button></a>
             </div>
         </div>
