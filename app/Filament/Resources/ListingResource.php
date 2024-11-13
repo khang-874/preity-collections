@@ -13,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
@@ -33,6 +34,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint\Operators\EqualsOperator;
 use Filament\Tables\Table;
@@ -40,6 +42,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+
+use function Laravel\Prompts\form;
 
 class ListingResource extends Resource
 {
@@ -144,13 +148,28 @@ class ListingResource extends Resource
                 TextColumn::make('serial_number') -> searchable(),
                 TextColumn::make('name') -> label('Listing name') -> searchable(),
                 TextColumn::make('vendor.name'),
+                TextColumn::make('created_at') -> sortable(),
                 TextColumn::make('sellingPrice'),
                 TextColumn::make('details_sum_sold') -> label('Sold') -> sum('details', 'sold') -> sortable(),
                 TextColumn::make('details_sum_inventory') -> label('Inventory') -> sum('details', 'inventory') -> sortable(),
                 TextColumn::make('subsection.section.name') -> searchable()
-            ])
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
+                Filter::make('created_at') -> form([
+                    DatePicker::make('created_from'),
+                    DatePicker::make('created_until') -> default(now()),
+                ])-> query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['created_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['created_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                        );
+                }),
                 Filter::make('on_clearance') -> query(function(Builder $query) : Builder {
                     $query -> where('is_clearance' , true);
                     return $query;
@@ -176,16 +195,16 @@ class ListingResource extends Resource
                     $query -> whereIn('id', $queryData -> pluck('id') -> toArray());
                     return $query;
                 }),
-                Filter::make('section')
-                    -> form([
-                        Select::make('section'),
-                    ])
-                    -> query(function (Builder $query, array $data) : Builder{
-                        return $query -> when(
-                            $data['section'],
-                            fn (Builder $query, string $name) : Builder => $query -> where('name', '=', $name)
-                        );
-                    })
+                // Filter::make('section')
+                //     -> form([
+                //         Select::make('section'),
+                //     ])
+                //     -> query(function (Builder $query, array $data) : Builder{
+                //         return $query -> when(
+                //             $data['section'],
+                //             fn (Builder $query, string $name) : Builder => $query -> where('name', '=', $name)
+                //         );
+                //     })
             ])
             ->actions([
                 Tables\Actions\Action::make('View')
