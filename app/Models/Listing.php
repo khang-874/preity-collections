@@ -49,8 +49,7 @@ class Listing extends Model
         return Listing::roundToNearest(Listing::roundToNearest(($price / 55) * 2.5) * ((100 - $sale_percentage) / 100))- 0.01; 
     }
     public function getBasePriceAttribute(){
-        if($this -> sale_percentage != 0)
-            return Listing::roundToNearest($this -> init_price / 55 * 2.5) - 0.01;
+        return Listing::roundToNearest($this -> init_price / 55 * 2.5) - 0.01;
     } 
     public function getSellingPriceAttribute(){
         return Listing::sellingPrice($this -> init_price, $this -> sale_percentage);
