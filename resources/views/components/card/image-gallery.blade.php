@@ -2,23 +2,15 @@
 
 
 @php
-   $count = 0;
-   // dd($listing -> images);
-   foreach ($listing->images as $image) {
-      // dd(Storage::url($image));
-   }
+   $count = 0; 
 @endphp
 
 
 <div x-data = "{activeSlide: 0}" class="relative {{$cover}}">
    @foreach ($listing->images as $image)
       <div x-show="activeSlide === {{$count++}}"
-               {{$attributes->merge(['class' => 'flex items-center justify-center'])}}>
-               @if (Storage::exists($image)) 
-                  <img x-cloak src='{{Storage::url($image)}}' class='object-cover w-full object-center' style="max-height: 30rem;"/>
-               @else
-                  <img x-cloak src='{{$image}}' class='object-cover  w-full object-center' style="max-height: 30rem;/>
-               @endif
+               {{$attributes->merge(['class' => 'flex items-center justify-center'])}}> 
+               <img x-cloak src='{{$listing -> getDisplayImageAt($count)}}' class='object-cover h-auto w-full object-top' style="max-height: 40rem;"/>
       </div>   
    @endforeach
 

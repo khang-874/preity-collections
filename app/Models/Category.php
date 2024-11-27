@@ -22,4 +22,7 @@ class Category extends Model
     public function randomListing() : Listing{
         return $this -> sections -> random() -> subsections -> random() -> randomListing();
     } 
+    public function getLinkAttribute(){
+        return '/listings?category=' . $this -> id;
+    }
 }

@@ -47,4 +47,7 @@ class Subsection extends Model
 			return null;
         return $randomListing -> get(0); 
     }
+     public function getLinkAttribute(){
+        return '/listings?subsection=' . $this -> id;
+    }  
 }

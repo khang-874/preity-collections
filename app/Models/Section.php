@@ -24,4 +24,7 @@ class Section extends Model
     public function randomListing() {
         return $this -> subsections -> random() -> randomListing();
     }
+    public function getLinkAttribute(){
+        return '/listings?section=' . $this -> id;
+    }
 }

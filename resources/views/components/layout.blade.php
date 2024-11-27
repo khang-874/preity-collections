@@ -1,3 +1,5 @@
+@props(['categories'])
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,10 +66,11 @@
 
     @livewireStyles
 </head>
-<body class="mb-48">
+<body class="bg-[#f8f8fc] text-[#2c2c2c]">
+    <x-header :categories="$categories"></x-header>
     {{$slot}} 
- 
     <x-flash-message></x-flash-message>
     @livewireScripts
+    <x-footer></x-footer>
 </body>
 </html>

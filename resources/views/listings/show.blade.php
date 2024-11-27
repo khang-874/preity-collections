@@ -1,21 +1,16 @@
-<x-layout>
-    <header>
-        <x-header :categories="$categories"></x-header>
-    </header>
+<x-layout :categories="$categories"> 
     <main> 
-        <div class="md:mx-auto mt-4 md:max-w-[50%]">
-			<div class="flex gap-4 flex-wrap">
-				<div class=''>            
+        <div class="max-w-screen-xl mx-auto p-6">
+			<div class="flex flex-col lg:flex-row items-center bg-white shadow-lg rounded-lg overflow-hidden">
+				<div class='lg:w-1/2 p-4 container'>            
 					<x-card.image-gallery :listing="$listing" cover="bg-white drop-shadow-md"></x-card.image-gallery>
 				</div>
-				<div class="flex-grow basis-1">
-					<div>
-						<h4 class="w-full font-medium text-2xl">{{$listing -> name}}</h4>
-						<p class="font-medium text-xl">CA$ {{$listing -> selling_price}}</p>
-					</div>  
+				<div class="lg:w-1/2 p-4 container">
+					<h4 class="w-full font-medium text-2xl">{{$listing -> name}}</h4>
+					<p class="font-medium text-xl mt-2">CA$ {{$listing -> selling_price}}</p>
 					<x-order-input :listing="$listing" :details="$listing->details"></x-order-input>                             
 
-                    <div x-data="{show : false}" class="mt-10">
+                    <div x-data="{show : false}" class="mt-4">
                         <div @click="show = !show" class="flex justify-between items-center cursor-pointer">
                             <p class="uppercase font-medium text-sm">Description</p>
                             <i x-show="!show" class="fa-solid fa-plus"></i>
@@ -34,14 +29,15 @@
                         </div>
                     </div>
 				</div> 
-			</div> 
-            
+			</div>  
         </div> 
-            <div class="h-[1px] w-screen bg-slate-100 mb-4 mt-8">
-            </div>
+
+        {{-- Divider  --}}
+        <div class="h-[1px] w-screen bg-slate-100 mb-4 mt-8">
+        </div>
+
         <div class="md:max-w-[50%] mx-auto">
             <livewire:slideshow :items="$recommendListings" type="listing" title="You might also like"/>
         </div>
-
-</main>
+    </main>
 </x-layout>

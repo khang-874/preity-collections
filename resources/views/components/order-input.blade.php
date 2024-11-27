@@ -42,8 +42,8 @@
 @endphp
 
 <div x-data="{
-    color: '{{$initialColor}}', 
-    size: '{{$initialSize}}', 
+    color: '', 
+    size: '', 
     quantity:1,
     availability : {{json_encode($availableOption)}},
     handleClick(){
@@ -87,12 +87,12 @@
         }
 
         children = otherOption.children;
-        for(let i = 0; i < children.length; ++i){
+        //Run backward so that we can set the option to be the first option
+        for(let i = children.length - 1; i >= 0; --i){
             let inputValue = children[i].children[0].value;
 
             if(!availableOption.includes(inputValue)){
                 children[i].classList.add('opacity-50');
-                {{-- children[i].classList.add('opacity-50 after:absolute after:left-0 after:top-1/2 after:h-[1px] after:bg-black after:w-full after:block'); --}}
             }
             else{
                 children[i].classList.remove('opacity-50');
@@ -106,9 +106,9 @@
         }
     }
 }" 
-    x-init="showAvailableOption('{{$initialColor}}', $refs.size, $refs.color, 'size', 'color')"
-    class= "mt-2 grid grid-rows-2 gap-y-2">
-    <div class="">
+    {{-- x-init="showAvailableOption('{{$initialSize}}', $refs.size, $refs.color, 'size', 'color')" --}}
+    class= "container flex flex-col">
+    <div class="mt-2">
         <p class="mb-1">Select size:</p> 
         <div x-ref="size" class="flex gap-2 flex-wrap ml-2">
             @foreach ($sizes as $size => $quantity) 
@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    <div class="">
+    <div class="mt-2">
         <p class="mb-1">Select color:</p> 
         <div x-ref="color" class="flex gap-2 flex-wrap ml-2">
             @foreach ($colors as $color => $quantity) 
@@ -143,7 +143,7 @@
             @endforeach 
         </div>
     </div>
-    <div class="flex gap-2 basis-[100%]">
+    <div class="flex gap-2 basis-[100%] mt-2">
         <label for="quantity" class="">Quantity:</label>
         <div class="flex items-center ">
             <button @click="quantity++" class="flex items-center"><i class="fa-solid fa-plus"></i></button>
@@ -153,7 +153,7 @@
         </div>
     </div>
 
-    <button @click="handleClick" class="p-2 bg-primary rounded-md font-medium text-white gap-2 w-52 text-base flex items-center justify-center">   
+    <button @click="handleClick" class="p-2 mt-2 bg-primary rounded-md font-medium text-white gap-2 w-52 text-base flex items-center justify-center">   
         <i class="fa-solid fa-cart-shopping" ></i>
         <p>Add to cart</p>
     </button>

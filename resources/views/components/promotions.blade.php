@@ -1,6 +1,5 @@
-@props(['promotions'])
+{{-- @props(['promotions'])
 <div class="mx-auto md:max-w-[60%] mt-6 mb-4">
-    {{-- <div class="">Promotion</div>  --}}
     <div    x-data = "{activeSlide: 0}" x-init="$nextTick(() => {
                 console.log('here');
                 console.log(activeSlide);
@@ -41,4 +40,9 @@
             </a>   
         @endforeach 
     </div>
-</div>
+</div> --}}
+<section class="bg-[#fdf4f7] text-[#7e246e] p-10 text-center">
+    <h2 class="text-4xl font-bold mb-4">Discover Stunning Indian Clothing</h2>
+    <p class="text-lg">Explore a blend of tradition and elegance with our premium collection.</p>
+    <button class="mt-6 bg-[#b6246d] px-8 py-3 rounded-md text-white hover:bg-[#7e246e]">Shop Now</button>
+</section>

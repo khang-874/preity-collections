@@ -9,7 +9,7 @@
             class="bg-white shadow-lg w-64 lg:w-[25%] h-full rounded-sm ml-auto overflow-y-scroll grid gap-y-1"
             style="grid-template-rows: auto 1fr auto;"
             @click.outside="$store.showCart.toggle()"> 
-        <div class="p-2 h-16 md:h-20 text-lg text-white bg-primary font-medium flex gap-x-2 border-b-2 items-center">
+        <div class="p-2 h-12 lg:h-16 text-lg text-white bg-primary font-medium flex gap-x-2 border-b-2 items-center">
             <button @click="$store.showCart.toggle()"><i class="fa-solid fa-xmark"></i></button>
             <p>Shopping cart</p>
         </div>

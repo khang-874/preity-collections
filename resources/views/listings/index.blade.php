@@ -1,8 +1,5 @@
-<x-layout>
-    <header>
-        <x-header :categories="$categories"></x-header>
-    </header>
-    <main> 
+<x-layout :categories="$categories">
+    <main class="mt-2 max-w-[80%] mx-auto"> 
         @php
             // dd($listings)
             $stdColors = [];
@@ -14,8 +11,8 @@
                 $stdSizes[] = $size -> size;
             }
         @endphp
-        <div class="flex gap-6 mt-2"> 
-            <div class="hidden md:block basis-[15rem] flex-grow bg-white h-full pl-[2%] "> 
+        <div class="flex gap-6"> 
+            <div class="hidden md:block basis-[15rem] flex-grow bg-white h-full ml-[2%] p-2 "> 
                 <livewire:filters :options="$stdSizes" property="size"/>
                 <livewire:filters :options="$stdColors" property="color"/>
             </div>

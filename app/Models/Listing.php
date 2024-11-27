@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HigherOrderWhenProxy;
 
 class Listing extends Model
@@ -86,12 +87,22 @@ class Listing extends Model
     public function getProductPriceCodeAttribute(){
         return Listing::priceCode($this -> init_price);
     }
+    public function getLinkAttribute(){
+        return  '/listings/' . $this -> id;
+    }
     public function getInventoryAttribute(){
         $inventory = 0;
         foreach($this -> details as $detail){
             $inventory += $detail -> inventory;
         }
         return $inventory;
+    }
+    public function getDisplayImageAt($index){
+        if($index >= count($this -> images))
+            return '';
+        if(Storage::exists($this -> images[$index]))
+            return Storage::url($this -> images[$index]);
+        return $this -> images[$index];
     }
     public function scopeSize($query, $size){
         //Filter based on size 
@@ -101,6 +112,7 @@ class Listing extends Model
             $query -> whereIn('details.size', $size);
         }
     }
+
     public function scopeAllSize($query){
         $query -> join('details', 'listings.id', '=', 'details.listing_id')
                 -> select('details.size')
