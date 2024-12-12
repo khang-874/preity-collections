@@ -6,6 +6,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\SubsectionController;
@@ -53,6 +54,7 @@ Route::delete('/listings/{listing}', [ListingController::class, 'destroy']) -> m
 //Get a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
 
+//Print
 Route::get('/print', [UserController::class, 'print']) -> name('print');
 
 //Print receipt
@@ -61,74 +63,10 @@ Route::get('/printReceipt', [UserController::class, 'printReceipt']) -> name('pr
 //Place order
 Route::get('/placeOrder', [OrderController::class, 'placeOrder']);
 
-//Update detail
-Route::put('/details/{detail}', [DetailController::class, 'update']) -> middleware('auth');
-
-//Delete detail
-Route::delete('/details/{detail}', [DetailController::class, 'destroy']) -> middleware('auth');
-
-//Create new deatil
-Route::post('/details', [DetailController::class, 'create']) -> middleware('auth');
-
-// //Delete image
-// Route::delete('/images/{image}' , [ImageController::class, 'destroy']) -> middleware('auth');
-
-//Display pending order
-Route::get('/orders', [OrderController::class, 'index']) -> middleware('auth');
-
-Route::get('/orderes/create/{customer}', [OrderController::class, 'create']) -> middleware('auth');
-//Display a single order
-Route::get('/orders/{order}', [OrderController::class, 'show']) -> middleware('auth');
-
-//Edit an order
-Route::put('/orders/{order}', [OrderController::class, 'edit']) -> middleware('auth');
-
-
 //Create new order;
 Route::post('/orders' ,[OrderController::class, 'store']);
 
-//Display all customers
-Route::get('/customers', [CustomerController::class, 'index']) -> middleware('auth');
+//Route to export sale data
+Route::get('/sales/export/', [OrderController::class, 'export']);
 
-Route::get('/customers/newOrder', [CustomerController::class, 'newOrder']) -> middleware('auth');
-
-//Display a single customer
-Route::get('/customers/{customer}', [CustomerController::class, 'show']) -> middleware('auth');
-
-//Update customer
-Route::post('/customers/{customer}', [CustomerController::class, 'edit']) -> middleware('auth');
-
-//Display login form
-Route::get('/login', [UserController::class, 'login']) -> name('login');
-
-// Mange categories, sections, subsections
-Route::get('/manage', [UserController::class, 'manage']) -> middleware('auth');
-
-//Create a new category
-Route::post('/categories', [CategoryController::class, 'store']) -> middleware('auth');
-
-//Delete a category
-Route::delete('/categories/{category}', [CategoryController::class, 'delete']) -> middleware('auth');
-
-//Create a new section
-Route::post('/sections', [SectionController::class, 'store']) -> middleware('auth');
-
-//Delete a section
-Route::delete('/sections/{section}', [SectionController::class, 'delete']) -> middleware('auth');
-
-//Create new subsection
-Route::post('/subsections', [SubsectionController::class, 'store']) -> middleware('auth');
-
-//Delete a subsection
-Route::delete('/subsections/{subsection}', [SubsectionController::class, 'delete']) -> middleware('auth');
-
-//Authenticate user
-Route::post('/authenticate', [UserController::class, 'authenticate']);
-
-//Logout user
-Route::post('/logout', [UserController::class, 'logout']);
-
-// Stripe
-Route::post('stripe/checkout', [StripePaymentController::class, 'stripeCheckout'])->name('stripe.checkout');
-
-Route::post('stripe/webhook', [StripePaymentController::class, 'handle']) -> name('stripe.webhook');
+Route::get('/testpayment', [PaymentController::class, 'processPayment']);

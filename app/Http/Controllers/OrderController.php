@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SalesExport;
 use App\Mail\NewOrder;
 use App\Models\Category;
 use App\Models\Customer;
@@ -9,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderListing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -160,4 +162,7 @@ class OrderController extends Controller
         ]);
     }
  
+    public function export(){
+        return Excel::download(new SalesExport, 'sales.xlsx');
+    }
 }
