@@ -158,6 +158,17 @@ class Listing extends Model
         if($filters['search'] ?? false){
             $query -> where('listings.name', 'like', '%' . request('search') . '%');
         }
+
+        if($filters['order'] ?? false){
+            $order = request('order');
+            match($order){
+                'newtoold' => $query -> orderBy('listings.created_at', 'DESC'),
+                'oldtonew' => $query -> orderBy('listings.created_at', 'ASC'),
+                'hightolow' => $query -> orderBy('listings.init_price', 'DESC'),
+                'lowtohigh' => $query -> orderBy('listings.init_price', 'ASC'),
+                'highestdiscount' => $query -> orderBy('listings.sale_percentage', 'DESC'),
+            };
+        }
         
     }
 }

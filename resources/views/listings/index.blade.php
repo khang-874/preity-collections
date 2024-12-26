@@ -17,7 +17,7 @@
                 <livewire:filters :options="$stdColors" property="color" :isBorder="false"/>
             </div>
             <div class="flex-grow-[9999]">
-                <x-layouts.index-title :listings_number="$listings_number"></x-layouts.index-title>
+                <x-layouts.index-title :listings_number="$listings_number" :title="$title" :orders="$orders"></x-layouts.index-title>
                 <div class="grid gap-1 md:gap-2  items-center mx-auto grid-cols-[repeat(auto-fit,_minmax(9rem,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(12rem,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(14rem,_1fr))]">
                     @unless(count($listings) == 0)
                         @foreach ($listings as $listing)

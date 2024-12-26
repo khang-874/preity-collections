@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <title>Clothing shop</title>
+    <title>Preity Collection</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
     <script type="text/javascript">

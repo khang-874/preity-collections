@@ -19,23 +19,65 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class ListingController extends Controller
-{
+{ 
     public function index(){
+        $title = $this -> findTitle(false);
+        $orders = $this -> getOrders();
         return view('listings.index', [
-                'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
+                'listings' => Listing::filter(request(['category', 'section', 'subsection','search', 'order'])) 
                                 -> size(request('size')) -> color(request('color')) -> available() 
                                 -> paginate(40),
                 'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
                                 -> allSize() -> get(),
-                'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search', 'isClearance'])) 
+                'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
                                 -> allColor() -> get(),
                 'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
                 'listings_number' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
-                                -> size(request('size')) -> color(request('color')) -> available() -> count()
-,
+                                -> size(request('size')) -> color(request('color')) -> available() -> count(),
+                'title' => $title,
+                'orders' => $orders,
         ]);
     }
+
+    //Get the sorting order
+    private function getOrders(){
+        $orders = [
+            'highestdiscount' => ['name' => 'Highest discount', 'active' => false,],
+            'newtoold' => ['name' => 'New to Old','active' => false,],
+            'oldtonew' => ['name' => 'Old to New','active' => false,],
+            'hightolow' => ['name' => 'High to Low','active' => false,],
+            'lowtohigh' => ['name' => 'Low to High','active' => false,],
+        ];
+        // dd(request('order'));
+
+        if(request('order') ?? false){
+            
+            foreach ($orders as $key => $value) {
+                if($key == request('order')){
+                    $orders[$key]['active'] = true;
+                }
+                else
+                    $order[$key]['active'] = false;
+            }
+        }
+
+        // dd($orders);
+        return $orders; 
+    }
+    private function findTitle(bool $isClearance){
+        $title = '';
+        if(request('category'))
+            $title= Category::find(request('category')) -> name;
+        if(request('section'))
+            $title= Section::find(request('section')) -> name;
+        if(request('subsection'))
+            $title = Subsection::find(request('subsection')) -> name;
+        if($isClearance)
+            $title .= ' Clearance';
+        return $title;
+    }
     public function indexClearance(){
+        $title = $this -> findTitle(true);
         return view('listings.index', [
                 'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
                                 -> size(request('size')) -> color(request('color')) -> available() 
@@ -45,6 +87,7 @@ class ListingController extends Controller
                 'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
                                 -> allColor() -> clearance() -> get(),
                 'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+                'title' => $title,
         ]);
 
     }
