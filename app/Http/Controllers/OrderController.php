@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderListing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -43,9 +44,12 @@ class OrderController extends Controller
             'phoneNumber' => ['required', 'unique:App\Models\Customer,phone_number']
             
         ]);
+        // dd($request);
         $firstName = $request -> input('firstName');
         $lastName = $request -> input('lastName');
         $phoneNumber = $request -> input('phoneNumber');
+        $email = $request -> input("email");
+        
         $items = json_decode($request -> input('items'), true);
 
         $payment = 'pending';
@@ -56,18 +60,18 @@ class OrderController extends Controller
 
         $customer = Customer::where('phone_number', $phoneNumber) 
                         -> orWhere('first_name', $firstName) 
-                        -> firstOr(function() use ($firstName, $lastName, $phoneNumber){
+                        -> firstOr(function() use ($firstName, $lastName, $phoneNumber, $email){
             return Customer::create([
                 'first_name' => $firstName,
                 'last_name' => $lastName,
-                'email' => '',
+                'email' => $email,
                 'phone_number' => $phoneNumber,
                 'amount_owe' => 0.0
             ]);
         });
 
         $order = Order::create([
-                'payment_type' => 'online',
+                'payment_type' => $payment,
                 'customer_id' => $customer -> id,
                 'amount_paid' => 0
         ]);
@@ -81,80 +85,63 @@ class OrderController extends Controller
                 'order_id' => $order -> id,
             ]); 
         }
-
-        //Send notificaiton about new email
-        $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
-        return redirect('/') -> with('message', 'Place order successfully');
+ 
+        $response = $this -> processPayment($customer, $order);
+        // If the response is successful, it will contain the session token
+        if ($response->successful()) {
+            $token = $response->body(); // Assuming the response is just the token
+             return view('payment.submitForm', ['token' => $token]);
+        } else {
+            // Handle error - log or display an error message
+            return response()->json(['error' => 'Failed to get session token'], 500);
+        }
     }
+    public function successOrder(Request $request){
+        $params = $request -> all();
+        $orderId = substr($params['ssl_invoice_number'], 3);
+        $order = Order::find(intval($orderId));
+        $order -> payment_type = 'online';
+        $order -> save();
+        return redirect('/') -> with('message', 'Your Order has been placed successfully');
+    }
+    public function processPayment(Customer $customer, Order $order){
+        $merchantID = env("MERCHANT_ID"); //Virtual Merchant Account ID 
+        $merchantUserID = env("USER_ID"); //Virtual Merchant User ID 
+        $merchantPinCode = env("PIN_CODE"); //Converge PIN 
+        $vendorID = env("VENDOR_ID"); //Vendor ID 
+        $url = "https://api.demo.convergepay.com/hosted-payments/transaction_token"; // URL to Converge demo session token server 
+        //$url = "https://api.convergepay.com/hosted-payments/transaction_token"; // URL to Converge production session token server  
+        
+        $amount = $order -> total;
+        $postFields = [
+            'ssl_merchant_id' => $merchantID,
+            'ssl_user_id' => $merchantUserID,
+            'ssl_pin' => $merchantPinCode,
+            'ssl_vendor_id' => $vendorID,
+            'ssl_invoice_number' => 'Inv' . $order -> id,  // Invoice number
+            'ssl_transaction_type' => 'ccsale',  // Transaction type
+            'ssl_first_name' => $customer -> first_name,
+            'ssl_last_name' => $customer -> last_name,
+            'ssl_phone' => $customer -> phone_number,
+            'ssl_email' => $customer -> email,
+            'order_id' => $order -> id,
+            'ssl_verify' => 'N',
+            'ssl_get_token' => 'Y',  // Generate token
+            'ssl_add_token' => 'Y',  // Add token if necessary
+            'ssl_amount' => $amount  // Transaction amount
+        ];
 
+        $response = Http::asForm()->post($url, $postFields);
+
+        return $response; 
+    }
     private function getAddress($addressObject){
         return $addressObject -> line1 . $addressObject -> line2 . ', ' 
         . $addressObject -> city . ', '
         . $addressObject -> state . ', '
         . $addressObject -> country . ', '
         . $addressObject -> postal_code . '.';
-    }
-    public function createOnlineOrder($orderItems, $customer, $amount_paid){
-        $name = $customer -> name;
-        $email = $customer -> email;
-        $phone = $customer -> phone;
-        $addressObject = $customer -> address;
-        $address = $this -> getAddress($addressObject);
-
-        $customer = Customer::where('phone_number', $phone) 
-                        -> orWhere('first_name', $name) 
-                        -> orWhere('email', $email)
-                        -> firstOr(function() use ($name, $email, $phone){
-            return Customer::create([
-                'first_name' => $name,
-                'last_name' => '',
-                'email' => $email,
-                'phone_number' => $phone == null ? '' : $phone,
-                'amount_owe' => 0.0
-            ]);
-        });
-
-        $order = Order::create([
-            'address' => $address,
-            'payment_type' => 'online',
-            'customer_id' => $customer -> id,
-            'amount_paid' => floatval($amount_paid) / 100
-        ]);
-
-        foreach($orderItems as $item){
-            OrderListing::create([
-                'listing_id' => $item['listingId'],
-                'detail_id' => $item['detailId'],
-                'quantity' => $item['quantity'],
-                'order_id' => $order -> id,
-            ]); 
-        }
-
-        //Send notificaiton about new email
-        $sentEmail = Mail::to('khang07087@gmail.com') -> send(new NewOrder($customer, $order));
-    }
-    public function edit(Order $order, Request $request){
-        $request -> validate([
-            'amount' => 'required'
-        ]);
-        
-        $customer = $order -> customer;
-        $customer -> amount_owe += $order -> getTotalAttribute() - $request -> input('amount');
-        $order -> payment_type = $request -> input('paymentType');
-        $customer -> save();
-        $order -> save();
-        return redirect('/customers/' . $order -> customer_id) -> with('message', 'Pay for order successfully');
-    }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order, Request $request)
-    {
-        //
-        return view('orders.show', [
-            'order' => $order
-        ]);
-    }
+    } 
 
     public function placeOrder(){
         return view('orders.placeorder',[

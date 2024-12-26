@@ -1,18 +1,18 @@
-<div x-data="{show:{{$currentOptions == [] ? 'false' : 'true'}}}" class="py-2">
-    <div @click="show = !show" class="flex justify-between items-center cursor-pointer">
-        <p class="uppercase font-medium text-sm">{{$property}}</p>
-        <i x-show="!show" class="fa-solid fa-plus"></i>
-        <i x-show="show" class="fa-solid fa-minus"></i>
+<div x-data="{show:{{$currentOptions == [] ? 'false' : 'true'}}}" class="p-4 {{$isBorder ? 'border-b-[1px] border-gray-200' : ''}}">
+    <div @click="show = !show" class="flex justify-between items-center cursor-pointer" :class="show ? 'mb-4' : ''">
+        <p class="uppercase font-medium text-base">{{$property}}</p>
+        <i x-cloak x-show="!show" class="fa-solid fa-plus"></i>
+        <i x-cloak x-show="show" class="fa-solid fa-minus"></i>
     </div>
     <div    x-show="show"
-            x-transition:enter="transition linear duration-400 transform"
+            x-transition:enter="transition linear duration-500 transform"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
-            x-transition:leave="transition linear duration-200"
-            x-transition:leave-start="opacity-100"
+            x-transition:leave="transition linear duration-0"
+            x-transition:leave-start="opacity-0"
             x-transition:leave-end="opacity-0"
             x-cloak 
-            class="grid grid-cols-2">
+            class="flex flex-col">
 
             @foreach ($options as $option)
                 <div x-id="['{{$property}}']" class="flex items-center gap-2">     

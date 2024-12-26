@@ -6,9 +6,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SectionController;
-use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\SubsectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -69,4 +67,4 @@ Route::post('/orders' ,[OrderController::class, 'store']);
 //Route to export sale data
 Route::get('/sales/export/', [OrderController::class, 'export']);
 
-Route::get('/testpayment', [PaymentController::class, 'processPayment']);
+Route::get('/orders/success', [OrderController::class, 'successOrder']);

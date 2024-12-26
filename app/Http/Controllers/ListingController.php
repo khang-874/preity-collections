@@ -30,6 +30,9 @@ class ListingController extends Controller
                 'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search', 'isClearance'])) 
                                 -> allColor() -> get(),
                 'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+                'listings_number' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
+                                -> size(request('size')) -> color(request('color')) -> available() -> count()
+,
         ]);
     }
     public function indexClearance(){

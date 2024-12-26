@@ -20,9 +20,5 @@ class Detail extends Model
      
     public function getAvailableAttribute(){
         return $this -> inventory != 0;
-    }
-    function getBarcodeAttribute(){
-        $generator = new \Picqer\Barcode\BarcodeGeneratorSVG();
-        return $generator -> getBarcode($this -> id, $generator::TYPE_CODE_128, 2, 30);
-    }
+    } 
 }

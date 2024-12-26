@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table -> string('payment_type');
             $table -> float('amount_paid');
-            $table -> text('address') -> nullable();
             $table->unsignedBigInteger('customer_id');
             $table -> foreign('customer_id') -> references('id') -> on('customers');
             $table->timestamps();

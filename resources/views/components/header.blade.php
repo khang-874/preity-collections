@@ -1,6 +1,6 @@
 @props(['categories'])
 
-<header class="bg-[#ffffff] text-[#2c2c2c] shadow-md sticky top-0 z-50">
+<header class="bg-[#ffffff] shadow-lg fixed top-0 z-50 text-black w-full">
     <div class="container mx-auto flex items-center">
         <div class="flex flex-1 items-center">
             <!-- Logo and Brand --> 

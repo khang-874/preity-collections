@@ -66,9 +66,11 @@
 
     @livewireStyles
 </head>
-<body class="bg-[#f8f8fc] text-[#2c2c2c]">
+<body class="bg-[#f8f8fc] text-[#2c2c2c] flex flex-col min-h-screen">
     <x-header :categories="$categories"></x-header>
-    {{$slot}} 
+    <main class="flex-grow pt-16">
+        {{$slot}} 
+    </main>
     <x-flash-message></x-flash-message>
     @livewireScripts
     <x-footer></x-footer>

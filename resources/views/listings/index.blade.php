@@ -1,5 +1,5 @@
 <x-layout :categories="$categories">
-    <main class="mt-2 max-w-[80%] mx-auto"> 
+    <div class="mt-2 mx-auto container"> 
         @php
             // dd($listings)
             $stdColors = [];
@@ -12,13 +12,13 @@
             }
         @endphp
         <div class="flex gap-6"> 
-            <div class="hidden md:block basis-[15rem] flex-grow bg-white h-full ml-[2%] p-2 "> 
-                <livewire:filters :options="$stdSizes" property="size"/>
-                <livewire:filters :options="$stdColors" property="color"/>
+            <div class="hidden lg:block basis-[15rem] bg-white h-full ml-4"> 
+                <livewire:filters :options="$stdSizes" property="size" :isBorder="true"/>
+                <livewire:filters :options="$stdColors" property="color" :isBorder="false"/>
             </div>
-            <div class="flex-grow-[9999] pr-[2%]">
-                <x-layouts.index-title></x-layouts.index-title>
-                <div class="grid gap-2 " style="grid-template-columns: repeat(auto-fit, minmax(min(16rem,100%), 1fr))">
+            <div class="flex-grow-[9999]">
+                <x-layouts.index-title :listings_number="$listings_number"></x-layouts.index-title>
+                <div class="grid gap-1 md:gap-2  items-center mx-auto grid-cols-[repeat(auto-fit,_minmax(9rem,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(12rem,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(14rem,_1fr))]">
                     @unless(count($listings) == 0)
                         @foreach ($listings as $listing)
                             @if ($listing -> available == true)
@@ -34,5 +34,5 @@
         @if(method_exists($listings, "links")) 
             <div class="mt-6 p-4">{{$listings->links()}}</div>
         @endif 
-    </main>
+    </div>
 </x-layout>

@@ -11,11 +11,13 @@ class Filters extends Component
     public $currentOptions = [];
     public $property = "";
     public $currentUrl = "";
+    public $isBorder = false;
 
-    public function mount(array $options, string $property){
+    public function mount(array $options, string $property, bool $isBorder){
         $this -> currentUrl = url() -> current();
         $this -> options = $options;
         $this -> property = $property;
+        $this -> isBorder = $isBorder;
         if(request($property)){
             foreach(request($property) as $option){
                 $this -> currentOptions []= $option;

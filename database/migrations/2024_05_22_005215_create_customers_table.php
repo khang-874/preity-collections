@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('last_name') -> nullable();
             $table->string('email') -> nullable();
             $table->string('phone_number') -> nullable();
+            // $table -> text('address') -> nullable();
             $table->float('amount_owe') -> default(0);
             $table->timestamps();
         });
