@@ -17,7 +17,7 @@
         <hr class="border-t-[1px] border-gray-400 mt-6 mb-2 w-full">
         <div class="w-full">
             <p class="text-sm">({{$listings_number}} products)</p>
-        </diV>
+        </div>
         <hr class="border-t-[1px] border-gray-400 my-2 w-full">
-    <div>
+    </div>
 </div>
