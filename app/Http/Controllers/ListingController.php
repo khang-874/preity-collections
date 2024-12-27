@@ -77,7 +77,7 @@ class ListingController extends Controller
         return $title;
     }
     public function indexClearance(){ 
-        $title = $this -> findTitle(false);
+        $title = $this -> findTitle(true);
         $orders = $this -> getOrders();
         return view('listings.index', [
                 'listings' => Listing::filter(request(['category', 'section', 'subsection','search', 'order'])) 
