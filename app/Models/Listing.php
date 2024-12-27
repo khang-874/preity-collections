@@ -134,6 +134,10 @@ class Listing extends Model
     public function scopeClearance($query){
         $query -> where('listings.is_clearance', '=', true);
     }
+
+    public function scopeSale($query){
+        $query -> where('listings.sale_percentage', '!=', 0) -> where('listings.is_clearance', '=', false);
+    }
     public function scopeAvailable($query){
         $query  -> select(DB::raw('sum(details.inventory) as inventory, listings.*'))
                 -> groupBy('listings.id')

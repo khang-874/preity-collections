@@ -20,24 +20,79 @@ use Illuminate\Support\Facades\DB;
 
 class ListingController extends Controller
 { 
-    public function index(){
-        $title = $this -> findTitle(false);
-        $orders = $this -> getOrders();
+
+    public function indexClearance()
+    {
+        return $this->prepareListingView('clearance');
+    }
+
+    public function index()
+    {
+        return $this->prepareListingView('normal');
+    }
+
+    public function indexSale()
+    {
+        return $this->prepareListingView('sale');
+    }
+
+    private function prepareListingView($type)
+    {
+        $title = $this->findTitle($type);
+        $orders = $this->getOrders();
+
+        $filters = request(['category', 'section', 'subsection', 'search', 'order']);
+        $filtersColorSize = request(['category', 'section', 'subsection', 'search']);
+        $size = request('size');
+        $color = request('color');
+
+        $listingsQuery = Listing::filter($filters)->size($size)->color($color)->available();
+ 
+        match($type){
+            'clearance' => $listingsQuery -> clearance(),
+            'sale' => $listingsQuery -> sale(),
+            default => null,
+        }; 
+        $listingsNumber = $listingsQuery -> count();
         return view('listings.index', [
-                'listings' => Listing::filter(request(['category', 'section', 'subsection','search', 'order'])) 
-                                -> size(request('size')) -> color(request('color')) -> available() 
-                                -> paginate(40),
-                'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
-                                -> allSize() -> get(),
-                'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
-                                -> allColor() -> get(),
-                'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
-                'listings_number' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
-                                -> size(request('size')) -> color(request('color')) -> available() -> count(),
-                'title' => $title,
-                'orders' => $orders,
+            'listings' => $listingsQuery->paginate(40),
+            'sizes' => $this->getSizes($filtersColorSize, $type),
+            'colors' => $this->getColors($filtersColorSize, $type),
+            'categories' => $this->getCategories(),
+            'listings_number' => $listingsNumber,
+            'title' => $title,
+            'orders' => $orders,
         ]);
     }
+
+    private function getSizes($filters, $type)
+    {
+        $query = Listing::filter($filters)->allSize();
+        match($type){
+            'clearance' => $query -> clearance(),
+            'sale' => $query -> sale(),
+            default => null,
+        }; 
+        return $query->get();
+    }
+
+    private function getColors($filters, $type)
+    {
+        $query = Listing::filter($filters)->allColor();
+        match($type){
+            'clearance' => $query -> clearance(),
+            'sale' => $query -> sale(),
+            default => null
+        };  
+        return $query->get();
+    }
+
+    private function getCategories()
+    {
+        return Category::all()->sortBy(function ($category) {
+            return $category->index;
+        });
+    } 
 
     //Get the sorting order
     private function getOrders(){
@@ -64,7 +119,7 @@ class ListingController extends Controller
         // dd($orders);
         return $orders; 
     }
-    private function findTitle(bool $isClearance){
+    private function findTitle($type){
         $title = '';
         if(request('category'))
             $title= Category::find(request('category')) -> name;
@@ -72,28 +127,13 @@ class ListingController extends Controller
             $title= Section::find(request('section')) -> name;
         if(request('subsection'))
             $title = Subsection::find(request('subsection')) -> name;
-        if($isClearance)
-            $title .= ' Clearance';
+        match($type){
+            'sale' => $title .= 'Special Sale',
+            'clearance' => $title .= ' Clearance',
+            default => null,
+        };
         return $title;
-    }
-    public function indexClearance(){ 
-        $title = $this -> findTitle(true);
-        $orders = $this -> getOrders();
-        return view('listings.index', [
-                'listings' => Listing::filter(request(['category', 'section', 'subsection','search', 'order'])) 
-                                -> size(request('size')) -> color(request('color')) -> available() 
-                                -> clearance() -> paginate(40),
-                'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
-                                -> allSize() -> clearance() -> get(),
-                'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
-                                -> allColor() -> clearance() -> get(),
-                'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
-                'listings_number' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
-                                -> size(request('size')) -> color(request('color')) -> available() -> clearance() -> count(),
-                'title' => $title,
-                'orders' => $orders,
-        ]);
-    }
+    } 
 
     private function randomListings(array $listing, int $number){
         $randomListing = array_rand($listing, min($number, count($listing))); 

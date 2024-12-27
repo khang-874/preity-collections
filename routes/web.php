@@ -34,6 +34,7 @@ Route::get('/listings', [ListingController::class, 'index']) -> name('listings.i
 
 //Get all clearance listings
 Route::get('/listings/clearance', [ListingController::class, 'indexClearance']) -> name('listings.indexClearance');
+Route::get('/listings/sale', [ListingController::class, 'indexSale']) -> name('listings.indexClearance');
 //show create form
 Route::get('/listings/create', [ListingController::class, 'create']) -> middleware('auth');
 

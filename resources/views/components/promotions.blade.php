@@ -14,7 +14,7 @@
         <a x-show="activeSlide == 0" href="{{url('/listings/clearance')}}">
             <img src="{{url('/images/background.png')}}" alt="Clearance promotion" class='w-full'> 
         </a>
-        <a x-show="activeSlide == 1" href="{{url('/listings')}}">
+        <a x-show="activeSlide == 1" href="{{url('/listings/sale')}}">
             <img src="{{url('/images/background-1.png')}}" alt="Sale promotion" class='w-full'> 
         </a>
 
