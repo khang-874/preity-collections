@@ -1,5 +1,5 @@
 <x-layout :categories="$categories">
-    <div class="mt-2 mx-auto container"> 
+    <div class="pt-10 mx-auto container"> 
         @php
             // dd($listings)
             $stdColors = [];
