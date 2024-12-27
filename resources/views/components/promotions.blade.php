@@ -1,26 +1,24 @@
-<section class="grid grid-cols-3 justify-between p-10 items-center"
-        style='background-image: url("{{url('/images/background.png')}}");
-                background-size: cover;
-                background-position: center'>
-    <!-- Left Side - Text Area -->
-    <div class="col-span-2">
-        <h2 class="text-6xl uppercase font-bold text-primary">New Year Sale</h2>
-        <p class="text-xl mt-4">Explore our premium collection at amazing prices. Get up to 50% off on selected items!</p>
-        <a href="/listings/" class="inline-block mt-6 px-6 py-3 bg-primary text-white text-lg rounded-lg hover:bg-purple-800 transition">Shop Now</a>
-    </div>
+<section class="">
+    <!-- Left Side - Text Area --> 
     <div    x-data = "{activeSlide: 0}" x-init="$nextTick(() => {
             console.log('here');
             console.log(activeSlide);
             setInterval(() => {
                 activeSlide++;
-                if(activeSlide == {{count($promotions)}})
+                if(activeSlide == 2)
                     activeSlide = 0;
             }, 4000) 
         })"
         class="relative w-full h-auto">
-    @foreach ($promotions as $key => $promotion)  
-        <div x-show="activeSlide=={{$key}}">
-            <x-card.listing-card :item="$promotion->listing"></x-card.listing-card>
-        </div>
-    @endforeach 
+    
+        <a x-show="activeSlide == 0" href="{{url('/listings/clearance')}}">
+            <img src="{{url('/images/background.png')}}" alt="Clearance promotion" class='w-full'> 
+        </a>
+        <a x-show="activeSlide == 1" href="{{url('/listings')}}">
+            <img src="{{url('/images/background-1.png')}}" alt="Sale promotion" class='w-full'> 
+        </a>
+
+        <div class="absolute border-[1px] border-black rounded-full bottom-2 right-8 md:right-10 size-3 md:size-4" @click="activeSlide = 0" :class="activeSlide == 0 ? 'bg-primary' : 'bg-white'"></div>
+        <div class="absolute border-[1px] border-black rounded-full bottom-2 right-4 size-3 md:size-4" @click="activeSlide = 1" :class="activeSlide == 1 ? 'bg-primary' : 'bg-white'"></div>
+    </div>
 </section>

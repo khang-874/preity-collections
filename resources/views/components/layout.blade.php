@@ -68,7 +68,7 @@
 </head>
 <body class="bg-[#f8f8fc] text-[#2c2c2c] flex flex-col min-h-screen">
     <x-header :categories="$categories"></x-header>
-    <main class="flex-grow pt-16">
+    <main class="flex-grow pt-12">
         {{$slot}} 
     </main>
     <x-flash-message></x-flash-message>

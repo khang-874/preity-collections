@@ -1,4 +1,4 @@
-<footer class="bg-[#2c2c2c] text-white p-6 mt-auto">
+<footer class="bg-[#2c2c2c] text-white p-6 mt-12">
     <div class="container mx-auto text-center">
         <p>&copy; 2024 Preity Collection. All rights reserved.</p>
     </div>

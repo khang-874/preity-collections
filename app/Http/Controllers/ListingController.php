@@ -76,10 +76,11 @@ class ListingController extends Controller
             $title .= ' Clearance';
         return $title;
     }
-    public function indexClearance(){
-        $title = $this -> findTitle(true);
+    public function indexClearance(){ 
+        $title = $this -> findTitle(false);
+        $orders = $this -> getOrders();
         return view('listings.index', [
-                'listings' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
+                'listings' => Listing::filter(request(['category', 'section', 'subsection','search', 'order'])) 
                                 -> size(request('size')) -> color(request('color')) -> available() 
                                 -> clearance() -> paginate(40),
                 'sizes' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
@@ -87,9 +88,11 @@ class ListingController extends Controller
                 'colors' => Listing::filter(request(['category', 'section', 'subsection', 'search'])) 
                                 -> allColor() -> clearance() -> get(),
                 'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+                'listings_number' => Listing::filter(request(['category', 'section', 'subsection','search'])) 
+                                -> size(request('size')) -> color(request('color')) -> available() -> clearance() -> count(),
                 'title' => $title,
+                'orders' => $orders,
         ]);
-
     }
 
     private function randomListings(array $listing, int $number){
