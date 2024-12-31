@@ -38,6 +38,15 @@ class OrderObserver
                 $orderListing -> detail -> save();
             }  
         }
+
+        //If change to pending type, it will reverse the order
+        if($order -> isDirty('payment_type') && $order -> payment_type === 'pending'){
+            foreach($order -> orderListings as $orderListing){
+                $orderListing -> detail -> inventory += $orderListing -> quantity;
+                $orderListing -> detail -> sold -= $orderListing -> quantity;
+                $orderListing -> detail -> save();
+            }
+        }
         Log::debug('Processing new order');
     }
 
@@ -48,11 +57,10 @@ class OrderObserver
     public function deleting(Order $order): void
     {
         //
-       foreach($order -> orderListings as $orderListing){
+        foreach($order -> orderListings as $orderListing){
             $orderListing -> detail -> inventory += $orderListing -> quantity;
             $orderListing -> detail -> sold -= $orderListing -> quantity;
             $orderListing -> detail -> save();
-
-       } 
+        } 
     }
 }

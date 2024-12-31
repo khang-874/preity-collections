@@ -25,45 +25,7 @@
 
     <title>Preity Collection</title>
     @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
-    <script type="text/javascript">
-        document.addEventListener('alpine:init', () => {
-        Alpine.store('cart', {
-            items: Alpine.$persist([]),  
-            addToCart(product) { 
-                alert('Item add successfully');
-                for(let i = 0; i < this.items.length; ++i)
-                    if(this.items[i]['detailId'] == product['detailId']){
-                        this.items[i]['quantity'] += product['quantity'];
-                        return;
-                    }
-                this.items.push(product);
-            },
-            removeFromCart(index){
-                this.items.splice(index, 1);
-            },      
-            getSubtotal(){
-                subtotal = 0;
-                for(let i = 0; i < this.items.length; ++i)
-                    subtotal += this.items[i]['price'] * this.items[i]['quantity'];
-                return subtotal;
-            }
-        });
-        Alpine.store('showCart', {
-            on: false,
-            toggle(){
-                this.on = !this.on;
-            }
-        });
-        Alpine.store('showMenu', {
-            on: false,
-            toggle(){
-                this.on = !this.on;
-            }
-        })
-    })
-    </script>
-
+    @vite('resources/js/app.js')    
     @livewireStyles
 </head>
 <body class="bg-[#f8f8fc] text-[#2c2c2c] flex flex-col min-h-screen">

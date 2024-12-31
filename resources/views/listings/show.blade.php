@@ -6,8 +6,20 @@
             </div>
             <div class="lg:w-1/2 p-4 container">
                 <h4 class="w-full font-medium text-2xl">{{$listing -> name}}</h4>
-                <p class="font-medium text-xl mt-2">CA$ {{$listing -> selling_price}}</p>
-                <x-order-input :listing="$listing" :details="$listing->details"></x-order-input>                             
+                @if ($listing -> sale_percentage != 0)
+                    <div class="flex items-center gap-1 sm:gap-2 sm:flex-row-reverse sm:justify-end">
+                        <div class="flex">
+                            <p class="text-xl font-medium text-red-500">CA$ {{$listing->selling_price}}</p> 
+                            <p class="hidden text-xl font-medium text-red-500 md:block">({{round($listing->sale_percentage)}}% off)</p>
+                        </div>
+                        <p class="text-base font-medium line-through">CA$ {{$listing->base_price}}</p>  
+                    </div>
+                @else
+                    <p class="font-medium text-xl mt-2">CA$ {{$listing -> selling_price}}</p>
+                @endif
+
+                <x-order-input :listing="$listing" :sizes="$sizes" :colors="$colors"></x-order-input>
+                {{-- <livewire:product-selector-component :listing="$listing"/> --}}
 
                 <div x-data="{show : false}" class="mt-4">
                     <div @click="show = !show" class="flex justify-between items-center cursor-pointer">

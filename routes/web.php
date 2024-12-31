@@ -68,4 +68,4 @@ Route::post('/orders' ,[OrderController::class, 'store']);
 //Route to export sale data
 Route::get('/sales/export/', [OrderController::class, 'export']);
 
-Route::get('/orders/success', [OrderController::class, 'successOrder']);
+Route::post('/orders/success', [OrderController::class, 'successOrder']);

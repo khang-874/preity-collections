@@ -13,7 +13,7 @@
         <!-- Search and Cart -->
         <div class="flex items-center space-x-4 flex-grow-0">
             <x-search></x-search> 
-            <button x-data class='flex flex-col justify-center pr-2' @click="$store.showCart.on = true">
+            <button x-data class='flex flex-col justify-center pr-2' @click="$store.showCart.toggle()">
                 <i class="fa-solid fa-cart-shopping mx-auto"></i>
             </button> 
         </div>

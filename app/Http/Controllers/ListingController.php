@@ -179,10 +179,20 @@ class ListingController extends Controller
         $randomCategoryListings = $this -> randomListings($categoryListings, 4);
         $recommend =  array_merge($randomCategoryListings, $randomSectionListings, $randomSubsectionListings);
 
+        $colors = [];
+        $sizes = [];
+        foreach ($listing -> details as $detail) 
+            if($detail -> available){ 
+                $colors[$detail->color][$detail->size] = ['detailId' => $detail -> id, 'quantity' => $detail -> inventory];
+                $sizes[$detail->size][$detail->color] = ['detailId' => $detail -> id, 'quantity' => $detail -> inventory]; 
+        }
+
         return view('listings.show', [
             'listing' => $listing,
             'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
-            'recommendListings' => $recommend
+            'recommendListings' => $recommend,
+            'colors' => $colors,
+            'sizes' => $sizes,
         ]);
     }
     public function create(){
