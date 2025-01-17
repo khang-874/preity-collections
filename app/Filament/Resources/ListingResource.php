@@ -79,6 +79,14 @@ class ListingResource extends Resource
                 Textarea::make('description') -> autosize() -> columnSpanFull(),
                 FileUpload::make('images') 
                             -> image() 
+                            -> reorderable()
+                            -> appendFiles()
+                            -> imageEditor()
+                            -> imageEditorMode(1)
+                            -> imageEditorAspectRatios([
+                                null,
+                                '3:4',
+                            ])
                             -> multiple()
                             -> disk('public')
                             -> directory('photos')
@@ -194,17 +202,7 @@ class ListingResource extends Resource
                                         -> get(); 
                     $query -> whereIn('id', $queryData -> pluck('id') -> toArray());
                     return $query;
-                }),
-                // Filter::make('section')
-                //     -> form([
-                //         Select::make('section'),
-                //     ])
-                //     -> query(function (Builder $query, array $data) : Builder{
-                //         return $query -> when(
-                //             $data['section'],
-                //             fn (Builder $query, string $name) : Builder => $query -> where('name', '=', $name)
-                //         );
-                //     })
+                }), 
             ])
             ->actions([
                 Tables\Actions\Action::make('View')

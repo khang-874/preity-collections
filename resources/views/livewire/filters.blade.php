@@ -1,4 +1,5 @@
-<div x-data="{show:{{$currentOptions == [] ? 'false' : 'true'}}}" class="p-4 {{$isBorder ? 'border-b-[1px] border-gray-200' : ''}}">
+<div x-data="{show:{{$currentOptions == [] ? 'false' : 'true'}}}" 
+    class="p-4 {{$isBorder ? 'border-b-[1px] border-gray-200' : ''}} w-[15rem]">
     <div @click="show = !show" class="flex justify-between items-center cursor-pointer" :class="show ? 'mb-4' : ''">
         <p class="uppercase font-medium text-base">{{$property}}</p>
         <i x-cloak x-show="!show" class="fa-solid fa-plus"></i>

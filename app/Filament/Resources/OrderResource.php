@@ -4,12 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers\OrderListingsRelationManager;
+use App\Models\Detail;
 use App\Models\Order;
+use Filament\Forms\Components\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -32,13 +36,12 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('first_name') -> relationship(name:'customer', titleAttribute:'first_name') -> label('First name') -> disabled(),
-                Select::make('phone_number') -> relationship(name:'customer', titleAttribute:'phone_number') -> label('Phone number') -> disabled(),
-                // Repeater::make('listings') -> relationship('listings')
-                //             -> schema([
-                //                 // Select::make('name') -> relationship(name:'listings', titleAttribute:'name') -> searchable() -> required(),
-                //             ])
-                TextInput::make('address'),
+                Select::make('first_name')  -> relationship(name:'customer', titleAttribute:'first_name') 
+                                            -> label('First name') -> disabled(),
+                Select::make('phone_number')    -> relationship(name:'customer', titleAttribute:'phone_number') 
+                                                -> label('Phone number') -> disabled(), 
+                Select::make('address') -> relationship(name:'customer', titleAttribute:'address')
+                                        -> label('Address') -> disabled(),
                 TextInput::make('amount_paid'),
                 Select::make('payment_type') 
                         -> options([
@@ -47,14 +50,13 @@ class OrderResource extends Resource
                             'debit' => 'Debit',
                             'cash' => 'Cash',
                             'online' => 'Online',
-                        ]),
+                        ]) -> required(),
                 Placeholder::make('subtotal') 
                             -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> subtotal),
                 Placeholder::make('total') 
                             -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> total),
                 Placeholder::make('amount_owe')
-                            -> content(fn (?Order $order) : string => $order == null ? '' : '$'  . $order -> remaining),
-                
+                            -> content(fn (?Order $order) : string => $order == null ? '' : '$'  . $order -> remaining), 
             ]);
     }
 

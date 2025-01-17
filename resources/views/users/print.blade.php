@@ -30,7 +30,12 @@
                 <h3>Price Code: {{$listing -> productPriceCode}}</h3>
                 <h3>Size: {{$detail -> size}}</h3>
                 <h3>Color: {{$detail -> color}}</h3>
-                <h2>MRP: ${{$listing -> basePrice}}</h2>
+                @if ($listing -> sale_percentage != 0)
+                    <h2>MRP: ${{$listing -> basePrice}}</h2>
+                @else 
+                    <h3><s>ORG: ${{$listing -> basePrice}}</s></h3>
+                    <h2>MRP: ${{$listing -> sellingPrice}}</h2>
+                @endif
 				<h3>Made in India</h3>
                 <h3>Dry clean only</h3>
             </div>

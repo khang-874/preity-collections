@@ -4,11 +4,11 @@
         {{json_encode($sizes)}},
         {{json_encode($colors)}},
         {{$listing->id}},
-        '{{ $listing->name }}',
+        '{{addslashes($listing->name) }}',
         {{$listing->base_price}},
         {{$listing->selling_price}},
         {{round($listing->sale_percentage)}},
-        '{{ $listing->getDisplayImageAt(0)}}'
+        '{{addslashes($listing->getDisplayImageAt(0))}}'
     )"
     class="container flex flex-col">
     <div class="mt-2">

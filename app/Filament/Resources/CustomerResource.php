@@ -28,10 +28,11 @@ class CustomerResource extends Resource
         return $form
             ->schema([
                 //
-                TextInput::make('first_name'),
-                TextInput::make('last_name'),
+                TextInput::make('first_name') -> required(),
+                TextInput::make('last_name') -> required(),
                 TextInput::make('email'),
                 TextInput::make('phone_number') -> required(),
+                TextInput::make('address'),
                 TextInput::make('amount_owe') -> numeric() -> disabled(),
             ]);
     }

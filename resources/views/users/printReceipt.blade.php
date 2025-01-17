@@ -94,6 +94,14 @@
 
     <div class="separator"></div>
 
+    <div class="center">No Refund.</div>
+    <div class="center">All sales are final.</div>
+    <div class="center">All unworn merchandise with tags can be exchanged within 3 days along with the original receipt.</div>
+    <div class="center">No guarantee on color.</div>
+    <div class="center">Clothes to be dry cleaned only.</div>
+
+    <div class="separator"></div>
+
     <div class="center">Thank you for your purchase!</div>
     <div class="center">Please come again!</div>
 {{-- 

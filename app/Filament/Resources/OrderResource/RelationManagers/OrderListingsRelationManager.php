@@ -30,9 +30,11 @@ class OrderListingsRelationManager extends RelationManager
     {
         return $form
             ->schema([ 
-                Select::make('listing_id') -> relationship('listing', titleAttribute:'serial_number') -> live() -> searchable() 
-                -> getSearchResultsUsing(fn (string $search): array => Listing::where('serial_number', '=', "{$search}")->pluck('name', 'id')->toArray())
-                -> required(),
+                // Select::make('listing_id') -> relationship('listing', titleAttribute:'serial_number') -> live() -> searchable() 
+                // -> getSearchResultsUsing(fn (string $search): array => Listing::where('serial_number', '=', "{$search}")->pluck('name', 'id')->toArray())
+                // -> required(),
+                Select::make('listing_id') -> relationship('listing', 'name') -> searchable(['serial_number', 'name'])
+                        -> live() -> required(),
                 Select::make('detail.size')  
                         -> options(function(Get $get) : array {
                             if(!$get('listing_id'))
@@ -44,11 +46,9 @@ class OrderListingsRelationManager extends RelationManager
                             if(!$get('listing_id') || !$get('detail.size'))
                                 return [];
                             $detail = Detail::find($get('detail.size'));
-                            // dd(Listing::find($get('listing.name')), $get('detail.size'));
                             $result = Detail::query() 
                                 -> where('listing_id', $get('listing_id')) 
                                 -> where('size', $detail -> size) -> pluck('color', 'id') -> toArray();
-                            // dd($detail, $result);
                             return $result;
                         }) -> required(),
                 TextInput::make('quantity') -> numeric() -> required() -> rules([
@@ -82,14 +82,25 @@ class OrderListingsRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                         -> mutateFormDataUsing(function(array $data){
+                            dd($data);
                             $detailId = $data['detail']['color'];
                             unset($data['detail']);
                             $data['detail_id'] = $detailId;
                             return $data;
-                        }) -> label('New listing'),
+                        }) -> label('Add listing'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                        -> mutateRecordDataUsing(function(array $data){
+
+                        })
+                        -> mutateFormDataUsing(function(array $data){
+                            dd($data);
+                            $detailId = $data['detail']['color'];
+                            unset($data['detail']);
+                            $data['detail_id'] = $detailId;
+                            return $data;
+                        }),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
