@@ -9,10 +9,10 @@
 @endphp
 
 <a class="cursor-pointer" href="{{$item->link}}" >
-    <div class="relative bg-white group w-36 sm:w-48 md:w-60 lg:w-72">
+    <div class="relative bg-white group w-36 sm:w-48 md:w-60">
         <div class="overflow-hidden relative"> 
 
-            <img src="{{$item -> getDisplayImageAt(0)}}" alt="" class="w-full h-48 sm:h-64 md:h-80 lg:w-96 object-cover object-top"> 
+            <img src="{{$item -> getDisplayImageAt(0)}}" alt="" class="w-full h-48 sm:h-64 md:h-80 object-cover object-top"> 
             @if($item -> sale_percentage != 0)
                 <div class="absolute bg-red-400 z-10 bottom-1 left-0 text-xs p-1 text-white font-medium rounded-sm">Flat {{round($item -> sale_percentage)}}% OFF</div>
             @endif
