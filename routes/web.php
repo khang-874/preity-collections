@@ -29,6 +29,14 @@ Route::get('/', function() {
     ]);
 }) -> name('index');
 
+Route::get('/aboutus', function(){
+    return view('aboutus' ,[
+        'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
+        'newArrival' => Listing::orderBy('created_at', 'DESC') -> take(20) -> get() -> all(),
+        'promotions' => Promotion::all()
+    ]);
+});
+
 //Get all listing
 Route::get('/listings', [ListingController::class, 'index']) -> name('listings.index');
 

@@ -12,8 +12,9 @@
         </button>
 
         <!-- Cards -->
-        <div class="grid gap-1 md:gap-2
-            grid-cols-[repeat(auto-fit,_minmax(8rem,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(12rem,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(14rem,_1fr))]">
+        {{-- <div class="grid gap-1 md:gap-2
+            grid-cols-[repeat(auto-fit,_minmax(8rem,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(12rem,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(14rem,_1fr))]"> --}}
+        <div class="flex gap-1 md:gap-2 justify-center">
             @foreach ($currentItems as $item)
                 @if ($type == 'listing')
                     {{-- <x-card.listing-card :item="$item" type="listing"></x-card.listing-card> --}}

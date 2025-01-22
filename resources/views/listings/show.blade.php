@@ -19,7 +19,6 @@
                 @endif
 
                 <x-order-input :listing="$listing" :sizes="$sizes" :colors="$colors"></x-order-input>
-                {{-- <livewire:product-selector-component :listing="$listing"/> --}}
 
                 <div x-data="{show : false}" class="mt-4">
                     <div @click="show = !show" class="flex justify-between items-center cursor-pointer">
@@ -47,7 +46,7 @@
     <div class="h-[1px] w-screen bg-slate-100 mb-4 mt-8">
     </div>
 
-    <div class="md:max-w-[50%] mx-auto">
+    <div class="container mx-auto">
         <livewire:slideshow :items="$recommendListings" type="listing" title="You might also like"/>
     </div>
 </x-layout>

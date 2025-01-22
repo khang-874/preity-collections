@@ -156,10 +156,7 @@ class ListingController extends Controller
                     }    
                     
         $subsectionListings = Subsection::find($listing -> subsection_id) -> listings -> all();
-        // dd(array_rand($subsectionListings, min(4, count($subsectionListings))));
-        // dd( array_intersect_key( $subsectionListings, array_flip( array_rand( $subsectionListings, 2 ) ) ) );
         $randomSubsectionListings = $this -> randomListings($subsectionListings, 4);
-        // $randomSubsectionListings = [];
 
         $sectionListings = [];
         $section = Section::find($section_id);
@@ -200,64 +197,5 @@ class ListingController extends Controller
             'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
             'vendors' => Vendor::all()
         ]);
-    }
-    public function store(Request $request){
-
-        // dd($request -> all());
-        $request -> validate([
-            'name' => 'required',
-            'description' => 'required',
-            'vendor_id' => 'required',
-            'initPrice' => ['required', 'numeric'],
-            'subsection_id' => ['required']
-        ]);
-
-        $details = json_decode($request -> input('details'), true);
-    
-        $listing = $request -> only(['name', 'description', 'brand', 'weight', 'vendor_id', 'initPrice', 'subsection_id']);
-        $createdListing = Listing::create([
-            'name' => $listing['name'],
-            'description' => $listing['description'],
-            'vendor_id' => $listing['vendor_id'],
-            'initPrice' => $listing['initPrice'],
-            'subsection_id' => $listing['subsection_id'],
-            'weight' => $listing['weight']
-        ]);
-        
-        foreach($details as $detail){
-            Detail::create([
-                'size' => $detail['size'],
-                'color' => $detail['color'],
-                'inventory' => intval($detail['inventory']),
-                'sold' => intval($detail['sold']),
-                'listing_id' => $createdListing -> id
-            ]);
-        }
-        return redirect('/listings/' . $createdListing -> id . '/edit');
-    } 
-    public function edit(Listing $listing){
-        return view('listings.edit', [
-            'listing' => $listing,
-            'vendors' => Vendor::all(), 
-            'categories' => Category::all() -> sortBy(function($category){return $category -> index;})
-        ]);
-    } 
-
-    public function update(Listing $listing, Request $request){
-        $formFields = $request -> validate([
-            'name' => 'required',
-            'description' => 'required',
-            'vendor_id' => 'required',
-            'initPrice' => ['required'],
-        ]); 
-       $formFields = $request -> all();
-        $listing -> update($formFields);
-
-        return redirect('/listings/' . $listing -> id  . '/edit') -> with('message', 'Listing update successfully');
-    }
-    
-    public function destroy(Listing $listing){
-        $listing -> delete();
-        return redirect('/');
-    }
+    }   
 }

@@ -10,7 +10,7 @@
    @foreach ($listing->images as $image)
       <div x-show="activeSlide === {{$count++}}"
                {{$attributes->merge(['class' => 'flex items-center justify-center'])}}> 
-               <img x-cloak src='{{$listing -> getDisplayImageAt($count - 1)}}' class='object-cover h-auto w-full object-top' style="max-height: 40rem;"/>
+               <img x-cloak src='{{$listing -> getDisplayImageAt($count - 1)}}' class='object-cover h-auto w-full object-top'/>
       </div>   
    @endforeach
 
