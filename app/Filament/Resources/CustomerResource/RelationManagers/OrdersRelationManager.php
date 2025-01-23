@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CustomerResource\RelationManagers;
 
 use App\Models\Detail;
+use App\Models\Listing;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
@@ -39,7 +40,13 @@ class OrdersRelationManager extends RelationManager
                         -> label('Listings')
                         -> relationship('orderListings')
                         -> schema([
-                            Select::make('listing_id') -> relationship('listing', 'name') -> searchable(['serial_number', 'name']) -> live(),
+                            Select::make('listing_id') -> relationship('listing', 'name') 
+                                -> searchable(['serial_number', 'name'])
+                                -> getSearchResultsUsing(fn (string $search) : array => Listing::where('serial_number', '=', $search)
+                                                        -> orWhere('name', 'like', "%{$search}%")
+                                                        -> pluck('name', 'id') -> toArray()) 
+                                -> getOptionLabelUsing(fn ($value): ?string => Listing::find($value)?->name)
+                                -> live(),
                             Select::make('size') -> options(function (Get $get){
                                 if(!$get('listing_id'))
                                     return [];

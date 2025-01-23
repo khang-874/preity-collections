@@ -43,6 +43,7 @@ class OrderResource extends Resource
                 Select::make('address') -> relationship(name:'customer', titleAttribute:'address')
                                         -> label('Address') -> disabled(),
                 TextInput::make('amount_paid'),
+                DatePicker::make('created_at'),
                 Select::make('payment_type') 
                         -> options([
                             'pending' => 'Pending',

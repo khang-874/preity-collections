@@ -15,7 +15,7 @@ class SalesExport implements FromQuery, ShouldAutoSize, WithHeadings, WithColumn
 {
     public function query(){
         return Order::query() -> join('customers', 'customers.id', '=', 'orders.customer_id')
-                            -> select('customers.first_name', 'customers.last_name', 'payment_type', 'amount_paid', 'address', 'orders.updated_at');
+                            -> select('customers.first_name', 'customers.last_name', 'payment_type', 'amount_paid', 'customers.address', 'orders.updated_at');
     } 
 
     public function map($order){

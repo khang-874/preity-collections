@@ -40,8 +40,8 @@
     <div class="center bold">Preity Collection</div>
     <div class="center">548 Devonwood Circle</div>
     <div class="center">Gloucester, Ontario, K1T 4E5</div>
-    <div class="center">Phone: (123) 456-7890</div>
-    <div class="center">HST: #</div>
+    <div class="center">Phone: (613) 297-0707</div>
+    <div class="center">HST: #854165743</div>
 
     <div class="separator"></div>
 
@@ -99,7 +99,7 @@
     <div class="center">All unworn merchandise with tags can be exchanged within 3 days along with the original receipt.</div>
     <div class="center">No guarantee on color.</div>
     <div class="center">Clothes to be dry cleaned only.</div>
-
+	<div class="center">The store is not responsible for any damage or loss of jewelry after purchase.</div>
     <div class="separator"></div>
 
     <div class="center">Thank you for your purchase!</div>
