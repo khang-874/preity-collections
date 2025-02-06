@@ -18,9 +18,8 @@ class PromotionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-            'listing_id' => Listing::factory(),
-            'text' => fake() -> realTextBetween(60, 80)
+            'title' => fake() -> title(),
+            'image' => fake() -> picsumUrl(width:2240, height:700),
         ];
     }
 }

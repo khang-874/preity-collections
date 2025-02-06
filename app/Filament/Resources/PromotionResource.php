@@ -7,11 +7,14 @@ use App\Filament\Resources\PromotionResource\RelationManagers;
 use App\Models\Listing;
 use App\Models\Promotion;
 use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,10 +31,15 @@ class PromotionResource extends Resource
         return $form
             ->schema([
                 //
-                TextInput::make('text') -> required(),
-                Select::make('listing_id') -> relationship('listing', titleAttribute:'serial_number') -> searchable() 
-                        -> getSearchResultsUsing(fn (string $search): array => Listing::where('serial_number', '=', "{$search}")->pluck('name', 'id')->toArray())
-                        -> required()
+                TextInput::make('title') -> required(),
+                FileUpload::make('image') 
+                        -> image() 
+                        -> disk('public')
+                        -> directory('photos')
+                        -> visibility('public')
+                        -> downloadable()
+                        -> columnSpanFull(),
+                Checkbox::make('isShow'), 
             ]);
     }
 
@@ -40,7 +48,8 @@ class PromotionResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('text'),
+                TextColumn::make('title'),
+                CheckboxColumn::make('show'),
             ])
             ->filters([
                 //

@@ -30,7 +30,7 @@
                 <h3>Price Code: {{$listing -> productPriceCode}}</h3>
                 <h3>Size: {{$detail -> size}}</h3>
                 <h3>Color: {{$detail -> color}}</h3>
-                @if ($listing -> sale_percentage != 0)
+                @if ($listing -> sale_percentage == 0)
                     <h2>MRP: ${{$listing -> basePrice}}</h2>
                 @else 
                     <h3><s>ORG: ${{$listing -> basePrice}}</s></h3>

@@ -55,6 +55,6 @@ class DatabaseSeeder extends Seeder
             ];
         }))) -> create();
         
-        Promotion::factory(3) -> recycle($listings) -> create(); 
+        Promotion::factory(2) -> create(); 
     }
 }
