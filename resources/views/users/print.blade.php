@@ -23,7 +23,7 @@
 <body> 
     <div style='display:flex;flex-direction: column;'>
         @foreach($details as $detail)
-            <div style="width: 230px; height: 289px">
+            <div style="width: 230px; height: 366px; break-after:page;">
                 <h2>PREITY</h2>
 				<h2>COLLECTION</h2>
                 <h3>SN: {{$listing -> serial_number}}</h3>

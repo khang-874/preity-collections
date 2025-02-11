@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email') -> nullable();
             $table->string('phone_number') -> nullable();
             $table -> text('address') -> nullable();
+            $table -> text('postal_code') -> nullable();
+            $table -> text('city') -> nullable();
             $table->float('amount_owe') -> default(0);
             $table->timestamps();
         });

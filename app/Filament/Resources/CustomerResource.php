@@ -33,6 +33,8 @@ class CustomerResource extends Resource
                 TextInput::make('email'),
                 TextInput::make('phone_number') -> required(),
                 TextInput::make('address'),
+                TextInput::make('postal_code'),
+                TextInput::make('city'),
                 TextInput::make('amount_owe') -> numeric() -> disabled(),
             ]);
     }

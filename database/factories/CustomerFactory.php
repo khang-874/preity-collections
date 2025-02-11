@@ -21,8 +21,9 @@ class CustomerFactory extends Factory
             'last_name' => fake() -> lastName(),
             'email' => fake() -> email(),
             'address' => fake() -> address(),
+            'postal_code' => fake() -> postcode(),
+            'city' => fake() -> city(),
             'phone_number' => fake() -> phoneNumber(),
-            // 'amount_owe' => fake() -> randomElement([0, random_int(0,10000)]),
         ];
     }
 }

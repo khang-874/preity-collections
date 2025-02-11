@@ -33,6 +33,7 @@ class Order extends Model
     }
 
     public function getTotalAttribute() : float{
+        //Add tax
         return round($this -> getSubTotalAttribute() * 1.13, 2);
     }
 

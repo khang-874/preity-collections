@@ -69,11 +69,13 @@ Route::get('/printReceipt', [UserController::class, 'printReceipt']) -> name('pr
 
 //Place order
 Route::get('/placeOrder', [OrderController::class, 'placeOrder']);
+// Route::post('/placeOrder', [OrderController::class, 'cancelPlaceOrder']);
 
-//Create new order;
-Route::post('/orders' ,[OrderController::class, 'store']);
+//Create new online order;
+Route::post('/orders/online' ,[OrderController::class, 'handleOnlineOrder']);
 
 //Route to export sale data
 Route::get('/sales/export/', [OrderController::class, 'export']);
 
+//When success order come
 Route::post('/orders/success', [OrderController::class, 'successOrder']);
