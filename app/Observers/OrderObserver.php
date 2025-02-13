@@ -12,15 +12,7 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        
-        if($order -> payment_type != 'pending'){
-            //Updating inventory and sold
-            foreach($order -> orderListings as $orderListing){
-                $orderListing -> detail -> inventory -= $orderListing -> quantity;
-                $orderListing -> detail -> sold += $orderListing -> quantity;
-                $orderListing -> detail -> save();
-            }  
-        }
+         
         Log::debug('Createing new order');
     }
 
@@ -28,25 +20,7 @@ class OrderObserver
      * Handle the Order "updated" event.
      */
     public function updated(Order $order): void
-    {
-        //Only change update the inventory when make a payment
-        if($order -> isDirty('payment_type') && $order -> getOriginal('payment_type') === 'pending'){
-            //Updating inventory and sold
-            foreach($order -> orderListings as $orderListing){
-                $orderListing -> detail -> inventory -= $orderListing -> quantity;
-                $orderListing -> detail -> sold += $orderListing -> quantity;
-                $orderListing -> detail -> save();
-            }  
-        }
-
-        //If change to pending type, it will reverse the order
-        if($order -> isDirty('payment_type') && $order -> payment_type === 'pending'){
-            foreach($order -> orderListings as $orderListing){
-                $orderListing -> detail -> inventory += $orderListing -> quantity;
-                $orderListing -> detail -> sold -= $orderListing -> quantity;
-                $orderListing -> detail -> save();
-            }
-        }
+    { 
         Log::debug('Processing new order');
     }
 
@@ -55,12 +29,6 @@ class OrderObserver
      * Undo the action on inventory to properly manage it
      */
     public function deleting(Order $order): void
-    {
-        //
-        foreach($order -> orderListings as $orderListing){
-            $orderListing -> detail -> inventory += $orderListing -> quantity;
-            $orderListing -> detail -> sold -= $orderListing -> quantity;
-            $orderListing -> detail -> save();
-        } 
+    { 
     }
 }

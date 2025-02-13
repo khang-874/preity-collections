@@ -12,19 +12,6 @@
                 <p class="text-sm pl-1">({{$listings_number}} products)</p>
             </div>
             <div class="gap-3 hidden md:flex text-sm pr-2">
-                {{-- <a class="w-max text-cyan-500 relative" href="/">
-                    New To Old
-                <div class="w-0 h-0 
-                    border-l-[6px] border-l-transparent
-                    border-b-[7px] border-b-cyan-500
-                    border-r-[6px] border-r-transparent absolute left-1/2 -translate-x-1/2">
-                </div>
-                </a>
-                <a class="w-max">Old to New</a>
-                <a class="w-max">High to Low</a>
-                <a class="w-max">Low to High</a> --}}
-                
-                {{-- <div>{{echo $orders}}</div> --}}
                 @foreach ($orders as $key => $value)
                     @if ($value['active'])
                         <a class="w-max text-cyan-500 relative" href="{{request() -> fullUrlWithoutQuery(['order'])}}">

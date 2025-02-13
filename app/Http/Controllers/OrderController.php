@@ -78,7 +78,7 @@ class OrderController extends Controller
         $address = request('ssl_avs_address');
         $city = request('ssl_city');
         $postalCode = request('ssl_avs_zip');
-        $items = request('items');
+        $items = json_decode(request('items'), true);
         
         $payment = 'online';
 

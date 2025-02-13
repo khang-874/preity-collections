@@ -16,11 +16,11 @@
         </div> 
         <div class="px-1">
             @foreach($categories as $category) 
-                <x-navbar-card showVariable="showSection" outsideDivStyle='text-lg' insideDivStyle='' link="/?category={{$category->id}}" name="{{$category -> name}}">
+                <x-navbar-card showVariable="showSection" outsideDivStyle='text-lg' insideDivStyle='' link="/listings/?category={{$category->id}}" name="{{$category -> name}}">
                         @foreach ($category -> sections as $section)
-                            <x-navbar-card showVariable="showSubsection" outsideDivStyle='pl-1 text-base' insideDivStyle='flex flex-col' link="/?section={{$section->id}}" name="{{$section->name}}">
+                            <x-navbar-card showVariable="showSubsection" outsideDivStyle='pl-1 text-base' insideDivStyle='flex flex-col' link="/listings/?section={{$section->id}}" name="{{$section->name}}">
                                 @foreach($section -> subsections as $subsection)
-                                    <a class="w-full pl-1 text-sm"href="/?subsection={{$subsection->id}}">{{$subsection -> name}}</a>
+                                    <a class="w-full pl-1 text-sm"href="/listings/?subsection={{$subsection->id}}">{{$subsection -> name}}</a>
                                 @endforeach
                             </x-navbar-card>
                         @endforeach
@@ -28,13 +28,13 @@
             @endforeach  
 
             {{-- showClearance --}}
-            <x-navbar-card showVariable="showOnclearance" outsideDivStyle='text-lg' insideDiveStyle='' link='/clearance/' name="Clearance">
+            <x-navbar-card showVariable="showOnclearance" outsideDivStyle='text-lg' insideDiveStyle='' link='listings/clearance/' name="Clearance">
                 @foreach($categories as $category) 
-                    <x-navbar-card showVariable="showSection" outsideDivStyle='pl-1 text-base' insideDivStyle='' link="/clearance/?category={{$category->id}}" name="{{$category -> name}}">
+                    <x-navbar-card showVariable="showSection" outsideDivStyle='pl-1 text-base' insideDivStyle='' link="listings/clearance/?category={{$category->id}}" name="{{$category -> name}}">
                             @foreach ($category -> sections as $section)
                                 <x-navbar-card showVariable="showSubsection" outsideDivStyle='pl-1 text-sm' insideDivStyle='flex flex-col' link="/clearance/?section={{$section->id}}" name="{{$section->name}}">
                                     @foreach($section -> subsections as $subsection)
-                                        <a class="w-full pl-1 text-xs"href="/clearance/?subsection={{$subsection->id}}">{{$subsection -> name}}</a>
+                                        <a class="w-full pl-1 text-xs"href="/listings/clearance/?subsection={{$subsection->id}}">{{$subsection -> name}}</a>
                                     @endforeach
                                 </x-navbar-card>
                             @endforeach

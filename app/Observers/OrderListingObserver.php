@@ -17,4 +17,11 @@ class OrderListingObserver
         $orderListing -> detail -> sold -= $orderListing -> quantity;
         $orderListing -> detail -> save();
     }
+
+    public function created(OrderListing $orderListing): void
+    {
+        $orderListing -> detail -> inventory -= $orderListing -> quantity;
+        $orderListing -> detail -> sold += $orderListing -> quantity;
+        $orderListing -> detail -> save();
+    }
 }
