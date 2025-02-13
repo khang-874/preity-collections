@@ -42,7 +42,7 @@ class OrderResource extends Resource
                                                 -> label('Phone number') -> disabled(), 
                 Select::make('address') -> relationship(name:'customer', titleAttribute:'address')
                                         -> label('Address') -> disabled(),
-                TextInput::make('amount_paid'),
+                TextInput::make('amount_paid') -> numeric(),
                 DatePicker::make('created_at'),
                 Select::make('payment_type') 
                         -> options([
@@ -53,9 +53,11 @@ class OrderResource extends Resource
                             'online' => 'Online',
                         ]) -> required(),
                 Placeholder::make('subtotal') 
-                            -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> subtotal),
+                            -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> subtotal)
+                            -> live(),
                 Placeholder::make('total') 
-                            -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> total),
+                            -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> total)
+                            -> live(),
                 Placeholder::make('amount_owe')
                             -> content(fn (?Order $order) : string => $order == null ? '' : '$'  . $order -> remaining), 
             ]);

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Detail;
 use App\Models\Listing;
 use App\Models\Order;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Hidden;
@@ -65,7 +66,15 @@ class OrdersRelationManager extends RelationManager
                                                         -> where('size', '=', $size) -> pluck('color', 'id');
                                 return $colors;
                             }),
-                            TextInput::make('quantity') -> numeric() -> required()
+                            TextInput::make('quantity') -> numeric() -> required() -> rules([
+                                fn (Get $get) : Closure => function(string $attribute, $value, Closure $fail) use ($get){
+                                    $detail = Detail::find($get('color'));
+                                    if($value <= 0)
+                                        $fail('Enter number more than 0');
+                                    if($detail -> inventory < $value)
+                                        $fail('Not enough inventory, maximum inventory is: ' . $detail -> inventory);
+                                }
+                            ])
                         ]) -> grid(3) 
                         -> columnSpanFull()
                         -> addActionLabel('Add listing')

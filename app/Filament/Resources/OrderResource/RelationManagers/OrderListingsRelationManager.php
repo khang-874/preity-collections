@@ -30,9 +30,6 @@ class OrderListingsRelationManager extends RelationManager
     {
         return $form
             ->schema([ 
-                // Select::make('listing_id') -> relationship('listing', titleAttribute:'serial_number') -> live() -> searchable() 
-                // -> getSearchResultsUsing(fn (string $search): array => Listing::where('serial_number', '=', "{$search}")->pluck('name', 'id')->toArray())
-                // -> required(),
                 Select::make('listing_id') -> relationship('listing', 'name') -> searchable(['serial_number', 'name'])
                         -> live() -> required(),
                 Select::make('detail.size')  
@@ -52,12 +49,13 @@ class OrderListingsRelationManager extends RelationManager
                             return $result;
                         }) -> required(),
                 TextInput::make('quantity') -> numeric() -> required() -> rules([
-                    fn (Get $get) : Closure => function(string $attribute, $value, Closure $fail) use ($get){
+                    fn (Get $get, OrderListing $orderListing) : Closure => function(string $attribute,  $value, Closure $fail) use ($get, $orderListing){
                         $detail = Detail::find($get('detail.color'));
+                        $oldValue = $orderListing -> quantity;
                         if($value <= 0)
                             $fail('Enter number more than 0');
-                        if($detail -> inventory < $value)
-                            $fail('Not enough inventory');
+                        if($detail -> inventory + $oldValue < $value)
+                            $fail('Not enough inventory, maximum inventory is: ' . ($detail -> inventory + $oldValue));
                     }
                 ]),
             ]);
@@ -82,7 +80,6 @@ class OrderListingsRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                         -> mutateFormDataUsing(function(array $data){
-                            dd($data);
                             $detailId = $data['detail']['color'];
                             unset($data['detail']);
                             $data['detail_id'] = $detailId;
@@ -92,10 +89,14 @@ class OrderListingsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make()
                         -> mutateRecordDataUsing(function(array $data){
-
+                            unset($data['order_id']);
+                            unset($data['created_at']);
+                            unset($data['updated_at']);
+                            $data['detail']['color'] = $data['detail_id'];
+                            $data['detail']['size'] = $data['detail_id'];
+                            return $data;
                         })
                         -> mutateFormDataUsing(function(array $data){
-                            dd($data);
                             $detailId = $data['detail']['color'];
                             unset($data['detail']);
                             $data['detail_id'] = $detailId;
