@@ -112,6 +112,8 @@ class OrderController extends Controller
             ]); 
         }
 
+        $order -> amount_paid = $order -> total;
+        $order -> save();
         return redirect('/') -> with('message', 'Your Order has been placed successfully');
     }
 
