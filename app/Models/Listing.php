@@ -135,6 +135,10 @@ class Listing extends Model
         $query -> where('listings.is_clearance', '=', true);
     }
 
+    public function scopeEvents($query, $event){
+        $query -> where('listings.event', '=', $event);
+    }
+
     public function scopeSale($query){
         $query -> where('listings.sale_percentage', '!=', 0) -> where('listings.is_clearance', '=', false);
     }

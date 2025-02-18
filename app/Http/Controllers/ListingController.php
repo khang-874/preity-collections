@@ -8,6 +8,7 @@ use App\Models\Vendor;
 use App\Models\Listing;
 use App\Models\Section;
 use App\Models\Category;
+use App\Models\Promotion;
 use App\Models\Subsection;
 use Carbon\Carbon;
 use Flowframe\Trend\Trend;
@@ -36,7 +37,12 @@ class ListingController extends Controller
         return $this->prepareListingView('sale');
     }
 
-    private function prepareListingView($type)
+    public function indexEvents(string $event){
+        // dd($event);
+        return $this -> prepareListingView('events', $event);
+    }
+
+    private function prepareListingView($type, $event='')
     {
         $title = $this->findTitle($type);
         $orders = $this->getOrders();
@@ -51,6 +57,7 @@ class ListingController extends Controller
         match($type){
             'clearance' => $listingsQuery -> clearance(),
             'sale' => $listingsQuery -> sale(),
+            'events' => $listingsQuery -> events($event),
             default => null,
         }; 
         $listingsNumber = $listingsQuery -> count();

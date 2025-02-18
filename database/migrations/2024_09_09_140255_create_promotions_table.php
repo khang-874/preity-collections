@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
+            $table->text('event');
             $table->text('image');
             $table->boolean('isShow') -> default(false);
             $table->timestamps();

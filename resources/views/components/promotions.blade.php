@@ -2,37 +2,43 @@
 
 
 @php
-    $promotion = null;
-    foreach($promotions as $item)    
-        if($item -> isShow){
-            $promotion = $item;
-        }
+    $idx = 0; 
+    $cnt = 0;
+    foreach($promotions as $promotion){
+        if($promotion -> isShow)
+            $cnt++;
+    }
 @endphp
 <section class="">
     <!-- Left Side - Text Area --> 
+    <!-- Their will be always one default promotion for clearance that's why we will have it plus one -->
     <div    x-data = "{activeSlide: 0}" x-init="$nextTick(() => {
             setInterval(() => {
                 activeSlide++;
-                if(activeSlide == {{$promotion == null ? 1 : 2}})
+                if(activeSlide == {{$cnt + 1}})
                     activeSlide = 0;
             }, 4000) 
         })"
         class="relative w-full h-auto">
     
-        <a x-show="activeSlide == 0" href="{{url('/listings/clearance')}}">
-            <img src="{{url('/images/background.png')}}" alt="Clearance promotion" class='w-full'> 
-        </a>   
-        @if ($promotion != null)
-            <a x-show="activeSlide == 1" href="{{url('/listings/sale')}}">
-                <img src="{{$item -> getDisplayImage()}}" alt="Sale promotion" class='w-full'> 
-            </a>       
-        @endif
-        
+        @foreach ($promotions as $promotion)
+            @if($promotion -> isShow)
+                <a x-show="activeSlide == {{$idx++}}" href="{{url('/listings/events/' .  $promotion -> event)}}">
+                    <img src="{{$promotion -> getDisplayImage()}}" alt="Sale Promotion" class='w-full'> 
+                </a>  
+            @endif
+        @endforeach
 
-        <div class="absolute border-[1px] border-black rounded-full bottom-2 right-8 md:right-10 size-3 md:size-4" @click="activeSlide = 0" :class="activeSlide == 0 ? 'bg-primary' : 'bg-white'"></div>
+        <a x-show="activeSlide == {{$cnt}}" href="{{url('/listings/clearance')}}">
+            <img src="{{url('/images/background.png')}}" alt="Clearance promotion" class='w-full'> 
+        </a>    
+
+        <div class="absolute bottom-2 right-4 flex space-x-2">
+        @for ($i = 0; $i <= $cnt; $i++)
+            <div class="border-[1px] border-black rounded-full size-3 md:size-4" @click="activeSlide = {{$i}}" 
+            :class="activeSlide == {{$i}} ? 'bg-primary' : 'bg-white'"></div>
+        @endfor
+        </div>
         
-        @if($promotion != null)
-            <div class="absolute border-[1px] border-black rounded-full bottom-2 right-4 size-3 md:size-4" @click="activeSlide = 1" :class="activeSlide == 1 ? 'bg-primary' : 'bg-white'"></div>
-        @endif
     </div>
 </section>

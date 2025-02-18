@@ -31,7 +31,7 @@ class PromotionResource extends Resource
         return $form
             ->schema([
                 //
-                TextInput::make('title') -> required(),
+                TextInput::make('event') -> required(),
                 FileUpload::make('image') 
                         -> image() 
                         -> disk('public')
@@ -48,8 +48,8 @@ class PromotionResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('title'),
-                CheckboxColumn::make('show'),
+                TextColumn::make('event'),
+                CheckboxColumn::make('isShow'),
             ])
             ->filters([
                 //

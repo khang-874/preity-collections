@@ -6,10 +6,12 @@ use App\Models\Customer;
 use App\Models\Listing;
 use App\Models\Order;
 use App\Models\OrderListing;
+use App\Models\Promotion;
 use App\Observers\CustomerObserver;
 use App\Observers\ListingObserver;
 use App\Observers\OrderListingObserver;
 use App\Observers\OrderObserver;
+use App\Observers\PromotionObserver;
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -38,5 +40,6 @@ class AppServiceProvider extends ServiceProvider
         Order::observe(OrderObserver::class);
         Customer::observe(CustomerObserver::class);
         OrderListing::observe(OrderListingObserver::class);
+        Promotion::observe(PromotionObserver::class);
     }
 }

@@ -3,7 +3,6 @@
         $sections = [];
         foreach($categories as $category)
             $sections = array_merge($sections, $category -> sections -> all());    
-        // dd($promotions)
     @endphp
     <div>
         <x-promotions :promotions="$promotions"></x-promotions>

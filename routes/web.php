@@ -42,21 +42,10 @@ Route::get('/listings', [ListingController::class, 'index']) -> name('listings.i
 
 //Get all clearance listings
 Route::get('/listings/clearance', [ListingController::class, 'indexClearance']) -> name('listings.indexClearance');
-Route::get('/listings/sale', [ListingController::class, 'indexSale']) -> name('listings.indexClearance');
-//show create form
-Route::get('/listings/create', [ListingController::class, 'create']) -> middleware('auth');
+Route::get('/listings/sale', [ListingController::class, 'indexSale']) -> name('listings.indexSale');
 
-//Store listing data
-Route::post('/listings', [ListingController::class, 'store']) -> middleware('auth');
-
-//Update listing data
-Route::put('/listings/{listing}', [ListingController::class, 'update']) -> middleware('auth');
-
-//Edit a listing
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']) -> middleware('auth');
-
-//Delete listing
-Route::delete('/listings/{listing}', [ListingController::class, 'destroy']) -> middleware('auth');
+//Get listing based on event
+Route::get('/listings/events/{event}', [ListingController::class, 'indexEvents']);
 
 //Get a single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show']);
@@ -69,7 +58,6 @@ Route::get('/printReceipt', [UserController::class, 'printReceipt']) -> name('pr
 
 //Place order
 Route::get('/placeOrder', [OrderController::class, 'placeOrder']);
-// Route::post('/placeOrder', [OrderController::class, 'cancelPlaceOrder']);
 
 //Create new online order;
 Route::post('/orders/online' ,[OrderController::class, 'handleOnlineOrder']);

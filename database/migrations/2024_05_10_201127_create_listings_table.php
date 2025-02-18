@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('init_price');
             $table->float('weight');
             $table->text('images');
+            $table -> text('event') -> nullable();
             $table -> unsignedBigInteger('subsection_id');
             $table -> foreign('subsection_id') -> references('id') -> on('subsections');
 

@@ -18,7 +18,7 @@ class PromotionFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake() -> title(),
+            'event' => fake() -> title(),
             'image' => fake() -> picsumUrl(width:2240, height:700),
         ];
     }

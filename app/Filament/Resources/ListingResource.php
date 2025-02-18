@@ -6,6 +6,7 @@ use App\Filament\Resources\ListingResource\Pages;
 use App\Filament\Resources\ListingResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Listing;
+use App\Models\Promotion;
 use App\Models\Section;
 use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
@@ -62,6 +63,16 @@ class ListingResource extends Resource
                     -> live(onBlur:true) 
                     -> required(), 
                 TextInput::make('sale_percentage') -> numeric() -> default(0) -> required() -> live(onBlur:true), 
+                Select::make('event') -> options(function(){
+                    $events = Promotion::all() -> unique('event') -> pluck('event') -> toArray();
+
+                    $options = [];
+                    foreach($events as $event){
+                        $options[$event] = $event;
+                    }
+                    
+                    return $options;
+                }),
                 Checkbox::make('is_clearance') -> inline() -> label('On clearance'),
                 Placeholder::make('sellingPrice') 
                         -> content(function(Get $get) : string{
