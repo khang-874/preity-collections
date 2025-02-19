@@ -19,6 +19,8 @@ class EditOrder extends EditRecord
                 -> icon('heroicon-m-printer')
                 -> url(fn(Order $record) : string => route('printReceipt', ['orderId' => $record->id]))
                 -> openUrlInNewTab(),
+            Actions\Action::make('View customer')
+                -> url(fn(Order $order) => url('/admin/customers/' . $order -> customer -> id . '/edit'))
         ];
     }
 }

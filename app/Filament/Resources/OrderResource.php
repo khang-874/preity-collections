@@ -36,12 +36,12 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('first_name')  -> relationship(name:'customer', titleAttribute:'first_name') 
-                                            -> label('First name') -> disabled(),
-                Select::make('phone_number')    -> relationship(name:'customer', titleAttribute:'phone_number') 
-                                                -> label('Phone number') -> disabled(), 
-                Select::make('address') -> relationship(name:'customer', titleAttribute:'address')
-                                        -> label('Address') -> disabled(),
+                Placeholder::make('first_name')
+                            -> content(fn (?Order $order) => $order == null ? '' : $order -> customer -> first_name),
+                Placeholder::make('phone_number')
+                            -> content(fn (?Order $order) => $order == null ? '' : $order -> customer -> phone_number),
+                Placeholder::make('address')
+                            -> content(fn (?Order $order) => $order == null ? '' : $order -> customer -> address),
                 TextInput::make('amount_paid') -> numeric(),
                 DatePicker::make('created_at'),
                 Select::make('payment_type') 
