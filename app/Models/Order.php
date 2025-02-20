@@ -26,18 +26,37 @@ class Order extends Model
     }
     public function getSubtotalAttribute() : float{
         $total = 0;
+        // dd($this -> orderListings);
         foreach($this -> orderListings as $orderListing){
-            $total += $orderListing -> listing -> getSellingPriceAttribute() * $orderListing -> quantity;
+            if($orderListing -> sale_price){
+                $total += $orderListing -> sale_price * $orderListing -> quantity;
+            }else{
+                $total += $orderListing -> listing -> getSellingPriceAttribute() * $orderListing -> quantity;
+            }
         }
+        // dd($total);
         return $total;
     }
 
     public function getTotalAttribute() : float{
         //Add tax
-        return round($this -> getSubTotalAttribute() * 1.13, 2);
+        if($this -> isTax){
+            return round($this -> getSubTotalAttribute() * 1.13, 2);
+        }
+        return round($this -> getSubtotalAttribute(), 2);
     }
 
     public function getRemainingAttribute() : float{
         return round($this -> total - $this -> amount_paid, 2);
+    }
+
+    public function getIsTaxAttribute() : bool{
+        $isTax = true;
+        foreach($this -> orderListings as $orderListing){
+            if($orderListing -> sale_price){
+                $isTax = false;
+            } 
+        } 
+        return $isTax;
     }
 }

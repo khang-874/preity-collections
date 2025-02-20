@@ -54,7 +54,6 @@
     <table width="100%"> 
         <thead>
             <tr>
-                <th class="left">Name</th>
                 <th class="left">Serial Number</th>
                 <th class="right">Quantity x Price</th>
             </tr>
@@ -62,9 +61,12 @@
         <tbody>
             @foreach ($order -> orderListings as $orderListing)
                 <tr>
-                    <td>{{$orderListing -> listing -> name}}</td>
                     <td>{{$orderListing -> listing -> serial_number}}</td>
-                    <td class='right'>{{$orderListing -> quantity}} x ${{$orderListing -> listing -> sellingPrice}}</td>				
+                    @if ($orderListing -> sale_price)
+                        <td class='right'>{{$orderListing -> quantity}} x ${{$orderListing -> sale_price}}</td>				
+                    @else
+                        <td class='right'>{{$orderListing -> quantity}} x ${{$orderListing -> listing -> sellingPrice}}</td>				
+                    @endif
                 </tr>
                 @if (!$loop -> last)
                     <tr>
@@ -77,21 +79,36 @@
 
     <div class="separator"></div>
 
-    <table width="100%">
+    @if ($order -> isTax)
+        <table width="100%">
+            <tr>
+                <td class="left bold">Subtotal:</td>
+                <td class="right">${{$order -> subtotal}}</td>
+            </tr>
+            <tr>
+                <td class="left bold">Tax (13%):</td>
+                <td class="right">${{round($order -> subtotal * .13, 2)}}</td>
+            </tr>
+            <tr>
+                <td class="left bold total">Total:</td>
+                <td class="right total">${{$order -> total}}</td>
+            </tr>
+        </table> 
+    @else
+        <table width="100%">
         <tr>
             <td class="left bold">Subtotal:</td>
             <td class="right">${{$order -> subtotal}}</td>
-        </tr>
-        <tr>
-            <td class="left bold">Tax (13%):</td>
-            <td class="right">${{round($order -> subtotal * .13, 2)}}</td>
-        </tr>
+        </tr> 
         <tr>
             <td class="left bold total">Total:</td>
             <td class="right total">${{$order -> total}}</td>
         </tr>
     </table>
 
+    @endif
+
+    
     <div class="separator"></div>
 
     <div class="center">No Refund.</div>

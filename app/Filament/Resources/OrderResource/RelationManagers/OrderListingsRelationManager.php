@@ -36,7 +36,9 @@ class OrderListingsRelationManager extends RelationManager
                         -> options(function(Get $get) : array {
                             if(!$get('listing_id'))
                                 return [];
-                            return array_unique(Detail::query() -> where('listing_id', $get('listing_id')) -> pluck('size', 'id') -> toArray());
+                            $sizes = array_unique(Detail::query() -> where('listing_id', $get('listing_id')) -> pluck('size', 'id') -> toArray());
+                            // dd($sizes);
+                            return $sizes;
                         })
                         -> live() -> required(),
                 Select::make('detail.color')  -> options(function(Get $get) : array{
@@ -48,6 +50,7 @@ class OrderListingsRelationManager extends RelationManager
                                 -> where('size', $detail -> size) -> pluck('color', 'id') -> toArray();
                             return $result;
                         }) -> required(),
+                TextInput::make('sale_price') -> numeric() -> default(0),
                 TextInput::make('quantity') -> numeric() -> required() -> rules([
                     fn (Get $get, OrderListing $orderListing) : Closure => function(string $attribute,  $value, Closure $fail) use ($get, $orderListing){
                         $detail = Detail::find($get('detail.color'));
@@ -72,6 +75,7 @@ class OrderListingsRelationManager extends RelationManager
                 TextColumn::make('detail.color') -> label('color'),
                 TextColumn::make('quantity'),
                 TextColumn::make('listing.sellingPrice') -> label('Selling price'),
+                TextColumn::make('sale_price'),
                 TextColumn::make('subtotal')
             ])
             ->filters([
@@ -80,6 +84,7 @@ class OrderListingsRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                         -> mutateFormDataUsing(function(array $data){
+                            //Save data from form to database
                             $detailId = $data['detail']['color'];
                             unset($data['detail']);
                             $data['detail_id'] = $detailId;
@@ -93,14 +98,29 @@ class OrderListingsRelationManager extends RelationManager
                             unset($data['created_at']);
                             unset($data['updated_at']);
                             $data['detail']['color'] = $data['detail_id'];
-                            $data['detail']['size'] = $data['detail_id'];
+
+                            //Because there maybe duplicate on size, we will have to handle it more carefully
+                            $detailSize = Detail::find($data['detail_id']) -> size;
+                            $sizes = array_unique(Detail::query() -> where('listing_id', $data['listing_id']) -> pluck('size', 'id') -> toArray());
+                            
+                            foreach($sizes as $id => $size){
+                                if($size === $detailSize){
+                                    $data['detail']['size'] = $id;
+                                    break;
+                                }
+                            }
+                            unset($data['detail_id']);
                             return $data;
                         })
                         -> mutateFormDataUsing(function(array $data){
+                            //Save data from form to database
                             $detailId = $data['detail']['color'];
                             unset($data['detail']);
                             $data['detail_id'] = $detailId;
                             return $data;
+                        })
+                        -> after(function(OrderListing $orderListing){
+                            return redirect(url('/admin/orders/' . $orderListing -> order_id . '/edit'));
                         }),
                 Tables\Actions\DeleteAction::make(),
             ])

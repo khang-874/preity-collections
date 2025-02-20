@@ -66,6 +66,7 @@ class OrdersRelationManager extends RelationManager
                                                         -> where('size', '=', $size) -> pluck('color', 'id');
                                 return $colors;
                             }),
+                            TextInput::make('sale_price') -> numeric() -> default(0),
                             TextInput::make('quantity') -> numeric() -> required() -> rules([
                                 fn (Get $get) : Closure => function(string $attribute, $value, Closure $fail) use ($get){
                                     $detail = Detail::find($get('color'));
@@ -83,7 +84,6 @@ class OrdersRelationManager extends RelationManager
                             unset($data['color']);
                             unset($data['size']);
                             $data['detail_id'] = $detail_id;
-                            // dd($data);
                             return $data;
                         })
 

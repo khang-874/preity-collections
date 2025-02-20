@@ -24,6 +24,7 @@ return new class extends Migration
             
             $table -> integer('quantity');
 
+            $table -> float('sale_price') -> default(0) -> nullable();
             $table->timestamps();
 
         });

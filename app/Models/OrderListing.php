@@ -22,6 +22,9 @@ class OrderListing extends Pivot
         return $this -> belongsTo(Detail::class, 'detail_id');
     }
     public function getSubtotalAttribute() : float{
+        //If there is manual price
+        if($this -> sale_price)
+            return $this -> sale_price * $this -> quantity;
         return $this -> listing -> sellingPrice * $this -> quantity;
     }
 }
