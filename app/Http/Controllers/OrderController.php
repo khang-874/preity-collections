@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Listing;
 use App\Models\Order;
 use App\Models\OrderListing;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -80,8 +81,6 @@ class OrderController extends Controller
         $postalCode = request('ssl_avs_zip');
         $items = json_decode(request('items'), true);
         
-        $payment = 'online';
-
         $customer = Customer::where('phone_number', $phoneNumber) 
                         -> firstOr(function() use ($firstName, $lastName, $phoneNumber, $email, $address, $city, $postalCode){
             return Customer::create([
@@ -97,11 +96,8 @@ class OrderController extends Controller
         });
 
         $order = Order::create([
-                'payment_type' => $payment,
-                'customer_id' => $customer -> id,
-                'amount_paid' => 0
-        ]);
-       
+            'customer_id' => $customer -> id,
+        ]); 
 
         foreach($items as $item){
             OrderListing::create([
@@ -112,8 +108,11 @@ class OrderController extends Controller
             ]); 
         }
 
-        $order -> amount_paid = $order -> total;
-        $order -> save();
+        $payment = Payment::created([
+            'order_id' => $order -> id,
+            'payment_type' => 'online',
+            'amount_paid' => $order -> total,
+        ]);
         return redirect('/') -> with('message', 'Your Order has been placed successfully');
     }
 

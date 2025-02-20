@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
@@ -14,7 +13,6 @@ use App\Livewire\Counter;
 use App\Mail\MyTestMail;
 use App\Mail\NewOrder;
 use App\Models\Category;
-use App\Models\Customer;
 use App\Models\Listing;
 use App\Models\Promotion;
 use Illuminate\Support\Facades\DB;

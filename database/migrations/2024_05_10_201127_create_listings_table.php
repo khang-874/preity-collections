@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('images');
             $table -> text('event') -> nullable();
             $table -> unsignedBigInteger('subsection_id');
-            $table -> foreign('subsection_id') -> references('id') -> on('subsections');
+            $table -> foreign('subsection_id') -> references('id') -> on('subsections') -> onUpdate('cascade') -> onDelete('cascade');
 
             $table -> unsignedBigInteger('vendor_id');
             $table -> foreign('vendor_id') -> references('id') -> on('vendors'); 

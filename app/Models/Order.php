@@ -12,8 +12,8 @@ class Order extends Model
 {
     use HasFactory;
     public $withTimestamps = true;
-    protected $with = ['orderListings', 'details'];
-    protected $fillable = ['payment_type', 'customer_id', 'amount_paid'];
+    protected $with = ['orderListings', 'details', 'payments'];
+    protected $fillable = ['customer_id'];
 
     public function customer() : BelongsTo{
         return $this -> belongsTo(Customer::class);
@@ -21,6 +21,10 @@ class Order extends Model
     public function orderListings() : HasMany{
         return $this -> hasMany(OrderListing::class);
     }
+    public function payments() : HasMany{
+        return $this -> hasMany(Payment::class);
+    }
+
     public function details() : BelongsToMany{
         return $this -> belongsToMany(Detail::class, 'orders_listings', 'order_id', 'detail_id');
     }
@@ -38,6 +42,13 @@ class Order extends Model
         return $total;
     }
 
+    public function getAmountPaidAttribute() : float{
+        $total = 0;
+        foreach($this -> payments as $payment){
+            $total += $payment -> amount_paid;
+        }
+        return $total;
+    }
     public function getTotalAttribute() : float{
         //Add tax
         if($this -> isTax){

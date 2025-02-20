@@ -35,8 +35,6 @@ class OrdersRelationManager extends RelationManager
     {
         return $form
             ->schema([ 
-                Hidden::make('payment_type') -> default('pending'),
-                Hidden::make('amount_paid') -> default(0),
                 Repeater::make('orderListings')
                         -> label('Listings')
                         -> relationship('orderListings')
@@ -97,9 +95,8 @@ class OrdersRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('created_at') -> dateTime(),
                 TextColumn::make('total'),
-                TextColumn::make('amount_paid'),
+                TextColumn::make('amountPaid'),
                 TextColumn::make('remaining'),
-                TextColumn::make('payment_type')
             ])
             ->filters([
                 //

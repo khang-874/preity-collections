@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Detail;
 use App\Models\Order;
+use App\Models\Payment;
 use Filament\Widgets\ChartWidget;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Flowframe\Trend\Trend;
@@ -36,9 +37,9 @@ class RevenueChart extends ChartWidget
         $query = null;
         
         if($activeFilter == 'total'){
-                $query = Order::query() -> where('payment_type', '!=', 'pending');
+                $query = Payment::query() -> where('payment_type', '!=', 'pending');
         }else{
-            $query = Order::query() -> where('payment_type', '=', $activeFilter); 
+            $query = Payment::query() -> where('payment_type', '=', $activeFilter); 
         } 
         $data = Trend::query($query)
             -> between(
@@ -73,6 +74,7 @@ class RevenueChart extends ChartWidget
             'credit' => 'Credit',
             'cash' => 'Cash',
             'debit' => 'Debit',
+            'online' => 'Online',
             'total' => 'Total',
        ]; 
     }

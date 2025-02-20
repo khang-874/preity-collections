@@ -42,16 +42,7 @@ class OrderResource extends Resource
                             -> content(fn (?Order $order) => $order == null ? '' : $order -> customer -> phone_number),
                 Placeholder::make('address')
                             -> content(fn (?Order $order) => $order == null ? '' : $order -> customer -> address),
-                TextInput::make('amount_paid') -> numeric(),
-                DatePicker::make('created_at'),
-                Select::make('payment_type') 
-                        -> options([
-                            'pending' => 'Pending',
-                            'credit' => 'Credit',
-                            'debit' => 'Debit',
-                            'cash' => 'Cash',
-                            'online' => 'Online',
-                        ]) -> required(),
+                DatePicker::make('created_at'), 
                 Placeholder::make('subtotal') 
                             -> content(fn (?Order $order) : string => $order == null ? '' :  '$' . $order -> subtotal)
                             -> live(),
@@ -60,6 +51,21 @@ class OrderResource extends Resource
                             -> live(),
                 Placeholder::make('amount_owe')
                             -> content(fn (?Order $order) : string => $order == null ? '' : '$'  . $order -> remaining), 
+                Repeater::make('payments')
+                    -> relationship('payments')
+                    -> schema([
+                            TextInput::make('amount_paid') -> numeric() -> required(),
+                            Select::make('payment_type') 
+                                    -> options([
+                                        'pending' => 'Pending',
+                                        'credit' => 'Credit',
+                                        'debit' => 'Debit',
+                                        'cash' => 'Cash',
+                                        'online' => 'Online',
+                                    ]) -> required(),
+                    ])
+                    -> columnSpanFull() -> grid(3),
+
             ]);
     }
 
@@ -70,9 +76,8 @@ class OrderResource extends Resource
                 //
                 TextColumn::make('customer.first_name') -> label("Customer's name"),
                 TextColumn::make('created_at') -> date() -> sortable(),
-                TextColumn::make('payment_type'),
                 TextColumn::make('total') -> numeric(),
-                TextColumn::make('amount_paid'),
+                TextColumn::make('amountPaid'),
             ])
             ->filters([
                 //

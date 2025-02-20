@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Listing;
 use App\Models\Order;
 use App\Models\OrderListing;
+use App\Models\Payment;
 use App\Models\Promotion;
 use App\Models\Section;
 use App\Models\Size;
@@ -53,7 +54,7 @@ class DatabaseSeeder extends Seeder
                 'listing_id' => $listing -> id,
                 'quantity' => random_int(1, $detail -> inventory),
             ];
-        }))) -> create();
+        })) ->has(Payment::factory(rand(1, 2)))) -> create();
         
         Promotion::factory(2) -> create(); 
     }

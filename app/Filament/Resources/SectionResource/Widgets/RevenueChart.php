@@ -22,6 +22,7 @@ class RevenueChart extends ChartWidget
         $activeFilter = $this -> filter;
         $query = Order::query() 
                         -> join('orders_listings', 'orders.id', '=', 'orders_listings.order_id')
+                        -> join('payments', 'payments.order_id', '=', 'orders.id')
                         -> join('listings', 'listings.id', '=', 'orders_listings.listing_id')
                         -> join('subsections', 'listings.subsection_id', '=', 'subsections.id')
                         -> join('sections', 'sections.id', '=', 'subsections.section_id');
@@ -67,6 +68,7 @@ class RevenueChart extends ChartWidget
             'credit' => 'Credit',
             'cash' => 'Cash',
             'debit' => 'Debit',
+            'online' => 'Online',
             'total' => 'Total',
        ]; 
     }

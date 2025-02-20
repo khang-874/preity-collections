@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table -> string('payment_type');
-            $table -> float('amount_paid');
             $table->unsignedBigInteger('customer_id');
-            $table -> foreign('customer_id') -> references('id') -> on('customers');
+            $table -> foreign('customer_id') -> references('id') -> on('customers') -> onUpdate('cascade') -> onDelete('cascade');
             $table->timestamps();
         });
     }
