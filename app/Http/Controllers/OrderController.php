@@ -108,9 +108,9 @@ class OrderController extends Controller
             ]); 
         }
 
-        $payment = Payment::created([
+        $payment = Payment::create([
             'order_id' => $order -> id,
-            'payment_type' => 'online',
+            'payment_type' => 'pending',
             'amount_paid' => $order -> total,
         ]);
         return redirect('/') -> with('message', 'Your Order has been placed successfully');

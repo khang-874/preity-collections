@@ -18,7 +18,7 @@
                     inputField.name = 'items';
                     inputField.value = JSON.stringify(data);
                     form.appendChild(inputField);
-                    {{-- localStorage.clear(); --}}
+                    localStorage.clear();
                     form.submit();
                 }
             }"

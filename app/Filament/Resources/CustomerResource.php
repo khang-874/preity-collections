@@ -29,7 +29,7 @@ class CustomerResource extends Resource
             ->schema([
                 //
                 TextInput::make('first_name') -> required(),
-                TextInput::make('last_name') -> required(),
+                TextInput::make('last_name'),
                 TextInput::make('email'),
                 TextInput::make('phone_number') -> required(),
                 TextInput::make('address'),
