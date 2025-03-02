@@ -30,8 +30,12 @@ Route::get('/', function() {
 Route::get('/aboutus', function(){
     return view('aboutus' ,[
         'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
-        'newArrival' => Listing::orderBy('created_at', 'DESC') -> take(20) -> get() -> all(),
-        'promotions' => Promotion::all()
+    ]);
+});
+
+Route::get('/privacypolicy', function(){
+    return view('privacypolicy' ,[
+        'categories' => Category::all() -> sortBy(function($category){return $category -> index;}),
     ]);
 });
 
